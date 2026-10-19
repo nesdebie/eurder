@@ -1,9 +1,11 @@
 package org.example.eurder.repository;
 
 import org.example.eurder.domain.Item;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+@Repository
 public class ItemRepository extends GenericRepository<Item> {
     public ItemRepository() { super(Item.class); }
 
