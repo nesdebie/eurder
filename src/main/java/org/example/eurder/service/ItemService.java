@@ -25,7 +25,7 @@ public class ItemService {
             throw BadRequestException.invalidAmount(request.amount());
 
         if (repository.getOptional(request.name()).isPresent())
-            return updateExistingItem(request);
+            throw BadRequestException.alreadyExistingItem(request.name());
         return repository.save(
                 new Item(
                         request.name(),
@@ -36,7 +36,15 @@ public class ItemService {
         );
     }
 
-    public Item updateExistingItem(PostItemRequest request) {
+    public Item updateItem(PostItemRequest request) {
+        verifyParametersAreFilledIn(request);
+        if (request.price() < 0)
+            throw BadRequestException.invalidPrice(request.price());
+        if (request.amount() < 0)
+            throw BadRequestException.invalidAmount(request.amount());
+        if (!repository.getOptional(request.name()).isPresent())
+            throw BadRequestException.nonExistingItem(request.name());
+
         Item updatedItem = repository.getOptional(request.name()).get();
 
         updatedItem.setDescription(request.description());

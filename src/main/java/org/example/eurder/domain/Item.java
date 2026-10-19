@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public class Item {
     private final UUID id;
-    private final String name;
+    private String name;
     private String description;
     private double price;
     private int amount;
@@ -35,6 +35,10 @@ public class Item {
 
     public int getAmount() {
         return amount;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setDescription(String description) {

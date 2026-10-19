@@ -4,6 +4,7 @@ import org.example.eurder.service.exception.ForbiddenException;
 
 public enum Permission {
     ADD_ITEM("Add item"),
+    UPDATE_ITEM("Update item"),
     ORDER_ITEM("Order Item");
 
     private final ForbiddenException exception;
