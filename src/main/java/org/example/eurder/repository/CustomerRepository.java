@@ -1,0 +1,13 @@
+package org.example.eurder.repository;
+
+import org.example.eurder.domain.Customer;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class CustomerRepository extends GenericRepository<Customer> {
+    CustomerRepository() {
+        super(Customer.class);
+    }
+
+    public Customer save(Customer customer) { return saveWithId(customer.getId(), customer); }
+}
