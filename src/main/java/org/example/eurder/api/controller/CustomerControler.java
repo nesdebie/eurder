@@ -1,7 +1,5 @@
 package org.example.eurder.api.controller;
 
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.example.eurder.api.dto.CustomerDto;
 import org.example.eurder.api.mapper.CustomerMapper;
 import org.example.eurder.api.request.PostCustomerRequest;
