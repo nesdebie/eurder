@@ -9,6 +9,6 @@ public record CustomerDto(
         String firstName,
         String lastName,
         String email,
-        Address address,
-        String phoneNumber
+        String phoneNumber,
+        AddressDto address
 ) {}

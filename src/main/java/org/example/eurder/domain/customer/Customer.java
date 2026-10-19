@@ -11,8 +11,8 @@ public class Customer {
     private String phoneNumber;
 
     public Customer(
-            String lastName,
             String firstName,
+            String lastName,
             String email,
             String phoneNumber,
             Address address

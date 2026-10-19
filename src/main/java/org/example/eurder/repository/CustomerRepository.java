@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class CustomerRepository extends GenericRepository<Customer> {
-    CustomerRepository() {
+    public CustomerRepository() {
         super(Customer.class);
     }
 

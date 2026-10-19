@@ -18,6 +18,7 @@ public class CustomerService {
         this.validator = EmailValidator.getInstance();
     }
 
+
     public Customer createCustomer(PostCustomerRequest request) {
         verifyParametersAreFilledIn(request);
 
@@ -30,8 +31,8 @@ public class CustomerService {
 
         return repository.save(
                 new Customer(
-                        request.lastName(),
                         request.firstName(),
+                        request.lastName(),
                         request.email(),
                         request.phoneNumber(),
                         new Address(
@@ -44,6 +45,7 @@ public class CustomerService {
         );
     }
 
+
     private void verifyParametersAreFilledIn(PostCustomerRequest request) {
         verifyParameterIsFilledIn(request.firstName(), "first name");
         verifyParameterIsFilledIn(request.lastName(), "last name");
@@ -51,9 +53,11 @@ public class CustomerService {
         verifyParameterIsFilledIn(request.phoneNumber(), "phone");
         verifyParameterIsFilledIn(request.street(), "street");
         verifyParameterIsFilledIn(request.streetNumber(), "street number");
+        verifyParameterIsFilledIn(request.city(), "city");
+        verifyParameterIsFilledIn(request.country(), "country");
     }
 
-    private void verifyParameterIsFilledIn(String value, String parameterName) {
+    public void verifyParameterIsFilledIn(String value, String parameterName) {
         if (value == null || value.isEmpty())
             throw BadRequestException.customerParameterRequired(parameterName);
     }
