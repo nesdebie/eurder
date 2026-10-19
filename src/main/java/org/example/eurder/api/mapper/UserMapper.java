@@ -1,16 +1,16 @@
 package org.example.eurder.api.mapper;
 
 import org.example.eurder.api.dto.AddressDto;
-import org.example.eurder.api.dto.CustomerDto;
-import org.example.eurder.domain.customer.Address;
-import org.example.eurder.domain.customer.Customer;
+import org.example.eurder.api.dto.UserDto;
+import org.example.eurder.domain.user.Address;
+import org.example.eurder.domain.user.User;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CustomerMapper {
+public class UserMapper {
 
-    public CustomerDto mapToDto(Customer customer) {
-        return new CustomerDto(
+    public UserDto mapToDto(User customer) {
+        return new UserDto(
                 customer.getId(),
                 customer.getFirstName(),
                 customer.getLastName(),

@@ -1,4 +1,4 @@
-package org.example.eurder.domain.customer;
+package org.example.eurder.domain.user;
 
 public record Address(
         String streetName,

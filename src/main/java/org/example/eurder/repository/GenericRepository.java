@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Predicate;
 
 public class GenericRepository<T> {
     protected final Logger logger = LoggerFactory.getLogger(getClass());
@@ -35,5 +36,9 @@ public class GenericRepository<T> {
         logger.debug("Saving item {} in {} repository", id, typeName);
         storedItems.put(id, item);
         return item;
+    }
+
+    protected Optional<T> getOptional(Predicate<T> predicate) {
+        return storedItems.values().stream().filter(predicate).findAny();
     }
 }

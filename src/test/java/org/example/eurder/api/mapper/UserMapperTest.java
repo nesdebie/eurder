@@ -1,28 +1,28 @@
 package org.example.eurder.api.mapper;
 
-import org.example.eurder.api.dto.CustomerDto;
-import org.example.eurder.domain.customer.Address;
-import org.example.eurder.domain.customer.Customer;
+import org.example.eurder.api.dto.UserDto;
+import org.example.eurder.domain.user.Address;
+import org.example.eurder.domain.user.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CustomerMapperTest {
-    private final CustomerMapper mapper = new CustomerMapper();
-    private Customer customer;
+class UserMapperTest {
+    private final UserMapper mapper = new UserMapper();
+    private User customer;
 
     @BeforeEach
     void initCustomer() {
         Address address = new Address("Baker Street", "221B", "London", "United Kingdom");
-        customer = new Customer("Sherlock", "Holmes", "sherlock.holmes@detective.com", "0000000000", address);
+        customer = new User("Sherlock", "Holmes", "sherlock.holmes@detective.com", "0000000000", address);
     }
 
     @DisplayName("Testing mapToDto")
     @Test
     void givenCustomer_whenCallingMapToDto_thenACustomerDtoIsReturned() {
-        CustomerDto dto = mapper.mapToDto(customer);
+        UserDto dto = mapper.mapToDto(customer);
 
         assertEquals(customer.getFirstName(), dto.firstName());
         assertEquals(customer.getLastName(), dto.lastName());

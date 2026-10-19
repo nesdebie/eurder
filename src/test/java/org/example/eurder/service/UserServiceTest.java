@@ -1,9 +1,9 @@
 package org.example.eurder.service;
 
 import org.assertj.core.api.Assertions;
-import org.example.eurder.api.request.PostCustomerRequest;
-import org.example.eurder.domain.customer.Customer;
-import org.example.eurder.repository.CustomerRepository;
+import org.example.eurder.api.request.PostUserRequest;
+import org.example.eurder.domain.user.User;
+import org.example.eurder.repository.UserRepository;
 import org.example.eurder.service.exception.BadRequestException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -14,14 +14,14 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-class CustomerServiceTest {
-    private final CustomerService service = new CustomerService(new CustomerRepository());
+class UserServiceTest {
+    private final UserService service = new UserService(new UserRepository());
 
     @BeforeEach
 
     @Test
     void givenValidPostCustomerRequest_whenCallingCreateCustomer_thenACustomerObjectIsReturned() {
-        PostCustomerRequest request = new PostCustomerRequest(
+        PostUserRequest request = new PostUserRequest(
                 "Sherlock",
                 "Holmes",
                 "sherlock.holmes@detective.com",
@@ -32,7 +32,7 @@ class CustomerServiceTest {
                 "United Kingdom"
         );
 
-        Assertions.assertThat(service.createCustomer(request)).isInstanceOf(Customer.class);
+        Assertions.assertThat(service.createCustomer(request)).isInstanceOf(User.class);
     }
 
     public static Stream<Arguments> badRequestStream() {
@@ -72,7 +72,7 @@ class CustomerServiceTest {
             String city,
             String country
     ) {
-        Assertions.assertThatThrownBy(() -> service.createCustomer(new PostCustomerRequest(
+        Assertions.assertThatThrownBy(() -> service.createCustomer(new PostUserRequest(
                 firstName,
                 lastName,
                 mail,

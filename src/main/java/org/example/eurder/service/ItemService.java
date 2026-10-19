@@ -1,0 +1,58 @@
+package org.example.eurder.service;
+
+import org.example.eurder.api.mapper.ItemMapper;
+import org.example.eurder.api.request.PostItemRequest;
+import org.example.eurder.domain.Item;
+import org.example.eurder.repository.ItemRepository;
+import org.example.eurder.service.exception.BadRequestException;
+import org.springframework.stereotype.Service;
+
+@Service
+public class ItemService {
+    private final ItemRepository repository;
+    private final ItemMapper mapper;
+
+    public ItemService(ItemRepository repository, ItemMapper mapper) {
+        this.repository = repository;
+        this.mapper = mapper;
+    }
+
+    public Item createItem(PostItemRequest request) {
+        verifyParametersAreFilledIn(request);
+        if (request.price() < 0)
+            throw BadRequestException.invalidPrice(request.price());
+        if (request.amount() < 0)
+            throw BadRequestException.invalidAmount(request.amount());
+
+        if (repository.getOptional(request.name()).isPresent())
+            return updateExistingItem(request);
+        return repository.save(
+                new Item(
+                        request.name(),
+                        request.description(),
+                        request.price(),
+                        request.amount()
+                )
+        );
+    }
+
+    public Item updateExistingItem(PostItemRequest request) {
+        Item updatedItem = repository.getOptional(request.name()).get();
+
+        updatedItem.setDescription(request.description());
+        updatedItem.setPrice(request.price());
+        updatedItem.setAmount(updatedItem.getAmount() + request.amount());
+
+        return repository.save(updatedItem);
+    }
+
+    public void verifyParametersAreFilledIn(PostItemRequest request) {
+        verifyParameterIsFilledIn(request.name(), "name");
+        verifyParameterIsFilledIn(request.description(), "description");
+    }
+
+    public void verifyParameterIsFilledIn(String value, String parameterName) {
+        if (value == null || value.isEmpty())
+            throw BadRequestException.customerParameterRequired(parameterName);
+    }
+}

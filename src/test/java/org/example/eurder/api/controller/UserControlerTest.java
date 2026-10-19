@@ -1,8 +1,8 @@
 package org.example.eurder.api.controller;
 
 import org.assertj.core.api.Assertions;
-import org.example.eurder.api.request.PostCustomerRequest;
-import org.example.eurder.domain.customer.Customer;
+import org.example.eurder.api.request.PostUserRequest;
+import org.example.eurder.domain.user.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,11 +14,9 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-class CustomerControlerTest {
+class UserControlerTest {
     @LocalServerPort
     private int port;
 
@@ -31,7 +29,7 @@ class CustomerControlerTest {
     ) {
     }
 
-    private ValidatableResponse postUser(PostCustomerRequest request) {
+    private ValidatableResponse postUser(PostUserRequest request) {
         return RestAssured
                 .given()
                 .contentType(ContentType.JSON)
@@ -46,7 +44,7 @@ class CustomerControlerTest {
     @Test
     @DisplayName("Adding a Customer successfully returns the correct response")
     void postUser_givenRepositoryIsEmpty_thenReturnCreatedObject() {
-        Customer customer = postUser(new PostCustomerRequest(
+        User customer = postUser(new PostUserRequest(
                 "Sherlock",
                 "Holmes",
                 "sherlock.holmes@detective.com",
@@ -59,7 +57,7 @@ class CustomerControlerTest {
                 .assertThat()
                 .statusCode(HttpStatus.CREATED.value())
                 .extract()
-                .as(Customer.class);
+                .as(User.class);
 
         Assertions.assertThat(customer.getFirstName()).isEqualTo("Sherlock");
     }
@@ -67,7 +65,7 @@ class CustomerControlerTest {
     @Test
     @DisplayName("Adding a customer with empty email returns the correct response")
     void postUser_givenEmailEmpty_thenThrowsException() {
-        ErrorResponse response = postUser(new PostCustomerRequest(
+        ErrorResponse response = postUser(new PostUserRequest(
                 "Sherlock",
                 "Holmes",
                 "",

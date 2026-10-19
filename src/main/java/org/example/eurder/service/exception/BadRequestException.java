@@ -17,6 +17,14 @@ public class BadRequestException extends RuntimeException {
         return new BadRequestException("Phone number %s is invalid".formatted(phone));
     }
 
+    public static BadRequestException invalidPrice(double price) {
+        return new BadRequestException("Item price %f is invalid".formatted(price));
+    }
+
+    public static BadRequestException invalidAmount(int amount) {
+        return new BadRequestException("Item amount %d is invalid".formatted(amount));
+    }
+
     public static BadRequestException invalidStreetNumber(String number) {
         return new BadRequestException("Street number %s is invalid".formatted(number));
     }

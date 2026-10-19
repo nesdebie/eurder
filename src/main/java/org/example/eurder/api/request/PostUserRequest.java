@@ -1,6 +1,6 @@
 package org.example.eurder.api.request;
 
-public record PostCustomerRequest (
+public record PostUserRequest(
         String firstName,
         String lastName,
         String email,

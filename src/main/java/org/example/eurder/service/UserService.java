@@ -1,25 +1,25 @@
 package org.example.eurder.service;
 
 import org.apache.commons.validator.routines.EmailValidator;
-import org.example.eurder.api.request.PostCustomerRequest;
-import org.example.eurder.domain.customer.Address;
-import org.example.eurder.domain.customer.Customer;
-import org.example.eurder.repository.CustomerRepository;
+import org.example.eurder.api.request.PostUserRequest;
+import org.example.eurder.domain.user.Address;
+import org.example.eurder.domain.user.User;
+import org.example.eurder.repository.UserRepository;
 import org.example.eurder.service.exception.BadRequestException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CustomerService {
-    private final CustomerRepository repository;
+public class UserService {
+    private final UserRepository repository;
     private final EmailValidator validator;
 
-    public CustomerService(CustomerRepository repository) {
+    public UserService(UserRepository repository) {
         this.repository = repository;
         this.validator = EmailValidator.getInstance();
     }
 
 
-    public Customer createCustomer(PostCustomerRequest request) {
+    public User createCustomer(PostUserRequest request) {
         verifyParametersAreFilledIn(request);
 
         if (!validator.isValid(request.email()))
@@ -28,9 +28,10 @@ public class CustomerService {
             throw BadRequestException.invalidPhoneNumber(request.phoneNumber());
         if(!request.streetNumber().matches("^[0-9]+([\\s\\-/]?[a-zA-Z0-9]+)?$"))
             throw BadRequestException.invalidStreetNumber(request.streetNumber());
-
+        if (!repository.isEmailAvailable(request.email()))
+            throw BadRequestException.invalidEmail(request.email());
         return repository.save(
-                new Customer(
+                new User(
                         request.firstName(),
                         request.lastName(),
                         request.email(),
@@ -46,7 +47,7 @@ public class CustomerService {
     }
 
 
-    private void verifyParametersAreFilledIn(PostCustomerRequest request) {
+    private void verifyParametersAreFilledIn(PostUserRequest request) {
         verifyParameterIsFilledIn(request.firstName(), "first name");
         verifyParameterIsFilledIn(request.lastName(), "last name");
         verifyParameterIsFilledIn(request.email(), "email");
