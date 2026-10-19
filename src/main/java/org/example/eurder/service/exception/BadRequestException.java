@@ -6,6 +6,18 @@ public class BadRequestException extends RuntimeException {
     }
 
     public static BadRequestException customerParameterRequired(String parameter) {
-        return new BadRequestException("Valid Customer %s is required".formatted(parameter));
+        return new BadRequestException("Valid Customer's %s is required".formatted(parameter));
+    }
+
+    public static BadRequestException invalidEmail(String email) {
+        return new BadRequestException("Email %s is invalid".formatted(email));
+    }
+
+    public static BadRequestException invalidPhoneNumber(String phone) {
+        return new BadRequestException("Phone number %s is invalid".formatted(phone));
+    }
+
+    public static BadRequestException invalidStreetNumber(String number) {
+        return new BadRequestException("Street number %s is invalid".formatted(number));
     }
 }

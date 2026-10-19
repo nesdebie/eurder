@@ -1,5 +1,7 @@
 package org.example.eurder.api.dto;
 
+import org.example.eurder.domain.customer.Address;
+
 import java.util.UUID;
 
 public record CustomerDto(
@@ -7,6 +9,6 @@ public record CustomerDto(
         String firstName,
         String lastName,
         String email,
-        String address,
+        Address address,
         String phoneNumber
 ) {}

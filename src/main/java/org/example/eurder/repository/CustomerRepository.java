@@ -1,6 +1,6 @@
 package org.example.eurder.repository;
 
-import org.example.eurder.domain.Customer;
+import org.example.eurder.domain.customer.Customer;
 import org.springframework.stereotype.Repository;
 
 @Repository

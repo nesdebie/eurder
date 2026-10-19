@@ -1,4 +1,4 @@
-package org.example.eurder.domain;
+package org.example.eurder.domain.customer;
 
 import java.util.UUID;
 
@@ -7,16 +7,23 @@ public class Customer {
     private String firstName;
     private String lastName;
     private String email;
-    private String address;
+    private Address address;
     private String phoneNumber;
 
-    public Customer(String lastName, String firstName, String email, String address, String phoneNumber) {
+    public Customer(
+            String lastName,
+            String firstName,
+            String email,
+            String phoneNumber,
+            Address address
+
+    ) {
         this.id = UUID.randomUUID();
         this.lastName = lastName;
         this.firstName = firstName;
         this.email = email;
-        this.address = address;
         this.phoneNumber = phoneNumber;
+        this.address = address;
     }
 
     public UUID getId() {
@@ -35,7 +42,7 @@ public class Customer {
         return email;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
 
