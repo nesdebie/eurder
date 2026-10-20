@@ -7,7 +7,9 @@ import org.example.eurder.repository.ItemRepository;
 import org.example.eurder.service.exception.BadRequestException;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.function.Predicate;
 
 @Service
 public class ItemService {
@@ -19,6 +21,17 @@ public class ItemService {
 
     public List<Item> getAllItems() {
         return repository.getAll();
+    }
+
+    public List<Item> getOverviewAllItems(String filter) {
+        Predicate<Item> predicate = ItemInventory.fromValue(filter)
+                .<Predicate<Item>>map(inv -> item -> inv.matches(item.getAmount()))
+                .orElse(item -> true);
+
+        return getAllItems().stream()
+                .filter(predicate)
+                .sorted(Comparator.comparingInt(Item::getAmount))
+                .toList();
     }
 
     public Item createItem(PostItemRequest request) {

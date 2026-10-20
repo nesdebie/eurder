@@ -6,6 +6,7 @@ import org.example.eurder.api.dto.ItemDto;
 import org.example.eurder.api.mapper.ItemMapper;
 import org.example.eurder.api.request.PostItemRequest;
 import org.example.eurder.api.request.PutItemRequest;
+import org.example.eurder.domain.Item;
 import org.example.eurder.domain.user.Permission;
 import org.example.eurder.service.ItemService;
 import org.example.eurder.service.SecurityService;
@@ -53,5 +54,15 @@ public class ItemController {
     @ResponseStatus(HttpStatus.OK)
     public List<ItemDto> getAllItems() {
         return mapper.mapToDto(service.getAllItems());
+    }
+
+    @SecurityRequirement(name = "Authorization")
+    @GetMapping(name = "/overview")
+    public List<ItemDto> getItemOverview(
+            @Parameter(hidden = true) @RequestHeader(value = "Authorization", required = false) String email,
+            @RequestParam(required = false) String filter
+    ) {
+        security.validateAuthorization(email, Permission.OVERVIEW_ITEM);
+        return mapper.mapToDto(service.getOverviewAllItems(filter));
     }
 }
