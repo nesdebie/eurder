@@ -1,30 +1,45 @@
 package org.example.eurder.service;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.example.eurder.api.request.PostUserRequest;
+import org.example.eurder.domain.Eurder;
+import org.example.eurder.domain.ItemGroup;
 import org.example.eurder.domain.user.Address;
 import org.example.eurder.domain.user.Role;
 import org.example.eurder.domain.user.User;
+import org.example.eurder.repository.EurderRepository;
 import org.example.eurder.repository.UserRepository;
 import org.example.eurder.service.exception.BadRequestException;
+import org.example.eurder.service.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserService {
-    private final UserRepository repository;
+    private final UserRepository users;
+    private final EurderRepository eurders;
     private final EmailValidator validator;
 
-    public UserService(UserRepository repository) {
-        this.repository = repository;
+    public UserService(UserRepository users, EurderRepository eurders) {
+        this.users = users;
+        this.eurders = eurders;
         this.validator = EmailValidator.getInstance();
     }
 
     public List<User> getAllCustomers() {
-        return repository.getAll().stream()
+        return users.getAll().stream()
                 .filter(user -> user.getRole().equals(Role.CUSTOMER))
                 .toList();
+    }
+
+    public Pair<User, List<ItemGroup>> getCustomerDetails(UUID id) {
+        Optional<User> user = users.get(id);
+        if (user == null) throw NotFoundException.userNotFound(id);
+        return Pair.of(user.get(), eurders.getItemGroupsByUserId(id));
     }
 
     public User createUser(PostUserRequest request) {
@@ -36,9 +51,9 @@ public class UserService {
             throw BadRequestException.invalidPhoneNumber(request.phoneNumber());
         if(!request.streetNumber().matches("^[0-9]+([\\s\\-/]?[a-zA-Z0-9]+)?$"))
             throw BadRequestException.invalidStreetNumber(request.streetNumber());
-        if (!repository.isEmailAvailable(request.email()))
+        if (!users.isEmailAvailable(request.email()))
             throw BadRequestException.invalidEmail(request.email());
-        return repository.save(
+        return users.save(
                 new User(
                         request.firstName(),
                         request.lastName(),

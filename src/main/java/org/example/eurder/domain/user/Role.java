@@ -9,6 +9,7 @@ public enum Role {
     ADMIN(
             List.of(Permission.ADD_ITEM,
                     Permission.UPDATE_ITEM,
+                    Permission.VIEW_CUSTOMER,
                     Permission.VIEW_CUSTOMERS
             )
     );

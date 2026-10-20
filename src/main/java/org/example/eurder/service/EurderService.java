@@ -1,6 +1,5 @@
 package org.example.eurder.service;
 
-import org.apache.commons.lang3.tuple.Pair;
 import org.example.eurder.api.request.PostEurderRequest;
 import org.example.eurder.domain.Eurder;
 import org.example.eurder.domain.Item;
@@ -12,7 +11,6 @@ import org.example.eurder.service.exception.BadRequestException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class EurderService {
@@ -27,9 +25,9 @@ public class EurderService {
     }
 
     public Eurder createEurder(PostEurderRequest request, String user) {
-        checkOrdersValidity(request.orders());
+        checkOrdersValidity(request.eurders());
 
-        List<ItemGroup> itemGroups = request.orders().stream()
+        List<ItemGroup> itemGroups = request.eurders().stream()
                 .map(order -> {
                     Item item = itemRepository.getOptionalById(order.itemId()).orElseThrow();
                     int amount = order.amount();

@@ -4,6 +4,8 @@ import org.example.eurder.api.dto.EurderDto;
 import org.example.eurder.domain.Eurder;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class EurderMapper {
     private ItemGroupMapper groupMapper;
@@ -21,5 +23,9 @@ public class EurderMapper {
                 userMapper.mapToDto(eurder.getUser()
                 )
         );
+    }
+
+    public List<EurderDto> mapToDto(List<Eurder> eurders) {
+        return eurders.stream().map(eurder -> mapToDto(eurder)).toList();
     }
 }
