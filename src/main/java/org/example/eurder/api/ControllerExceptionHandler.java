@@ -17,6 +17,18 @@ import java.util.UUID;
 public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     private static final Logger logger = LoggerFactory.getLogger(ControllerExceptionHandler.class);
 
+    @ExceptionHandler(NotFoundException.class)
+    protected void notFound(NotFoundException ex, HttpServletResponse response) throws IOException {
+        logger.warn("Not found: {}", ex.getMessage());
+        response.sendError(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+    }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    protected void unauthorized(UnauthorizedException ex, HttpServletResponse response) throws IOException {
+        logger.warn("Unauthorized: {}", ex.getMessage());
+        response.sendError(HttpStatus.UNAUTHORIZED.value(), ex.getMessage());
+    }
+
     @ExceptionHandler(BadRequestException.class)
     protected void badRequest(BadRequestException ex, HttpServletResponse response) throws IOException {
         logger.warn("Bad Request: {}", ex.getMessage());
@@ -31,5 +43,11 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 "Something went wrong. Please contact support with code: %s".formatted(errorId)
         );
+    }
+
+    @ExceptionHandler(ForbiddenException.class)
+    protected void forbidden(ForbiddenException ex, HttpServletResponse response) throws IOException {
+        logger.warn("Forbidden: {}", ex.getMessage());
+        response.sendError(HttpStatus.FORBIDDEN.value(), ex.getMessage());
     }
 }
