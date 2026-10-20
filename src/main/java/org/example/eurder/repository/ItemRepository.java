@@ -8,7 +8,11 @@ import java.util.UUID;
 
 @Repository
 public class ItemRepository extends GenericRepository<Item> {
-    public ItemRepository() { super(Item.class); }
+    public ItemRepository() {
+        super(Item.class);
+        this.save(new Item("Warhammer 40K", "Starter Set", 199.99, 15));
+        this.save(new Item("Warhammer AoS", "Ultimate Starter Set", 99.99, 15));
+    }
 
     public Item save(Item item) { return saveWithId(item.getId(), item); }
 

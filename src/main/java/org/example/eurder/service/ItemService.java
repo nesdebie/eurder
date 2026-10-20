@@ -1,6 +1,7 @@
 package org.example.eurder.service;
 
 import org.example.eurder.api.request.PostItemRequest;
+import org.example.eurder.api.request.PutItemRequest;
 import org.example.eurder.domain.Item;
 import org.example.eurder.repository.ItemRepository;
 import org.example.eurder.service.exception.BadRequestException;
@@ -39,17 +40,18 @@ public class ItemService {
         );
     }
 
-    public Item updateItem(PostItemRequest request) {
+    public Item updateItem(PutItemRequest request) {
         verifyParametersAreFilledIn(request);
         if (request.price() < 0)
             throw BadRequestException.invalidPrice(request.price());
         if (request.amount() < 0)
             throw BadRequestException.invalidAmount(request.amount());
-        if (!repository.getOptionalByName(request.name()).isPresent())
+        if (!repository.getOptionalById(request.id()).isPresent())
             throw BadRequestException.nonExistingItem(request.name());
 
         Item updatedItem = repository.getOptionalByName(request.name()).get();
 
+        updatedItem.setName(request.name());
         updatedItem.setDescription(request.description());
         updatedItem.setPrice(request.price());
         updatedItem.setAmount(updatedItem.getAmount() + request.amount());
@@ -58,6 +60,11 @@ public class ItemService {
     }
 
     public void verifyParametersAreFilledIn(PostItemRequest request) {
+        verifyParameterIsFilledIn(request.name(), "name");
+        verifyParameterIsFilledIn(request.description(), "description");
+    }
+
+    public void verifyParametersAreFilledIn(PutItemRequest request) {
         verifyParameterIsFilledIn(request.name(), "name");
         verifyParameterIsFilledIn(request.description(), "description");
     }

@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.example.eurder.api.dto.ItemDto;
 import org.example.eurder.api.mapper.ItemMapper;
 import org.example.eurder.api.request.PostItemRequest;
+import org.example.eurder.api.request.PutItemRequest;
 import org.example.eurder.domain.user.Permission;
 import org.example.eurder.service.ItemService;
 import org.example.eurder.service.SecurityService;
@@ -35,6 +36,17 @@ public class ItemController {
     ) {
         security.validateAuthorization(email, Permission.ADD_ITEM);
         return mapper.mapToDto(service.createItem(request));
+    }
+
+    @SecurityRequirement(name = "Authorization")
+    @PutMapping
+    @ResponseStatus(HttpStatus.OK)
+    public ItemDto updateItem(
+            @Parameter(hidden = true) @RequestHeader(value = "Authorization", required = false) String email,
+            @RequestBody PutItemRequest request
+    ) {
+        security.validateAuthorization(email, Permission.UPDATE_ITEM);
+        return mapper.mapToDto(service.updateItem(request));
     }
 
     @GetMapping

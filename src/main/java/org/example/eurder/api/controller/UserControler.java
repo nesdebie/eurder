@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/customer")
+@RequestMapping(value = "/register")
 public class UserControler {
     private final UserService service;
     private final UserMapper mapper;
