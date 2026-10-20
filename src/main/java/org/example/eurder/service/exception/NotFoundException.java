@@ -10,4 +10,8 @@ public class NotFoundException extends RuntimeException {
     public static NotFoundException userNotFound(UUID id) {
         return new NotFoundException("The user with the id %s could not be found".formatted(id));
     }
+
+    public static NotFoundException eurderNotFound(UUID id) {
+        return new NotFoundException("The eurder with the id %s could not be found".formatted(id));
+    }
 }

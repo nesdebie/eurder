@@ -9,9 +9,12 @@ import org.example.eurder.repository.EurderRepository;
 import org.example.eurder.repository.ItemRepository;
 import org.example.eurder.repository.UserRepository;
 import org.example.eurder.service.exception.BadRequestException;
+import org.example.eurder.service.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class EurderService {
@@ -25,7 +28,18 @@ public class EurderService {
         this.userRepository = userRepository;
     }
 
-    public Eurder createEurder(PostEurderRequest request, String user) {
+    public Eurder reeurder(UUID id, String email) {
+        Eurder old = eurderRepository.get(id)
+                .orElseThrow(() -> NotFoundException.eurderNotFound(id));
+
+        List<PostEurderRequest.OrderLineDto> lines = old.getItems().stream()
+                .map(group -> new PostEurderRequest.OrderLineDto(group.getItemId(), group.getAmount()))
+                .toList();
+
+        return createEurder(new PostEurderRequest(lines), email);
+    }
+
+    public Eurder createEurder(PostEurderRequest request, String email) {
         checkOrdersValidity(request.eurders());
 
         List<ItemGroup> itemGroups = request.eurders().stream()
@@ -41,7 +55,12 @@ public class EurderService {
                 })
                 .toList();
 
-        return eurderRepository.save(new Eurder(itemGroups, userRepository.getUserWithEmail(user).get()));
+        return eurderRepository.save(
+                new Eurder(
+                        itemGroups,
+                        userRepository.getUserWithEmail(email).get()
+                )
+        );
     }
 
     private void checkOrdersValidity(List<PostEurderRequest.OrderLineDto> orders) {
