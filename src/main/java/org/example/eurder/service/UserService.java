@@ -3,7 +3,6 @@ package org.example.eurder.service;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.example.eurder.api.request.PostUserRequest;
-import org.example.eurder.domain.Eurder;
 import org.example.eurder.domain.ItemGroup;
 import org.example.eurder.domain.user.Address;
 import org.example.eurder.domain.user.Role;
@@ -51,7 +50,7 @@ public class UserService {
             throw BadRequestException.invalidPhoneNumber(request.phoneNumber());
         if(!request.streetNumber().matches("^[0-9]+([\\s\\-/]?[a-zA-Z0-9]+)?$"))
             throw BadRequestException.invalidStreetNumber(request.streetNumber());
-        if (!users.isEmailAvailable(request.email()))
+        if (users.isEmailAlreadyUsed(request.email()))
             throw BadRequestException.invalidEmail(request.email());
         return users.save(
                 new User(

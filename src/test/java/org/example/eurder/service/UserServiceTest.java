@@ -3,6 +3,7 @@ package org.example.eurder.service;
 import org.assertj.core.api.Assertions;
 import org.example.eurder.api.request.PostUserRequest;
 import org.example.eurder.domain.user.User;
+import org.example.eurder.repository.EurderRepository;
 import org.example.eurder.repository.UserRepository;
 import org.example.eurder.service.exception.BadRequestException;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,9 +16,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 class UserServiceTest {
-    private final UserService service = new UserService(new UserRepository());
-
-    @BeforeEach
+    private final UserService service = new UserService(new UserRepository(), new EurderRepository());
 
     @Test
     void givenValidPostUserRequest_whenCallingCreateCustomer_thenACustomerObjectIsReturned() {

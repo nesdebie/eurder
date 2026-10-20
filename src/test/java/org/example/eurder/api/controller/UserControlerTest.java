@@ -37,7 +37,7 @@ class UserControlerTest {
                 .body(request)
                 .port(port)
                 .when()
-                .post("/customer")
+                .post("/user")
                 .then();
     }
 

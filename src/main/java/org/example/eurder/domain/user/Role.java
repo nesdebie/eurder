@@ -12,7 +12,8 @@ public enum Role {
                     Permission.UPDATE_ITEM,
                     Permission.VIEW_CUSTOMER,
                     Permission.VIEW_CUSTOMERS,
-                    Permission.VIEW_SHIPPING
+                    Permission.VIEW_SHIPPING,
+                    Permission.OVERVIEW_ITEM
             )
     );
 

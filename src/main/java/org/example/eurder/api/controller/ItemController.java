@@ -57,7 +57,7 @@ public class ItemController {
     }
 
     @SecurityRequirement(name = "Authorization")
-    @GetMapping(name = "/overview")
+    @GetMapping(value = "/overview")
     public List<ItemDto> getItemOverview(
             @Parameter(hidden = true) @RequestHeader(value = "Authorization", required = false) String email,
             @RequestParam(required = false) String filter
