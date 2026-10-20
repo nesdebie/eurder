@@ -4,6 +4,7 @@ import org.example.eurder.api.request.PostEurderRequest;
 import org.example.eurder.domain.Eurder;
 import org.example.eurder.domain.Item;
 import org.example.eurder.domain.ItemGroup;
+import org.example.eurder.domain.ItemToShipToday;
 import org.example.eurder.domain.report.EurdersReport;
 import org.example.eurder.repository.EurderRepository;
 import org.example.eurder.repository.ItemRepository;
@@ -12,6 +13,7 @@ import org.example.eurder.service.exception.BadRequestException;
 import org.example.eurder.service.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -26,6 +28,16 @@ public class EurderService {
         this.eurderRepository = eurderRepository;
         this.itemRepository = itemRepository;
         this.userRepository = userRepository;
+    }
+
+    public List<ItemToShipToday> getAllItemsShippedToday() {
+        LocalDate today = LocalDate.now();
+
+        return eurderRepository.getAll().stream()
+                .flatMap(eurder -> eurder.getItems().stream()
+                        .filter(group -> group.getShippingDate().equals(today))
+                        .map(group -> new ItemToShipToday(group, eurder.getUser().getAddress())))
+                .toList();
     }
 
     public Eurder reeurder(UUID id, String email) {

@@ -11,7 +11,8 @@ public enum Role {
             List.of(Permission.ADD_ITEM,
                     Permission.UPDATE_ITEM,
                     Permission.VIEW_CUSTOMER,
-                    Permission.VIEW_CUSTOMERS
+                    Permission.VIEW_CUSTOMERS,
+                    Permission.VIEW_SHIPPING
             )
     );
 

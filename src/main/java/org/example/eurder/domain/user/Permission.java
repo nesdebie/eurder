@@ -8,7 +8,8 @@ public enum Permission {
     ORDER_ITEM("Order Item"),
     VIEW_REPORT("View an orders report"),
     VIEW_CUSTOMER("View a single customer"),
-    VIEW_CUSTOMERS("View all customers");
+    VIEW_CUSTOMERS("View all customers"),
+    VIEW_SHIPPING("View all items shipped today");
 
     private final ForbiddenException exception;
 
