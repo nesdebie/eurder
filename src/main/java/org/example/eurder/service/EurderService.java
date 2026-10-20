@@ -4,6 +4,7 @@ import org.example.eurder.api.request.PostEurderRequest;
 import org.example.eurder.domain.Eurder;
 import org.example.eurder.domain.Item;
 import org.example.eurder.domain.ItemGroup;
+import org.example.eurder.domain.report.EurdersReport;
 import org.example.eurder.repository.EurderRepository;
 import org.example.eurder.repository.ItemRepository;
 import org.example.eurder.repository.UserRepository;
@@ -48,5 +49,13 @@ public class EurderService {
             throw BadRequestException.invalidAmount(0);
         if (!orders.stream().allMatch(order -> itemRepository.getOptionalById(order.itemId()).isPresent()))
             throw BadRequestException.nonExistingItem("");
+    }
+
+    public EurdersReport getEurdersReport(String email) {
+        return new EurdersReport(
+                eurderRepository.getAll().stream()
+                        .filter(eurder -> eurder.getUser().getEmail().equals(email))
+                        .toList()
+        );
     }
 }

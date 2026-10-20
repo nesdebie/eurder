@@ -1,4 +1,6 @@
-package org.example.eurder.api.dto;
+package org.example.eurder.api.dto.eurder;
+
+import org.example.eurder.api.dto.user.UserDto;
 
 import java.util.List;
 import java.util.UUID;

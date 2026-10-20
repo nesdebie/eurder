@@ -1,10 +1,7 @@
 package org.example.eurder.api.mapper;
 
-import org.apache.commons.lang3.tuple.Pair;
-import org.example.eurder.api.dto.AddressDto;
-import org.example.eurder.api.dto.UserDetailsDto;
-import org.example.eurder.api.dto.UserDto;
-import org.example.eurder.domain.Eurder;
+import org.example.eurder.api.dto.user.AddressDto;
+import org.example.eurder.api.dto.user.UserDto;
 import org.example.eurder.domain.user.Address;
 import org.example.eurder.domain.user.User;
 import org.springframework.stereotype.Component;

@@ -1,6 +1,6 @@
 package org.example.eurder.api.mapper;
 
-import org.example.eurder.api.dto.EurderDto;
+import org.example.eurder.api.dto.eurder.EurderDto;
 import org.example.eurder.domain.Eurder;
 import org.springframework.stereotype.Component;
 

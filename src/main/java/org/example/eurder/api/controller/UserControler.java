@@ -3,8 +3,8 @@ package org.example.eurder.api.controller;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
-import org.example.eurder.api.dto.UserDetailsDto;
-import org.example.eurder.api.dto.UserDto;
+import org.example.eurder.api.dto.user.detail.UserDetailsDto;
+import org.example.eurder.api.dto.user.UserDto;
 import org.example.eurder.api.mapper.UserDetailsMapper;
 import org.example.eurder.api.mapper.UserMapper;
 import org.example.eurder.api.request.PostUserRequest;

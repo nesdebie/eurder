@@ -1,6 +1,6 @@
 package org.example.eurder.api.mapper;
 
-import org.example.eurder.api.dto.UserDto;
+import org.example.eurder.api.dto.user.UserDto;
 import org.example.eurder.domain.user.Address;
 import org.example.eurder.domain.user.User;
 import org.junit.jupiter.api.BeforeEach;

@@ -4,7 +4,8 @@ import java.util.List;
 
 public enum Role {
     CUSTOMER(
-            List.of(Permission.ORDER_ITEM)
+            List.of(Permission.ORDER_ITEM,
+                    Permission.VIEW_REPORT)
     ),
     ADMIN(
             List.of(Permission.ADD_ITEM,

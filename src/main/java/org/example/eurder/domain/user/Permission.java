@@ -6,6 +6,7 @@ public enum Permission {
     ADD_ITEM("Add item"),
     UPDATE_ITEM("Update item"),
     ORDER_ITEM("Order Item"),
+    VIEW_REPORT("View an orders report"),
     VIEW_CUSTOMER("View a single customer"),
     VIEW_CUSTOMERS("View all customers");
 

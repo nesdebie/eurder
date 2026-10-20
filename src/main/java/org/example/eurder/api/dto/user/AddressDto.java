@@ -1,4 +1,4 @@
-package org.example.eurder.api.dto;
+package org.example.eurder.api.dto.user;
 
 public record AddressDto(
         String streetName,
