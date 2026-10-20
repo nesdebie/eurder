@@ -6,6 +6,8 @@ import org.example.eurder.domain.user.Address;
 import org.example.eurder.domain.user.User;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class UserMapper {
 
@@ -18,6 +20,10 @@ public class UserMapper {
                 customer.getPhoneNumber(),
                 mapToDto(customer.getAddress())
         );
+    }
+
+    public List<UserDto> mapToDto(List<User> list) {
+        return list.stream().map(user -> mapToDto(user)).toList();
     }
 
     public AddressDto mapToDto(Address address) {

@@ -12,6 +12,10 @@ public class UserRepository extends GenericRepository<User> {
 
     public UserRepository() {
         super(User.class);
+        populateRepository();
+    }
+
+    private void populateRepository() {
         User admin = new User(
                 "admin",
                 "admin",
@@ -26,6 +30,20 @@ public class UserRepository extends GenericRepository<User> {
         );
         admin.setRole(Role.ADMIN);
         this.save(admin);
+
+        User client = new User(
+                "client",
+                "client",
+                "client@client.com",
+                "420",
+                new Address(
+                        "CL1",
+                        "3NT",
+                        "CLIENTCITY",
+                        "CLIENTLAND"
+                )
+        );
+        this.save(client);
     }
 
     public User save(User user) { return saveWithId(user.getId(), user); }

@@ -3,10 +3,13 @@ package org.example.eurder.service;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.example.eurder.api.request.PostUserRequest;
 import org.example.eurder.domain.user.Address;
+import org.example.eurder.domain.user.Role;
 import org.example.eurder.domain.user.User;
 import org.example.eurder.repository.UserRepository;
 import org.example.eurder.service.exception.BadRequestException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserService {
@@ -18,6 +21,11 @@ public class UserService {
         this.validator = EmailValidator.getInstance();
     }
 
+    public List<User> getAllCustomers() {
+        return repository.getAll().stream()
+                .filter(user -> user.getRole().equals(Role.CUSTOMER))
+                .toList();
+    }
 
     public User createUser(PostUserRequest request) {
         verifyParametersAreFilledIn(request);
