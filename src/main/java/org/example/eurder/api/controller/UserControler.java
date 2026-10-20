@@ -24,6 +24,6 @@ public class UserControler {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public UserDto createCustomer(@RequestBody PostUserRequest request) {
-        return mapper.mapToDto(service.createCustomer(request));
+        return mapper.mapToDto(service.createUser(request));
     }
 }

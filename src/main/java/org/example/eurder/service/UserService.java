@@ -19,7 +19,7 @@ public class UserService {
     }
 
 
-    public User createCustomer(PostUserRequest request) {
+    public User createUser(PostUserRequest request) {
         verifyParametersAreFilledIn(request);
 
         if (!validator.isValid(request.email()))

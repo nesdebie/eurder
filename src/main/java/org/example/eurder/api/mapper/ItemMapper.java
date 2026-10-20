@@ -4,6 +4,8 @@ import org.example.eurder.api.dto.ItemDto;
 import org.example.eurder.domain.Item;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class ItemMapper {
     public ItemDto mapToDto(Item item) {
@@ -14,5 +16,9 @@ public class ItemMapper {
                 item.getPrice(),
                 item.getAmount()
         );
+    }
+
+    public List<ItemDto> mapToDto(List<Item> list) {
+        return list.stream().map(item -> mapToDto(item)).toList();
     }
 }

@@ -4,6 +4,7 @@ import org.example.eurder.domain.Item;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public class ItemRepository extends GenericRepository<Item> {
@@ -11,7 +12,9 @@ public class ItemRepository extends GenericRepository<Item> {
 
     public Item save(Item item) { return saveWithId(item.getId(), item); }
 
-    public Optional<Item> getOptional(String name) {
+    public Optional<Item> getOptionalByName(String name) {
         return getOptional(item -> item.getName().equals(name));
     }
+
+    public Optional<Item> getOptionalById(UUID id) { return getOptional(item -> item.getId().equals(id)); }
 }

@@ -20,7 +20,7 @@ class UserServiceTest {
     @BeforeEach
 
     @Test
-    void givenValidPostCustomerRequest_whenCallingCreateCustomer_thenACustomerObjectIsReturned() {
+    void givenValidPostUserRequest_whenCallingCreateCustomer_thenACustomerObjectIsReturned() {
         PostUserRequest request = new PostUserRequest(
                 "Sherlock",
                 "Holmes",
@@ -32,7 +32,7 @@ class UserServiceTest {
                 "United Kingdom"
         );
 
-        Assertions.assertThat(service.createCustomer(request)).isInstanceOf(User.class);
+        Assertions.assertThat(service.createUser(request)).isInstanceOf(User.class);
     }
 
     public static Stream<Arguments> badRequestStream() {
@@ -62,7 +62,7 @@ class UserServiceTest {
     @ParameterizedTest(name = "Name: {0} {1} | Mail: {2} | Phone: {3} | Address: {4} {5}, {6}, {7}")
     @DisplayName("Create Customer with invalid/empty/null field in the request")
     @MethodSource("badRequestStream")
-    void givenBadRequest_whenCallingCreateBook_thenAnExceptionIsThrown(
+    void givenBadRequest_whenCallingCreateUser_thenAnExceptionIsThrown(
             String firstName,
             String lastName,
             String mail,
@@ -72,7 +72,7 @@ class UserServiceTest {
             String city,
             String country
     ) {
-        Assertions.assertThatThrownBy(() -> service.createCustomer(new PostUserRequest(
+        Assertions.assertThatThrownBy(() -> service.createUser(new PostUserRequest(
                 firstName,
                 lastName,
                 mail,

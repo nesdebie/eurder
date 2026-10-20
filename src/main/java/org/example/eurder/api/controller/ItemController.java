@@ -11,6 +11,8 @@ import org.example.eurder.service.SecurityService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/item")
 public class ItemController {
@@ -33,5 +35,11 @@ public class ItemController {
     ) {
         security.validateAuthorization(email, Permission.ADD_ITEM);
         return mapper.mapToDto(service.createItem(request));
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<ItemDto> getAllItems() {
+        return mapper.mapToDto(service.getAllItems());
     }
 }
