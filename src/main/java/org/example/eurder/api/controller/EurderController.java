@@ -29,7 +29,14 @@ public class EurderController {
     private final ItemGroupMapper itemGroupMapper;
     private final ItemToShipTodayMapper toShipToday;
 
-    public EurderController(EurderMapper mapper, EurderService service, SecurityService security, EurdersReportMapper eurdersReportMapper, ItemGroupMapper itemGroupMapper, ItemToShipTodayMapper toShipToday) {
+    public EurderController(
+            EurderMapper mapper,
+            EurderService service,
+            SecurityService security,
+            EurdersReportMapper eurdersReportMapper,
+            ItemGroupMapper itemGroupMapper,
+            ItemToShipTodayMapper toShipToday
+    ) {
         this.mapper = mapper;
         this.service = service;
         this.security = security;
@@ -43,8 +50,8 @@ public class EurderController {
     @ResponseStatus(HttpStatus.CREATED)
     public EurderDto createEurder(
             @Parameter(hidden = true) @RequestHeader(value = "Authorization", required = false) String email,
-            @RequestBody PostEurderRequest request)
-    {
+            @RequestBody PostEurderRequest request
+    ) {
         security.validateAuthorization(email, Permission.ORDER_ITEM);
         return mapper.mapToDto(service.createEurder(request, email));
     }
@@ -54,8 +61,8 @@ public class EurderController {
     @ResponseStatus(HttpStatus.CREATED)
     public EurderDto reeurder(
             @Parameter(hidden = true) @RequestHeader(value = "Authorization", required = false) String email,
-            @PathVariable UUID id)
-    {
+            @PathVariable UUID id
+    ) {
         security.validateAuthorization(email, Permission.ORDER_ITEM);
         return mapper.mapToDto(service.reeurder(id, email));
     }
@@ -64,8 +71,8 @@ public class EurderController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public EurdersReportDto getEurdersReport(
-            @Parameter(hidden = true) @RequestHeader(value = "Authorization", required = false) String email)
-    {
+            @Parameter(hidden = true) @RequestHeader(value = "Authorization", required = false) String email
+    ) {
         security.validateAuthorization(email, Permission.VIEW_REPORT);
         return eurdersReportMapper.mapToDto(service.getEurdersReport(email));
     }
@@ -74,8 +81,8 @@ public class EurderController {
     @GetMapping(value = "/today")
     @ResponseStatus(HttpStatus.OK)
     public List<ItemToShipTodayDto> getAllItemsShippedToday(
-            @Parameter(hidden = true) @RequestHeader(value = "Authorization", required = false) String email)
-    {
+            @Parameter(hidden = true) @RequestHeader(value = "Authorization", required = false) String email
+    ) {
         security.validateAuthorization(email, Permission.VIEW_SHIPPING);
         return toShipToday.mapToDto(service.getAllItemsShippedToday());
     }

@@ -22,7 +22,11 @@ public class ItemController {
     private ItemService service;
     private SecurityService security;
 
-    public ItemController(ItemMapper mapper, ItemService service, SecurityService security) {
+    public ItemController(
+            ItemMapper mapper,
+            ItemService service,
+            SecurityService security
+    ) {
         this.mapper = mapper;
         this.service = service;
         this.security = security;

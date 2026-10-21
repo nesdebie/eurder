@@ -25,7 +25,12 @@ public class UserControler {
     private final UserDetailsMapper userDetailsMapper;
     private final SecurityService security;
 
-    public UserControler(UserService service, UserMapper userMapper, UserDetailsMapper userDetailsMapper, SecurityService security) {
+    public UserControler(
+            UserService service,
+            UserMapper userMapper,
+            UserDetailsMapper userDetailsMapper,
+            SecurityService security
+    ) {
         this.service = service;
         this.userMapper = userMapper;
         this.userDetailsMapper = userDetailsMapper;
@@ -34,7 +39,9 @@ public class UserControler {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDto createCustomer(@RequestBody PostUserRequest request) {
+    public UserDto createCustomer(
+            @RequestBody PostUserRequest request
+    ) {
         return userMapper.mapToDto(service.createUser(request));
     }
 
