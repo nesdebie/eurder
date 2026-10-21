@@ -10,7 +10,8 @@ import java.util.UUID;
 public class ItemRepository extends GenericRepository<Item> {
     public ItemRepository() {
         super(Item.class);
-        this.save(new Item("Warhammer 40K", "Starter Set", 199.99, 15));
+        this.save(new Item("Warhammer 40K", "Starter Set", 199.99, 1));
+        this.save(new Item("Warhammer", "[DEPRECATED]", 99.99, 8));
         this.save(new Item("Warhammer AoS", "Ultimate Starter Set", 99.99, 15));
     }
 

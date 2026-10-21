@@ -5,6 +5,7 @@ import org.example.eurder.api.request.PutItemRequest;
 import org.example.eurder.domain.Item;
 import org.example.eurder.repository.ItemRepository;
 import org.example.eurder.service.exception.BadRequestException;
+import org.example.eurder.service.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -62,7 +63,8 @@ public class ItemService {
         if (!repository.getOptionalById(request.id()).isPresent())
             throw BadRequestException.nonExistingItem(request.name());
 
-        Item updatedItem = repository.getOptionalByName(request.name()).get();
+        Item updatedItem = repository.getOptionalById(request.id())
+                .orElseThrow(() -> NotFoundException.itemNotFound(request.id()));
 
         updatedItem.setName(request.name());
         updatedItem.setDescription(request.description());

@@ -36,9 +36,9 @@ public class UserService {
     }
 
     public Pair<User, List<ItemGroup>> getCustomerDetails(UUID id) {
-        Optional<User> user = users.get(id);
-        if (user == null) throw NotFoundException.userNotFound(id);
-        return Pair.of(user.get(), eurders.getItemGroupsByUserId(id));
+        User user = users.get(id)
+                .orElseThrow(() ->  NotFoundException.userNotFound());
+        return Pair.of(user, eurders.getItemGroupsByUserId(id));
     }
 
     public User createUser(PostUserRequest request) {
