@@ -11,6 +11,7 @@ import org.example.eurder.api.request.PostUserRequest;
 import org.example.eurder.api.request.PutItemRequest;
 import org.example.eurder.repository.ItemRepository;
 import org.example.eurder.service.ItemInventory;
+import org.example.eurder.service.exception.ForbiddenException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -38,6 +39,25 @@ class ItemControllerTest {
     ) {}
 
     private final ItemRepository repository = new ItemRepository();
+
+    private PostItemRequest createPost() {
+        return new PostItemRequest(
+                "Batmobile",
+                "Lego Batman",
+                19.99,
+                15
+        );
+    }
+
+    private PutItemRequest createPut(UUID id) {
+        return new PutItemRequest(
+                id,
+                "Jokermobile",
+                "Lego Joke",
+                1.99,
+                1
+        );
+    }
 
     @DisplayName("Testing OK")
     @Nested
@@ -91,25 +111,6 @@ class ItemControllerTest {
                     .statusCode(HttpStatus.OK.value())
                     .extract()
                     .as(ItemDto[].class);
-        }
-
-        private PostItemRequest createPost() {
-            return new PostItemRequest(
-                    "Batmobile",
-                    "Lego Batman",
-                    19.99,
-                    15
-            );
-        }
-
-        private PutItemRequest createPut(UUID id) {
-            return new PutItemRequest(
-                    id,
-                    "Jokermobile",
-                    "Lego Joke",
-                    1.99,
-                    1
-            );
         }
 
         @DisplayName("Testing createItem")
@@ -171,8 +172,53 @@ class ItemControllerTest {
     @Nested
     class TestingBadRequest {}
 
+    @DisplayName("Testing Forbidden")
     @Nested
-    class TestingForbidden {}
+    class TestingForbidden {
+        private ErrorResponse getItemsOverviewBadCredentials(String filter) {
+            return RestAssured
+                    .given()
+                    .baseUri("http://localhost:" + port)
+                    .header("Authorization", "client@client.com")
+                    .when()
+                    .get("/item/overview/" + filter)
+                    .then()
+                    .statusCode(HttpStatus.FORBIDDEN.value())
+                    .extract()
+                    .as(ErrorResponse.class);
+        }
+
+        @DisplayName("Testing getItemsOverview")
+        @Test
+        void givenWrongCredentials_whenCallingGetItemsOverview_thenAnExceptionIsThrown() {
+            Assertions.assertThat(getItemsOverviewBadCredentials(null).status()).isEqualTo(HttpStatus.FORBIDDEN.value());
+            Assertions.assertThat(getItemsOverviewBadCredentials(null).error()).isEqualTo("Forbidden");
+            Assertions.assertThat(getItemsOverviewBadCredentials(null).message()).isEqualTo("You don't have permission to View item's amount");
+        }
+
+        private ErrorResponse postItemBadCredentials(PostItemRequest request) {
+            return RestAssured
+                    .given()
+                    .contentType(ContentType.JSON)
+                    .accept(ContentType.JSON)
+                    .header("Authorization", "client@client.com")
+                    .body(request)
+                    .port(port)
+                    .when()
+                    .post("/item")
+                    .then()
+                    .statusCode(HttpStatus.FORBIDDEN.value())
+                    .extract()
+                    .as(ErrorResponse.class);
+        }
+        @DisplayName("Testing creatItem")
+        @Test
+        void givenWrongCredentials_whenCallingCreateItem_thenAnExceptionIsThrown() {
+            Assertions.assertThat(postItemBadCredentials(createPost()).status()).isEqualTo(HttpStatus.FORBIDDEN.value());
+            Assertions.assertThat(postItemBadCredentials(createPost()).error()).isEqualTo("Forbidden");
+            Assertions.assertThat(postItemBadCredentials(createPost()).message()).isEqualTo("You don't have permission to Add item");
+        }
+    }
 
     @Nested
     class TestingUnauthorized {}
