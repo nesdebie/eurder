@@ -49,7 +49,8 @@ public class UserRepository extends GenericRepository<User> {
     public User save(User user) { return saveWithId(user.getId(), user); }
 
     public boolean isEmailAlreadyUsed(String email) {
-        return getOptional(user -> user.getEmail().equals(email)).isPresent();
+        return getOptional(user -> user.getEmail().equals(email))
+                .isPresent();
     }
 
     public Optional<User> getUserWithEmail(String email) {

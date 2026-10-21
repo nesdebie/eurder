@@ -36,14 +36,12 @@ public class ItemService {
     }
 
     public Item createItem(PostItemRequest request) {
-        verifyParametersAreFilledIn(request);
-        if (request.price() < 0)
-            throw BadRequestException.invalidPrice(request.price());
-        if (request.amount() <= 0)
-            throw BadRequestException.invalidAmount(request.amount());
+        verifyParametersAreFilledIn(request.name(), request.description());
+        verifyNumericParametersAreValid(request.price(), request.amount());
 
         if (repository.getOptionalByName(request.name()).isPresent())
             throw BadRequestException.alreadyExistingItem(request.name());
+
         return repository.save(
                 new Item(
                         request.name(),
@@ -55,14 +53,11 @@ public class ItemService {
     }
 
     public Item updateItem(PutItemRequest request) {
-        verifyParametersAreFilledIn(request);
-        if (request.price() < 0)
-            throw BadRequestException.invalidPrice(request.price());
-        if (request.amount() < 0)
-            throw BadRequestException.invalidAmount(request.amount());
+        verifyParametersAreFilledIn(request.name(), request.description());
+        verifyNumericParametersAreValid(request.price(), request.amount());
+
         if (!repository.getOptionalById(request.id()).isPresent())
             throw BadRequestException.nonExistingItem(request.name());
-
         Item updatedItem = repository.getOptionalById(request.id())
                 .orElseThrow(() -> NotFoundException.itemNotFound(request.id()));
 
@@ -74,18 +69,17 @@ public class ItemService {
         return repository.save(updatedItem);
     }
 
-    public void verifyParametersAreFilledIn(PostItemRequest request) {
-        verifyParameterIsFilledIn(request.name(), "name");
-        verifyParameterIsFilledIn(request.description(), "description");
+    private void verifyNumericParametersAreValid(double price, int amount) {
+        if (price < 0) throw BadRequestException.invalidPrice(price);
+        if (amount < 0) throw BadRequestException.invalidAmount(amount);
     }
 
-    public void verifyParametersAreFilledIn(PutItemRequest request) {
-        verifyParameterIsFilledIn(request.name(), "name");
-        verifyParameterIsFilledIn(request.description(), "description");
+    private void verifyParametersAreFilledIn(String name, String description) {
+        verifyParameterIsFilledIn(name, "name");
+        verifyParameterIsFilledIn(description, "description");
     }
 
     public void verifyParameterIsFilledIn(String value, String parameterName) {
-        if (value == null || value.isEmpty())
-            throw BadRequestException.customerParameterRequired(parameterName);
+        if (value == null || value.isEmpty()) throw BadRequestException.customerParameterRequired(parameterName);
     }
 }

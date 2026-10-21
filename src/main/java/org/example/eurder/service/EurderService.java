@@ -36,7 +36,8 @@ public class EurderService {
         return eurderRepository.getAll().stream()
                 .flatMap(eurder -> eurder.getItems().stream()
                         .filter(group -> group.getShippingDate().equals(today))
-                        .map(group -> new ItemToShipToday(group, eurder.getUser().getAddress())))
+                        .map(group -> new ItemToShipToday(group, eurder.getUser().getAddress()))
+                )
                 .toList();
     }
 

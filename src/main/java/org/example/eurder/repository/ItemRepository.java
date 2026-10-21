@@ -21,5 +21,7 @@ public class ItemRepository extends GenericRepository<Item> {
         return getOptional(item -> item.getName().equals(name));
     }
 
-    public Optional<Item> getOptionalById(UUID id) { return getOptional(item -> item.getId().equals(id)); }
+    public Optional<Item> getOptionalById(UUID id) {
+        return getOptional(item -> item.getId().equals(id));
+    }
 }
