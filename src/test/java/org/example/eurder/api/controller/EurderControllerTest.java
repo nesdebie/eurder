@@ -5,6 +5,8 @@ import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
 import org.assertj.core.api.Assertions;
 import org.example.eurder.api.dto.ItemDto;
+import org.example.eurder.api.dto.eurder.EurderDto;
+import org.example.eurder.api.dto.eurder.report.EurdersReportDto;
 import org.example.eurder.api.request.PostEurderRequest;
 import org.example.eurder.api.request.PostItemRequest;
 import org.example.eurder.api.request.PutItemRequest;
@@ -80,6 +82,30 @@ class EurderControllerTest {
                     .post("/eurder")
                     .then();
         }
+        private ValidatableResponse postReeurder(UUID id) {
+            return RestAssured
+                    .given()
+                    .contentType(ContentType.JSON)
+                    .accept(ContentType.JSON)
+                    .header("Authorization", "client@client.com")
+                    .port(port)
+                    .when()
+                    .post("/eurder/" + id)
+                    .then();
+        }
+
+        private ValidatableResponse getOrdersDetails() {
+            return RestAssured
+                    .given()
+                    .contentType(ContentType.JSON)
+                    .accept(ContentType.JSON)
+                    .header("Authorization", "client@client.com")
+                    .port(port)
+                    .when()
+                    .get("/eurder")
+                    .then();
+        }
+
         @Test
         void givenExistingItem_whenPostEurder_thenCreated() {
             PostEurderRequest request = new PostEurderRequest(
@@ -89,6 +115,33 @@ class EurderControllerTest {
             postEurder(request)
                     .assertThat()
                     .statusCode(HttpStatus.CREATED.value());
+        }
+
+        @Test
+        void givenExistingItem_whenPostReeurder_thenCreated() {
+            PostEurderRequest request = new PostEurderRequest(
+                    List.of(new PostEurderRequest.OrderLineDto(id, 5))
+            );
+
+            EurderDto dto = postEurder(request)
+                    .extract()
+                    .as(EurderDto.class);
+            postReeurder(dto.id())
+                    .assertThat()
+                    .statusCode(HttpStatus.CREATED.value());
+        }
+
+        @Test
+        void givenExistingItem_whenGetOrdersDetails_thenCreated() {
+            PostEurderRequest request = new PostEurderRequest(
+                    List.of(new PostEurderRequest.OrderLineDto(id, 5))
+            );
+
+            EurderDto dto = postEurder(request)
+                    .extract()
+                    .as(EurderDto.class);
+            postReeurder(dto.id());
+            getOrdersDetails().assertThat().statusCode(HttpStatus.OK.value()).extract().as(EurdersReportDto.class);
         }
     }
 }
