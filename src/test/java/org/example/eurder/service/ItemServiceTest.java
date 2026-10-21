@@ -55,7 +55,7 @@ class ItemServiceTest {
                 Arguments.of("DA PRODUCT", "", 9.99, 10000),
                 Arguments.of("DA PRODUCT", null, 9.99, 10000),
                 Arguments.of("DA PRODUCT", "DA PRODUCT IS GOOD", -9.99, 10000),
-                Arguments.of("DA PRODUCT", "DA PRODUCT IS GOOD", 9.99, 0)
+                Arguments.of("DA PRODUCT", "DA PRODUCT IS GOOD", 9.99, -1)
         );
     }
 

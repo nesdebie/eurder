@@ -17,8 +17,8 @@ public class ItemRepository extends GenericRepository<Item> {
 
     public Item save(Item item) { return saveWithId(item.getId(), item); }
 
-    public Optional<Item> getOptionalByName(String name) {
-        return getOptional(item -> item.getName().equals(name));
+    public boolean isItemPresent(String name) {
+        return getOptional(item -> item.getName().equals(name)).isPresent();
     }
 
     public Optional<Item> getOptionalById(UUID id) {

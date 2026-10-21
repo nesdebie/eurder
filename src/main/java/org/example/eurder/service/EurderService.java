@@ -57,7 +57,8 @@ public class EurderService {
 
         List<ItemGroup> itemGroups = request.eurders().stream()
                 .map(order -> {
-                    Item item = itemRepository.getOptionalById(order.itemId()).orElseThrow();
+                    Item item = itemRepository.getOptionalById(order.itemId())
+                            .orElseThrow();
                     int amount = order.amount();
 
                     ItemGroup itemGroup = new ItemGroup(item, amount);
@@ -79,7 +80,7 @@ public class EurderService {
     private void checkOrdersValidity(List<PostEurderRequest.OrderLineDto> orders) {
         if (!orders.stream().allMatch(order -> order.amount() > 0))
             throw BadRequestException.invalidAmount(0);
-        if (!orders.stream().allMatch(order -> itemRepository.getOptionalById(order.itemId()).isPresent()))
+        if (orders.stream().allMatch(order -> itemRepository.getOptionalById(order.itemId()).isEmpty()))
             throw BadRequestException.nonExistingItem("");
     }
 

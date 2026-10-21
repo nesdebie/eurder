@@ -39,7 +39,7 @@ public class ItemService {
         verifyParametersAreFilledIn(request.name(), request.description());
         verifyNumericParametersAreValid(request.price(), request.amount());
 
-        if (repository.getOptionalByName(request.name()).isPresent())
+        if (repository.isItemPresent(request.name()))
             throw BadRequestException.itemNameDuplicate(request.name());
 
         return repository.save(
@@ -56,9 +56,9 @@ public class ItemService {
         verifyParametersAreFilledIn(request.name(), request.description());
         verifyNumericParametersAreValid(request.price(), request.amount());
 
-        if (!repository.getOptionalById(request.id()).isPresent())
+        if (repository.getOptionalById(request.id()).isEmpty())
             throw BadRequestException.nonExistingItem(request.name());
-        if (repository.getOptionalByName(request.name()).isPresent())
+        if (repository.isItemPresent(request.name()))
             throw BadRequestException.itemNameDuplicate(request.name());
         Item updatedItem = repository.getOptionalById(request.id())
                 .orElseThrow(() -> NotFoundException.itemNotFound(request.id()));
