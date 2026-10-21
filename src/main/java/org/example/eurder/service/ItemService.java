@@ -66,7 +66,7 @@ public class ItemService {
         updatedItem.setName(request.name());
         updatedItem.setDescription(request.description());
         updatedItem.setPrice(request.price());
-        updatedItem.setAmount(updatedItem.getAmount() + request.amount());
+        updatedItem.setAmount(request.amount());
 
         return repository.save(updatedItem);
     }
