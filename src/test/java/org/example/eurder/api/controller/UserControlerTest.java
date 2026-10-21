@@ -67,7 +67,8 @@ class UserControlerTest {
                 .extract()
                 .as(UserDto.class);
 
-        Assertions.assertThat(customer.firstName()).isEqualTo("Sherlock");
+        Assertions.assertThat(customer.firstName())
+                .isEqualTo("Sherlock");
     }
 
     @Test
@@ -87,7 +88,8 @@ class UserControlerTest {
                 .statusCode(HttpStatus.BAD_REQUEST.value())
                 .extract().as(ErrorResponse.class);
 
-        Assertions.assertThat(response.message).isEqualTo("Valid Customer's email is required");
+        Assertions.assertThat(response.message)
+                .isEqualTo("Valid Customer's email is required");
     }
 
     private UserDto[] getUsers() {
@@ -117,7 +119,8 @@ class UserControlerTest {
                         "London",
                         "United Kingdom"
                 ));
-        Assertions.assertThat(getUsers().length).isEqualTo(size + 1);
+        Assertions.assertThat(getUsers().length)
+                .isEqualTo(size + 1);
     }
 
     private UserDetailsDto getUser(UUID id) {
@@ -150,7 +153,9 @@ class UserControlerTest {
                 .statusCode(HttpStatus.CREATED.value())
                 .extract()
                 .as(UserDto.class);
-        Assertions.assertThat(getUser(customer.id()).user().firstName()).isEqualTo("Sherlock");
+
+        Assertions.assertThat(getUser(customer.id()).user().firstName())
+                .isEqualTo("Sherlock");
     }
 
     private ErrorResponse getUserBadId() {
@@ -169,9 +174,12 @@ class UserControlerTest {
     @DisplayName("Testing Not Found")
     @Test
     void givenInvalidId_whenCallingGetUser_thenAnErrorIsThrowned() {
-        Assertions.assertThat(getUserBadId().status()).isEqualTo(HttpStatus.NOT_FOUND.value());
-        Assertions.assertThat(getUserBadId().error()).isEqualTo("Not Found");
-        Assertions.assertThat(getUserBadId().message()).isEqualTo("User not found");
+        Assertions.assertThat(getUserBadId().status())
+                .isEqualTo(HttpStatus.NOT_FOUND.value());
+        Assertions.assertThat(getUserBadId().error())
+                .isEqualTo("Not Found");
+        Assertions.assertThat(getUserBadId().message())
+                .isEqualTo("User not found");
     }
 
 
@@ -194,9 +202,12 @@ class UserControlerTest {
         @DisplayName("Get all customers")
         @Test
         void givenBadCredentials_whenCallingGetAllUsers_thenAnExceptionIsThrowned() {
-            Assertions.assertThat(getUsersBadCredentials().status()).isEqualTo(HttpStatus.FORBIDDEN.value());
-            Assertions.assertThat(getUsersBadCredentials().error()).isEqualTo("Forbidden");
-            Assertions.assertThat(getUsersBadCredentials().message()).isEqualTo("You don't have permission to View all customers");
+            Assertions.assertThat(getUsersBadCredentials().status())
+                    .isEqualTo(HttpStatus.FORBIDDEN.value());
+            Assertions.assertThat(getUsersBadCredentials().error())
+                    .isEqualTo("Forbidden");
+            Assertions.assertThat(getUsersBadCredentials().message())
+                    .isEqualTo("You don't have permission to View all customers");
         }
 
 
@@ -230,9 +241,13 @@ class UserControlerTest {
                     .statusCode(HttpStatus.CREATED.value())
                     .extract()
                     .as(UserDto.class);
-            Assertions.assertThat(getUserBadCredentials(customer.id()).status()).isEqualTo(HttpStatus.FORBIDDEN.value());
-            Assertions.assertThat(getUserBadCredentials(customer.id()).error()).isEqualTo("Forbidden");
-            Assertions.assertThat(getUserBadCredentials(customer.id()).message()).isEqualTo("You don't have permission to View a single customer");
+
+            Assertions.assertThat(getUserBadCredentials(customer.id()).status())
+                    .isEqualTo(HttpStatus.FORBIDDEN.value());
+            Assertions.assertThat(getUserBadCredentials(customer.id()).error())
+                    .isEqualTo("Forbidden");
+            Assertions.assertThat(getUserBadCredentials(customer.id()).message())
+                    .isEqualTo("You don't have permission to View a single customer");
         }
     }
 
@@ -254,9 +269,12 @@ class UserControlerTest {
         @DisplayName("Get all customers")
         @Test
         void givenNoCredentials_whenCallingGetAllUsers_thenAnExceptionIsThrowned() {
-            Assertions.assertThat(getUsersNoCredentials().status()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
-            Assertions.assertThat(getUsersNoCredentials().error()).isEqualTo("Unauthorized");
-            Assertions.assertThat(getUsersNoCredentials().message()).isEqualTo("Unauthorized");
+            Assertions.assertThat(getUsersNoCredentials().status())
+                    .isEqualTo(HttpStatus.UNAUTHORIZED.value());
+            Assertions.assertThat(getUsersNoCredentials().error())
+                    .isEqualTo("Unauthorized");
+            Assertions.assertThat(getUsersNoCredentials().message())
+                    .isEqualTo("Unauthorized");
         }
 
         private ErrorResponse getUserNoCredentials(UUID id) {
@@ -288,9 +306,13 @@ class UserControlerTest {
                     .statusCode(HttpStatus.CREATED.value())
                     .extract()
                     .as(UserDto.class);
-            Assertions.assertThat(getUserNoCredentials(customer.id()).status()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
-            Assertions.assertThat(getUserNoCredentials(customer.id()).error()).isEqualTo("Unauthorized");
-            Assertions.assertThat(getUserNoCredentials(customer.id()).message()).isEqualTo("Unauthorized");
+
+            Assertions.assertThat(getUserNoCredentials(customer.id()).status())
+                    .isEqualTo(HttpStatus.UNAUTHORIZED.value());
+            Assertions.assertThat(getUserNoCredentials(customer.id()).error())
+                    .isEqualTo("Unauthorized");
+            Assertions.assertThat(getUserNoCredentials(customer.id()).message())
+                    .isEqualTo("Unauthorized");
         }
     }
 }

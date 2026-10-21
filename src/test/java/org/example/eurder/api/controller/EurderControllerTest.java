@@ -67,6 +67,7 @@ class EurderControllerTest {
                 .extract()
                 .as(ItemDto.class).id();
     }
+
     @DisplayName("Testing OK")
     @Nested
     class TestingOk {
@@ -137,11 +138,15 @@ class EurderControllerTest {
                     List.of(new PostEurderRequest.OrderLineDto(id, 5))
             );
 
-            EurderDto dto = postEurder(request)
-                    .extract()
+            EurderDto dto = postEurder(request).extract()
                     .as(EurderDto.class);
+
             postReeurder(dto.id());
-            getOrdersDetails().assertThat().statusCode(HttpStatus.OK.value()).extract().as(EurdersReportDto.class);
+
+            getOrdersDetails().assertThat()
+                    .statusCode(HttpStatus.OK.value())
+                    .extract()
+                    .as(EurdersReportDto.class);
         }
     }
 }

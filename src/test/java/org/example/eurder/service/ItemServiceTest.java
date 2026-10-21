@@ -33,7 +33,8 @@ class ItemServiceTest {
                 9.99,
                 10000
         );
-        Assertions.assertThat(service.createItem(request)).isInstanceOf(Item.class);
+        Assertions.assertThat(service.createItem(request))
+                .isInstanceOf(Item.class);
     }
 
     @Test
@@ -45,7 +46,9 @@ class ItemServiceTest {
                 10000
         );
         service.createItem(request);
-        Assertions.assertThatThrownBy(() -> service.createItem(request)).isInstanceOf(BadRequestException.class);
+        Assertions.assertThatThrownBy(
+                () -> service.createItem(request)
+        ).isInstanceOf(BadRequestException.class);
     }
 
     public static Stream<Arguments> badRequestStream() {
@@ -68,11 +71,15 @@ class ItemServiceTest {
             double price,
             int amount
     ) {
-        Assertions.assertThatThrownBy(() -> service.createItem(new PostItemRequest(
-                name,
-                description,
-                price,
-                amount
-        ))).isInstanceOf(BadRequestException.class);
+        Assertions.assertThatThrownBy(
+                () -> service.createItem(
+                        new PostItemRequest(
+                                name,
+                                description,
+                                price,
+                                amount
+                        )
+                )
+        ).isInstanceOf(BadRequestException.class);
     }
 }

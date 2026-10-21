@@ -133,34 +133,35 @@ class ItemControllerTest {
                     .statusCode(HttpStatus.OK.value())
                     .extract()
                     .as(ItemDto.class);
+            
             Assertions.assertThat(updatedItem.id()).isEqualTo(item.id());
             Assertions.assertThat(updatedItem.name()).isEqualTo("Jokermobile");
         }
 
         @DisplayName("Testing getAllItems")
         @Test
-        void given_whenCallingGetAllItems_thenAnArrayOfObjectIsReturnes() {
+        void given_whenCallingGetAllItems_thenAnArrayOfObjectIsReturned() {
             Assertions.assertThat(getItems().length).isEqualTo(3);
         }
 
         @DisplayName("Testing getItemsOverview no filter")
         @Test
-        void givenNoFilter_whenCallingGetItemsOverview_thenAnArrayOfObjectIsReturnes() {
+        void givenNoFilter_whenCallingGetItemsOverview_thenAnArrayOfObjectIsReturned() {
             Assertions.assertThat(getItemsOverview(null).length).isEqualTo(3);
         }
         @DisplayName("Testing getItemsOverview low filter")
         @Test
-        void givenLowFilter_whenCallingGetItemsOverview_thenAnArrayOfObjectIsReturnes() {
+        void givenLowFilter_whenCallingGetItemsOverview_thenAnArrayOfObjectIsReturned() {
             Assertions.assertThat(getItemsOverview("STOCK_LOW").length).isEqualTo(1);
         }
         @DisplayName("Testing getItemsOverview medium filter")
         @Test
-        void givenMediumFilter_whenCallingGetItemsOverview_thenAnArrayOfObjectIsReturnes() {
+        void givenMediumFilter_whenCallingGetItemsOverview_thenAnArrayOfObjectIsReturned() {
             Assertions.assertThat(getItemsOverview("STOCK_MEDIUM").length).isEqualTo(1);
         }
         @DisplayName("Testing getItemsOverview high filter")
         @Test
-        void givenHighFilter_whenCallingGetItemsOverview_thenAnArrayOfObjectIsReturnes() {
+        void givenHighFilter_whenCallingGetItemsOverview_thenAnArrayOfObjectIsReturned() {
             Assertions.assertThat(getItemsOverview("STOCK_HIGH").length).isEqualTo(1);
         }
     }

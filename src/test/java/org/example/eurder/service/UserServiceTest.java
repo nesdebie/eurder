@@ -16,7 +16,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 class UserServiceTest {
-    private final UserService service = new UserService(new UserRepository(), new EurderRepository());
+    private final UserService service =
+            new UserService(new UserRepository(), new EurderRepository());
 
     @Test
     void givenValidPostUserRequest_whenCallingCreateCustomer_thenACustomerObjectIsReturned() {
@@ -31,7 +32,8 @@ class UserServiceTest {
                 "United Kingdom"
         );
 
-        Assertions.assertThat(service.createUser(request)).isInstanceOf(User.class);
+        Assertions.assertThat(service.createUser(request))
+                .isInstanceOf(User.class);
     }
 
     public static Stream<Arguments> badRequestStream() {
@@ -71,15 +73,19 @@ class UserServiceTest {
             String city,
             String country
     ) {
-        Assertions.assertThatThrownBy(() -> service.createUser(new PostUserRequest(
-                firstName,
-                lastName,
-                mail,
-                phone,
-                street,
-                number,
-                city,
-                country
-        ))).isInstanceOf(BadRequestException.class);
+        Assertions.assertThatThrownBy(
+                () -> service.createUser(
+                        new PostUserRequest(
+                                firstName,
+                                lastName,
+                                mail,
+                                phone,
+                                street,
+                                number,
+                                city,
+                                country
+                        )
+                )
+        ).isInstanceOf(BadRequestException.class);
     }
 }
