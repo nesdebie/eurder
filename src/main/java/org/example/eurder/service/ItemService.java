@@ -40,7 +40,7 @@ public class ItemService {
         verifyNumericParametersAreValid(request.price(), request.amount());
 
         if (repository.getOptionalByName(request.name()).isPresent())
-            throw BadRequestException.alreadyExistingItem(request.name());
+            throw BadRequestException.itemNameDuplicate(request.name());
 
         return repository.save(
                 new Item(
@@ -58,6 +58,8 @@ public class ItemService {
 
         if (!repository.getOptionalById(request.id()).isPresent())
             throw BadRequestException.nonExistingItem(request.name());
+        if (repository.getOptionalByName(request.name()).isPresent())
+            throw BadRequestException.itemNameDuplicate(request.name());
         Item updatedItem = repository.getOptionalById(request.id())
                 .orElseThrow(() -> NotFoundException.itemNotFound(request.id()));
 
