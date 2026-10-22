@@ -94,12 +94,14 @@ class ItemControllerTest {
     }
 
     private ItemDto[] getItemsOverview(String filter) {
+        String url = "/item/overview" + (filter == null ? "" : "/" + filter);
+
         return RestAssured
                 .given()
                 .baseUri("http://localhost:" + port)
                 .header("Authorization", "admin@admin.com")
                 .when()
-                .get("/item/overview/" + filter)
+                .get(url)
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .extract()
@@ -167,7 +169,29 @@ class ItemControllerTest {
     }
 
     @Nested
-    class TestingBadRequest {}
+    class TestingBadRequest {
+        private ErrorResponse getItemsOverviewWrongFilter(String filter) {
+            return RestAssured
+                    .given()
+                    .baseUri("http://localhost:" + port)
+                    .header("Authorization", "admin@admin.com")
+                    .when()
+                    .get("/item/overview/" + filter)
+                    .then()
+                    .statusCode(HttpStatus.BAD_REQUEST.value())
+                    .extract()
+                    .as(ErrorResponse.class);
+        }
+        @DisplayName("Testing getItemsOverview wrong filter")
+        @Test
+        void givenHighFilter_whenCallingGetItemsOverview_thenAnArrayOfObjectIsReturned() {
+            String wrong = "WRONG_FILTER";
+            Assertions.assertThat(getItemsOverviewWrongFilter(wrong).status).isEqualTo(HttpStatus.BAD_REQUEST.value());
+            Assertions.assertThat(getItemsOverviewWrongFilter(wrong).error).isEqualTo("Bad Request");
+            Assertions.assertThat(getItemsOverviewWrongFilter(wrong).message).isEqualTo("Filter %s does not exist".formatted(wrong));
+        }
+
+    }
 
     @DisplayName("Testing Forbidden")
     @Nested
@@ -279,5 +303,4 @@ class ItemControllerTest {
             Assertions.assertThat(updatedItem.message).isEqualTo("Item with ID %s not found".formatted(randomId));
         }
     }
-
 }

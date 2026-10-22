@@ -61,10 +61,10 @@ public class ItemController {
     }
 
     @SecurityRequirement(name = "Authorization")
-    @GetMapping(value = "/overview/{filter}")
+    @GetMapping(value = {"/overview","/overview/{filter}"})
     public List<ItemDto> getItemOverview(
             @Parameter(hidden = true) @RequestHeader(value = "Authorization", required = false) String email,
-            @PathVariable(required = false) String filter
+            @PathVariable(name= "filter", required = false) String filter
     ) {
         security.validateAuthorization(email, Permission.OVERVIEW_ITEM);
         return mapper.mapToDto(service.getOverviewAllItems(filter));

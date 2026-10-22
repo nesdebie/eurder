@@ -8,8 +8,10 @@ import org.example.eurder.service.exception.BadRequestException;
 import org.example.eurder.service.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 @Service
@@ -25,9 +27,13 @@ public class ItemService {
     }
 
     public List<Item> getOverviewAllItems(String filter) {
-        Predicate<Item> predicate = ItemInventory.fromValue(filter)
-                .<Predicate<Item>>map(inv -> item -> inv.matches(item.getAmount()))
-                .orElse(item -> true);
+        Predicate<Item> predicate = item -> true;
+
+        if (filter != null) {
+            ItemInventory inventory = ItemInventory.fromValue(filter)
+                    .orElseThrow(() -> BadRequestException.wrongFilter(filter));
+            predicate = item -> inventory.matches(item.getAmount());
+        }
 
         return getAllItems().stream()
                 .filter(predicate)

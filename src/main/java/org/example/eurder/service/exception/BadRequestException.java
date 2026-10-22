@@ -37,4 +37,8 @@ public class BadRequestException extends RuntimeException {
     public static BadRequestException itemNameDuplicate(String name) {
         return new BadRequestException("Item name %s does already exist".formatted(name));
     }
+
+    public static BadRequestException wrongFilter(String name) {
+        return new BadRequestException("Filter %s does not exist".formatted(name));
+    }
 }
