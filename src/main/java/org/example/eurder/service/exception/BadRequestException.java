@@ -29,9 +29,6 @@ public class BadRequestException extends RuntimeException {
         return new BadRequestException("Street number %s is invalid".formatted(number));
     }
 
-    public static BadRequestException alreadyExistingItem(String name) {
-        return new BadRequestException("Item %s already exist".formatted(name));
-    }
 
     public static BadRequestException nonExistingItem(String name) {
         return new BadRequestException("Item %s does not exist yet".formatted(name));

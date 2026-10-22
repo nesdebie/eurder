@@ -57,7 +57,7 @@ public class ItemService {
         verifyNumericParametersAreValid(request.price(), request.amount());
 
         if (repository.getOptionalById(request.id()).isEmpty())
-            throw BadRequestException.nonExistingItem(request.name());
+            throw NotFoundException.itemNotFound(request.id());
         if (repository.isItemPresent(request.name()))
             throw BadRequestException.itemNameDuplicate(request.name());
         Item updatedItem = repository.getOptionalById(request.id())

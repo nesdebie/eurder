@@ -18,4 +18,8 @@ public class NotFoundException extends RuntimeException {
     public static NotFoundException itemNotFound(UUID id) {
         return new NotFoundException("Item with ID %s not found".formatted(id));
     }
+
+    public static NotFoundException itemNotFound() {
+        return new NotFoundException("Item not found");
+    }
 }

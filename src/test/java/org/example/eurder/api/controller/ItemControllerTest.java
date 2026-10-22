@@ -55,60 +55,60 @@ class ItemControllerTest {
         );
     }
 
+    private ValidatableResponse postItem(PostItemRequest request) {
+        return RestAssured
+                .given()
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .header("Authorization", "admin@admin.com")
+                .body(request)
+                .port(port)
+                .when()
+                .post("/item")
+                .then();
+    }
+
+    private ValidatableResponse putItem(PutItemRequest request) {
+        return RestAssured
+                .given()
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .header("Authorization", "admin@admin.com")
+                .body(request)
+                .port(port)
+                .when()
+                .put("/item")
+                .then();
+    }
+
+    private ItemDto[] getItems() {
+        return RestAssured
+                .given()
+                .baseUri("http://localhost:" + port)
+                .when()
+                .get("/item")
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .extract()
+                .as(ItemDto[].class);
+    }
+
+    private ItemDto[] getItemsOverview(String filter) {
+        return RestAssured
+                .given()
+                .baseUri("http://localhost:" + port)
+                .header("Authorization", "admin@admin.com")
+                .when()
+                .get("/item/overview/" + filter)
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .extract()
+                .as(ItemDto[].class);
+    }
+
     @DisplayName("Testing OK")
     @Nested
     class TestingOk {
-        private ValidatableResponse postItem(PostItemRequest request) {
-            return RestAssured
-                    .given()
-                    .contentType(ContentType.JSON)
-                    .accept(ContentType.JSON)
-                    .header("Authorization", "admin@admin.com")
-                    .body(request)
-                    .port(port)
-                    .when()
-                    .post("/item")
-                    .then();
-        }
-
-        private ValidatableResponse putItem(PutItemRequest request) {
-            return RestAssured
-                    .given()
-                    .contentType(ContentType.JSON)
-                    .accept(ContentType.JSON)
-                    .header("Authorization", "admin@admin.com")
-                    .body(request)
-                    .port(port)
-                    .when()
-                    .put("/item")
-                    .then();
-        }
-
-        private ItemDto[] getItems() {
-            return RestAssured
-                    .given()
-                    .baseUri("http://localhost:" + port)
-                    .when()
-                    .get("/item")
-                    .then()
-                    .statusCode(HttpStatus.OK.value())
-                    .extract()
-                    .as(ItemDto[].class);
-        }
-
-        private ItemDto[] getItemsOverview(String filter) {
-            return RestAssured
-                    .given()
-                    .baseUri("http://localhost:" + port)
-                    .header("Authorization", "admin@admin.com")
-                    .when()
-                    .get("/item/overview/" + filter)
-                    .then()
-                    .statusCode(HttpStatus.OK.value())
-                    .extract()
-                    .as(ItemDto[].class);
-        }
-
         @DisplayName("Testing createItem")
         @Test
         void givenValidRequest_whenCallingCreateItem_thenAnObjectIsReturned() {
@@ -218,9 +218,66 @@ class ItemControllerTest {
     }
 
     @Nested
-    class TestingUnauthorized {}
+    class TestingUnauthorized {
+        private ErrorResponse getItemsOverviewNoCredentials(String filter) {
+            return RestAssured
+                    .given()
+                    .baseUri("http://localhost:" + port)
+                    .when()
+                    .get("/item/overview/" + filter)
+                    .then()
+                    .statusCode(HttpStatus.UNAUTHORIZED.value())
+                    .extract()
+                    .as(ErrorResponse.class);
+        }
+
+        @DisplayName("Testing getItemsOverview")
+        @Test
+        void givenWrongCredentials_whenCallingGetItemsOverview_thenAnExceptionIsThrown() {
+            Assertions.assertThat(getItemsOverviewNoCredentials(null).status()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
+            Assertions.assertThat(getItemsOverviewNoCredentials(null).error()).isEqualTo("Unauthorized");
+            Assertions.assertThat(getItemsOverviewNoCredentials(null).message()).isEqualTo("Unauthorized");
+        }
+
+        private ErrorResponse postItemNoCredentials(PostItemRequest request) {
+            return RestAssured
+                    .given()
+                    .contentType(ContentType.JSON)
+                    .accept(ContentType.JSON)
+                    .body(request)
+                    .port(port)
+                    .when()
+                    .post("/item")
+                    .then()
+                    .statusCode(HttpStatus.UNAUTHORIZED.value())
+                    .extract()
+                    .as(ErrorResponse.class);
+        }
+        @DisplayName("Testing creatItem")
+        @Test
+        void givenWrongCredentials_whenCallingCreateItem_thenAnExceptionIsThrown() {
+            Assertions.assertThat(postItemNoCredentials(createPost()).status()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
+            Assertions.assertThat(postItemNoCredentials(createPost()).error()).isEqualTo("Unauthorized");
+            Assertions.assertThat(postItemNoCredentials(createPost()).message()).isEqualTo("Unauthorized");
+        }
+    }
 
     @Nested
-    class TestingNotFound {}
+    class TestingNotFound {
+        @DisplayName("Testing updateItem")
+        @Test
+        void givenValidId_whenCallingUpdateItem_thenAnObjectIsReturned() {
+            UUID randomId = UUID.randomUUID();
+            ErrorResponse updatedItem = putItem(createPut(randomId))
+                    .assertThat()
+                    .statusCode(HttpStatus.NOT_FOUND.value())
+                    .extract()
+                    .as(ErrorResponse.class);
+
+            Assertions.assertThat(updatedItem.status).isEqualTo(HttpStatus.NOT_FOUND.value());
+            Assertions.assertThat(updatedItem.error).isEqualTo("Not Found");
+            Assertions.assertThat(updatedItem.message).isEqualTo("Item with ID %s not found".formatted(randomId));
+        }
+    }
 
 }
