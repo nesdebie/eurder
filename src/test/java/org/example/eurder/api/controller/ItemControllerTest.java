@@ -151,16 +151,19 @@ class ItemControllerTest {
         void givenNoFilter_whenCallingGetItemsOverview_thenAnArrayOfObjectIsReturned() {
             Assertions.assertThat(getItemsOverview(null).length).isEqualTo(3);
         }
+
         @DisplayName("Testing getItemsOverview low filter")
         @Test
         void givenLowFilter_whenCallingGetItemsOverview_thenAnArrayOfObjectIsReturned() {
             Assertions.assertThat(getItemsOverview("STOCK_LOW").length).isEqualTo(1);
         }
+
         @DisplayName("Testing getItemsOverview medium filter")
         @Test
         void givenMediumFilter_whenCallingGetItemsOverview_thenAnArrayOfObjectIsReturned() {
             Assertions.assertThat(getItemsOverview("STOCK_MEDIUM").length).isEqualTo(1);
         }
+
         @DisplayName("Testing getItemsOverview high filter")
         @Test
         void givenHighFilter_whenCallingGetItemsOverview_thenAnArrayOfObjectIsReturned() {
@@ -182,6 +185,7 @@ class ItemControllerTest {
                     .extract()
                     .as(ErrorResponse.class);
         }
+
         @DisplayName("Testing getItemsOverview wrong filter")
         @Test
         void givenHighFilter_whenCallingGetItemsOverview_thenAnArrayOfObjectIsReturned() {
