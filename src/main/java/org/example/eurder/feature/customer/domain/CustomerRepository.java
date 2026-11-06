@@ -1,4 +1,4 @@
-package org.example.eurder.feature.user.domain;
+package org.example.eurder.feature.customer.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

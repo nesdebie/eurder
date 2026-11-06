@@ -1,4 +1,4 @@
-package org.example.eurder.feature.user.api.dto;
+package org.example.eurder.feature.customer.api.dto;
 
 import org.example.eurder.common.api.dto.AddressDto;
 import org.example.eurder.common.api.dto.FullNameDto;

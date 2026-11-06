@@ -1,4 +1,4 @@
-package org.example.eurder.feature.user.api.request;
+package org.example.eurder.feature.customer.api.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;

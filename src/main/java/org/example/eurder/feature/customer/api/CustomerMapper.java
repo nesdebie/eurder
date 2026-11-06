@@ -1,9 +1,9 @@
-package org.example.eurder.feature.user.api;
+package org.example.eurder.feature.customer.api;
 
 import org.example.eurder.common.api.AddressMapper;
 import org.example.eurder.common.api.FullNameMapper;
-import org.example.eurder.feature.user.api.dto.CreatedCustomerDto;
-import org.example.eurder.feature.user.domain.Customer;
+import org.example.eurder.feature.customer.api.dto.CreatedCustomerDto;
+import org.example.eurder.feature.customer.domain.Customer;
 import org.springframework.stereotype.Component;
 
 @Component

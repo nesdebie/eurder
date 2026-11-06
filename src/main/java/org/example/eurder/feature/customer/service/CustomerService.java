@@ -1,13 +1,13 @@
-package org.example.eurder.feature.user.service;
+package org.example.eurder.feature.customer.service;
 
 import org.example.eurder.common.api.AddressMapper;
 import org.example.eurder.common.api.FullNameMapper;
 import org.example.eurder.feature.security.exception.EmailAlreadyUsedException;
-import org.example.eurder.feature.user.api.CustomerMapper;
-import org.example.eurder.feature.user.api.dto.CreatedCustomerDto;
-import org.example.eurder.feature.user.api.request.CreateCustomerRequest;
-import org.example.eurder.feature.user.domain.Customer;
-import org.example.eurder.feature.user.domain.CustomerRepository;
+import org.example.eurder.feature.customer.api.CustomerMapper;
+import org.example.eurder.feature.customer.api.dto.CreatedCustomerDto;
+import org.example.eurder.feature.customer.api.request.CreateCustomerRequest;
+import org.example.eurder.feature.customer.domain.Customer;
+import org.example.eurder.feature.customer.domain.CustomerRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

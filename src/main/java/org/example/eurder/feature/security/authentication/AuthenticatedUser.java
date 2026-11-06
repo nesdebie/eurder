@@ -1,6 +1,6 @@
 package org.example.eurder.feature.security.authentication;
 
-import org.example.eurder.feature.user.domain.Customer;
+import org.example.eurder.feature.customer.domain.Customer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

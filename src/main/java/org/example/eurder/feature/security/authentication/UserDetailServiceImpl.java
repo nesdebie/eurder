@@ -1,7 +1,7 @@
 package org.example.eurder.feature.security.authentication;
 
-import org.example.eurder.feature.user.domain.Customer;
-import org.example.eurder.feature.user.domain.CustomerRepository;
+import org.example.eurder.feature.customer.domain.Customer;
+import org.example.eurder.feature.customer.domain.CustomerRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
