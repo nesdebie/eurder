@@ -10,8 +10,8 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name = "users")
-public class User {
+@Table(name = "customers")
+public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -29,8 +29,8 @@ public class User {
     @Embedded
     private Address address;
 
-    private User(String email, String passwordHash, Role role,
-                 FullName fullName, String phoneNumber, Address address) {
+    private Customer(String email, String passwordHash, Role role,
+                     FullName fullName, String phoneNumber, Address address) {
         this.email = normalizeEmail(Objects.requireNonNull(email));
         this.passwordHash = Objects.requireNonNull(passwordHash);
         this.role = Objects.requireNonNull(role);
@@ -39,19 +39,19 @@ public class User {
         this.address = address;
     }
 
-    protected User() {
+    protected Customer() {
     }
 
-    public static User customer(String email, String passwordHash,
-                                FullName fullName, String phoneNumber, Address address) {
-        return new User(email, passwordHash, Role.CUSTOMER,
+    public static Customer customer(String email, String passwordHash,
+                                    FullName fullName, String phoneNumber, Address address) {
+        return new Customer(email, passwordHash, Role.CUSTOMER,
                 Objects.requireNonNull(fullName, "Full name is required"),
                 Objects.requireNonNull(phoneNumber, "Phone number is required"),
                 Objects.requireNonNull(address, "Address is required"));
     }
 
-    public static User admin(String email, String passwordHash) {
-        return new User(email, passwordHash, Role.ADMIN, null, null, null);
+    public static Customer admin(String email, String passwordHash) {
+        return new Customer(email, passwordHash, Role.ADMIN, null, null, null);
     }
 
     public UUID getId() {

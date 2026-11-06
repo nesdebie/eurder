@@ -1,4 +1,8 @@
-create extension if not exists pgcrypto;
+CREATE extension IF NOT EXISTS pgcrypto;
 
-insert into users (email, password_hash, role)
-values ('admin@eurder.com', crypt('${adminPassword}', gen_salt('bf')), 'ADMIN');
+INSERT INTO customers (email, password_hash, role)
+VALUES (
+        'admin@eurder.com',
+        crypt('${adminPassword}', gen_salt('bf')),
+        'ADMIN'
+       );
