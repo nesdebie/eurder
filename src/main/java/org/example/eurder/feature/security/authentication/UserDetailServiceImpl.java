@@ -1,7 +1,7 @@
 package org.example.eurder.feature.security.authentication;
 
-import org.example.eurder.feature.security.domain.Credentials;
-import org.example.eurder.feature.security.domain.CredentialsRepository;
+import org.example.eurder.feature.user.domain.User;
+import org.example.eurder.feature.user.domain.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -10,17 +10,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional(readOnly = true)
-public class CredentialsUserDetailsService implements UserDetailsService {
+public class UserDetailServiceImpl implements UserDetailsService {
 
-    private final CredentialsRepository credentialsRepository;
+    private final UserRepository userRepository;
 
-    public CredentialsUserDetailsService(CredentialsRepository credentialsRepository) {
-        this.credentialsRepository = credentialsRepository;
+    public UserDetailServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        return credentialsRepository.findByEmail(Credentials.normalizeEmail(username))
+        return userRepository.findByEmail(User.normalizeEmail(username))
                 .map(AuthenticatedUser::from)
                 .orElseThrow(() -> new UsernameNotFoundException("No credentials found for " + username));
     }

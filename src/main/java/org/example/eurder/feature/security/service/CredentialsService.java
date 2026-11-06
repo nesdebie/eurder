@@ -1,9 +1,8 @@
 package org.example.eurder.feature.security.service;
 
 
-import org.example.eurder.feature.security.domain.Credentials;
-import org.example.eurder.feature.security.domain.CredentialsRepository;
 import org.example.eurder.feature.security.domain.Role;
+import org.example.eurder.feature.security.exception.EmailAlreadyUsedException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -30,7 +29,7 @@ public class CredentialsService {
         try {
             return credentialsRepository.saveAndFlush(new Credentials(normalizedEmail, passwordHash, role));
         } catch (DataIntegrityViolationException e) {
-            throw new EmailAlreadyUsedException(normalizedEmail, e);
+            throw new EmailAlreadyUsedException(normalizedEmail);
         }
     }
 }

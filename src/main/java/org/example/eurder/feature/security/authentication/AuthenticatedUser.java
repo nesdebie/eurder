@@ -1,6 +1,6 @@
 package org.example.eurder.feature.security.authentication;
 
-import org.example.eurder.feature.security.domain.Credentials;
+import org.example.eurder.feature.user.domain.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,11 +13,11 @@ public record AuthenticatedUser(UUID id,
                                 String passwordHash,
                                 List<GrantedAuthority> authorities) implements UserDetails {
 
-    public static AuthenticatedUser from(Credentials credentials) {
-        List<GrantedAuthority> authorities = credentials.getRole().getPermissions().stream()
+    public static AuthenticatedUser from(User user) {
+        List<GrantedAuthority> authorities = user.getRole().getPermissions().stream()
                 .<GrantedAuthority>map(feature -> new SimpleGrantedAuthority(feature.name()))
                 .toList();
-        return new AuthenticatedUser(credentials.getId(), credentials.getEmail(), credentials.getPasswordHash(), authorities);
+        return new AuthenticatedUser(user.getId(), user.getEmail(), user.getPasswordHash(), authorities);
     }
 
     @Override

@@ -1,8 +1,11 @@
 package org.example.eurder.common.domain;
 
+import jakarta.persistence.Embeddable;
+
+@Embeddable
 public record Address(
-        String street,
-        String houseNumber,
+        String streetName,
+        String streetNumber,
         String postalCode,
         String city
 ) {}

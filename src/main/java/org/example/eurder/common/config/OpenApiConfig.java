@@ -31,7 +31,7 @@ import java.util.Map;
 
 @Configuration
 @OpenAPIDefinition(info = @Info(title = "Eurder", version = "1.0", description = """
-        Parking lot management back-end.
+        Eurder management back-end.
 
         Authenticate with HTTP Basic (your email and password) through the Authorize button: \
         each operation states the feature it requires and the roles having it.
