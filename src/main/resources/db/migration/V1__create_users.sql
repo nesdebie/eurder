@@ -1,13 +1,13 @@
 CREATE TABLE users
 (
-    id            UUID         DEFAULT gen_rANDom_uuid() PRIMARY KEY ,
+    id            UUID         DEFAULT gen_random_uuid() PRIMARY KEY ,
     email         VARCHAR(255) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL,
     role          VARCHAR(20)  NOT NULL,
     first_name    VARCHAR(255),
     last_name     VARCHAR(255),
     phone_number  VARCHAR(50),
-    street_name   VARCHAR(255),
+    street        VARCHAR(255),
     house_number  VARCHAR(20),
     postal_code   VARCHAR(20),
     city          VARCHAR(255),
