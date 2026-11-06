@@ -1,4 +1,4 @@
-package org.example.eurder.common.api.dto;
+package org.example.eurder.feature.eurder.domain;
 
 import jakarta.persistence.Embeddable;
 import org.example.eurder.feature.item.domain.Item;
