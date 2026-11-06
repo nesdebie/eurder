@@ -1,48 +1,40 @@
 package org.example.eurder.feature.user.domain;
 
 import jakarta.persistence.*;
-import org.example.eurder.feature.security.domain.Role;
+import org.example.eurder.common.domain.Address;
+import org.example.eurder.common.domain.FullName;
+import org.example.eurder.feature.security.domain.Credentials;
+
+import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "users")
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    private String email;
-    private String passwordHash;
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    
     @Embedded
     private FullName fullName;
-    private String phoneNumber;
+
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "credentials_id")
+    private Credentials credentials;
+    
+    private String telephone;
+    
     @Embedded
     private Address address;
 
-    private User(String email, String passwordHash, Role role,
-                 FullName fullName, String phoneNumber, Address address) {
-        this.id = UUID.randomUUID();
-        this.email = email;
-        this.passwordHash = passwordHash;
-        this.role = role;
+    public User(FullName fullName, Credentials credentials, String telephone, Address address) {
         this.fullName = fullName;
-        this.phoneNumber = phoneNumber;
+        this.credentials = Objects.requireNonNull(credentials);
+        this.telephone = telephone;
         this.address = address;
     }
 
     protected User() {
-        // for JPA
     }
-
-    public static User customer(String email, String passwordHash,
-                                FullName fullName, String phoneNumber, Address address) {
-        // vérifier que fullName, phoneNumber et address ne sont pas null
-        return new User(email, passwordHash, Role.CUSTOMER, fullName, phoneNumber, address);
-    }
-
-    public static User admin(String email, String passwordHash) {
-        return new User(email, passwordHash, Role.ADMIN, null, null, null);
-    }
-
-    // getters, aucun setter public
 }

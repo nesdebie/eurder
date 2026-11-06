@@ -1,4 +1,4 @@
-package org.example.eurder.feature.user.domain;
+package org.example.eurder.common.domain;
 
 public record Address(
         String street,
