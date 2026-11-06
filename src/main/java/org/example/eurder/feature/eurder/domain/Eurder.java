@@ -37,16 +37,27 @@ public class Eurder {
         this.customer = Objects.requireNonNull(customer);
         this.orderDate = Objects.requireNonNull(orderDate);
         this.itemGroups = new ArrayList<>(itemGroups);
-        this.totalPrice = getTotalPrice();
+        this.totalPrice = calculateTotalPrice();
     }
 
     protected Eurder() {}
 
-    private BigDecimal getTotalPrice() {
-        return getItemGroups().stream()
-                .map(itemGroup -> itemGroup.totalPrice())
-                .filter(Objects::nonNull)
+    private BigDecimal calculateTotalPrice() {
+        return itemGroups.stream()
+                .map(ItemGroup::totalPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public LocalDate getOrderDate() {
+        return orderDate;
+    }
+
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
     }
 
     public List<ItemGroup> getItemGroups() {
