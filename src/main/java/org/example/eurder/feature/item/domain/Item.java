@@ -27,6 +27,13 @@ public class Item {
         this.amount = amount;
     }
 
+    public void update(Item item) {
+        this.name = Objects.requireNonNull(item.getName());
+        this.description = Objects.requireNonNull(item.getDescription());
+        this.price = Objects.requireNonNull(item.getPrice());
+        this.amount = item.getAmount();
+    }
+
     protected Item() {}
 
     public UUID getId() {

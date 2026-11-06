@@ -5,7 +5,7 @@ import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 
-public record AddItemRequest(
+public record AddOrUpdateItemRequest(
         @NotBlank(message = "Item name is required")
         @Size(max = 50, message = "Item name must be at most 50 characters")
         @Schema(example = "My super item name")
