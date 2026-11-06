@@ -12,4 +12,11 @@ public class FullNameMapper {
                 fullName.lastName()
         );
     }
+
+    public FullName mapToEmbeddable(FullNameDto dto) {
+        return new FullName(
+                dto.firstName(),
+                dto.lastName()
+        );
+    }
 }

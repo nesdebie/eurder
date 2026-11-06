@@ -73,4 +73,16 @@ public class Customer {
     public Role getRole() {
         return role;
     }
+
+    public FullName getFullName() {
+        return fullName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
 }

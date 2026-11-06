@@ -14,4 +14,13 @@ public class AddressMapper {
                 address.city()
         );
     }
+
+    public Address mapToEmbeddable(AddressDto dto) {
+        return new Address(
+                dto.streetName(),
+                dto.streetNumber(),
+                dto.postalCode(),
+                dto.city()
+        );
+    }
 }
