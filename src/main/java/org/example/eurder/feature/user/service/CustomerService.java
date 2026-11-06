@@ -1,10 +1,7 @@
 package org.example.eurder.feature.user.service;
 
-import jakarta.transaction.Transactional;
 import org.example.eurder.common.api.AddressMapper;
 import org.example.eurder.common.api.FullNameMapper;
-import org.example.eurder.common.domain.Address;
-import org.example.eurder.common.domain.FullName;
 import org.example.eurder.feature.security.exception.EmailAlreadyUsedException;
 import org.example.eurder.feature.user.api.CustomerMapper;
 import org.example.eurder.feature.user.api.dto.CreatedCustomerDto;
@@ -14,6 +11,7 @@ import org.example.eurder.feature.user.domain.CustomerRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional

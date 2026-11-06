@@ -2,6 +2,8 @@ package org.example.eurder.feature.item.domain;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -14,14 +16,14 @@ public class Item {
 
     private String description;
 
-    private double price;
+    private BigDecimal price;
 
     private int amount;
 
-    public Item(String name, String description, double price, int amount) {
-        this.name = name;
-        this.description = description;
-        this.price = price;
+    public Item(String name, String description, BigDecimal price, int amount) {
+        this.name = Objects.requireNonNull(name);
+        this.description = Objects.requireNonNull(description);
+        this.price = Objects.requireNonNull(price);
         this.amount = amount;
     }
 
@@ -39,7 +41,7 @@ public class Item {
         return description;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
