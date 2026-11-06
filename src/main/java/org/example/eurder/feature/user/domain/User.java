@@ -54,6 +54,10 @@ public class User {
         return new User(email, passwordHash, Role.ADMIN, null, null, null);
     }
 
+    public UUID getId() {
+        return id;
+    }
+
     public static String normalizeEmail(String email) {
         return email.trim().toLowerCase(Locale.ROOT);
     }
