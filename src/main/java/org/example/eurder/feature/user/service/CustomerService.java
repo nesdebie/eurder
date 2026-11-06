@@ -19,14 +19,14 @@ import org.springframework.stereotype.Service;
 @Transactional
 public class CustomerService {
 
-    private final CustomerRepository userRepository;
+    private final CustomerRepository customerRepository;
     private final PasswordEncoder passwordEncoder;
     private final AddressMapper addressMapper;
     private final FullNameMapper fullNameMapper;
     private final CustomerMapper customerMapper;
 
-    public CustomerService(CustomerRepository userRepository, PasswordEncoder passwordEncoder, AddressMapper addressMapper, FullNameMapper fullNameMapper, CustomerMapper customerMapper) {
-        this.userRepository = userRepository;
+    public CustomerService(CustomerRepository customerRepository, PasswordEncoder passwordEncoder, AddressMapper addressMapper, FullNameMapper fullNameMapper, CustomerMapper customerMapper) {
+        this.customerRepository = customerRepository;
         this.passwordEncoder = passwordEncoder;
         this.addressMapper = addressMapper;
         this.fullNameMapper = fullNameMapper;
@@ -47,7 +47,7 @@ public class CustomerService {
         );
 
         try {
-            return customerMapper.mapToCreatedDto(userRepository.saveAndFlush(customer));
+            return customerMapper.mapToCreatedDto(customerRepository.saveAndFlush(customer));
         } catch (DataIntegrityViolationException e) {
             throw new EmailAlreadyUsedException(normalizedEmail);
         }
@@ -55,7 +55,7 @@ public class CustomerService {
 
 
     private void verifyIfEmailHasDuplicate(String email) {
-        userRepository.findByEmail(email).
-                orElseThrow(() -> new EmailAlreadyUsedException(email));
+        customerRepository.findByEmail(email)
+                .ifPresent(customer -> { throw new EmailAlreadyUsedException(email); });
     }
 }
