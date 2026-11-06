@@ -1,7 +1,6 @@
 package org.example.eurder.service;
 
 import org.apache.commons.lang3.tuple.Pair;
-import org.apache.commons.validator.routines.EmailValidator;
 import org.example.eurder.api.request.PostUserRequest;
 import org.example.eurder.domain.ItemGroup;
 import org.example.eurder.domain.user.Address;
@@ -21,12 +20,10 @@ import java.util.UUID;
 public class UserService {
     private final UserRepository users;
     private final EurderRepository eurders;
-    private final EmailValidator validator;
 
     public UserService(UserRepository users, EurderRepository eurders) {
         this.users = users;
         this.eurders = eurders;
-        this.validator = EmailValidator.getInstance();
     }
 
     public List<User> getAllCustomers() {
@@ -44,8 +41,6 @@ public class UserService {
     public User createUser(PostUserRequest request) {
         verifyParametersAreFilledIn(request);
 
-        if (!validator.isValid(request.email()))
-            throw BadRequestException.invalidEmail(request.email());
         if(!request.phoneNumber().chars().allMatch(Character::isDigit))
             throw BadRequestException.invalidPhoneNumber(request.phoneNumber());
         if(!request.streetNumber().matches("^[0-9]+([\\s\\-/]?[a-zA-Z0-9]+)?$"))
