@@ -30,7 +30,7 @@ public class ItemService {
     }
 
     public ItemDto createItem(AddOrUpdateItemRequest request) {
-        verifyItemNameHasNoDuplicate(request.name());
+        verifyItemNameHasNoDuplicate(request.name(), null);
 
         Item item = new Item(
                 request.name(),
