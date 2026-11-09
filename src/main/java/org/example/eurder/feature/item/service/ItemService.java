@@ -56,6 +56,12 @@ public class ItemService {
         }
     }
 
+    public void reduceStock(UUID id, int amount) {
+        Item item = getItemById(id);
+        item.reduceAmount(amount);
+        itemRepository.saveAndFlush(item);
+    }
+
 
     public List<ItemDto> getAllItems() {
         return itemMapper.mapToDto(

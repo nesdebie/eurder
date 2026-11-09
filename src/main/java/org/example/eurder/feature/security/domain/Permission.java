@@ -3,5 +3,7 @@ package org.example.eurder.feature.security.domain;
 public enum Permission {
     ADD_ITEM,
     UPDATE_ITEM,
-    EURDER_ITEMS
+    EURDER_ITEMS,
+    REEURDER_ITEMS,
+    VIEW_EURDERS_REPORT
 }

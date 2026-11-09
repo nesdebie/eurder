@@ -2,6 +2,7 @@ package org.example.eurder.feature.customer.service;
 
 import org.example.eurder.common.api.AddressMapper;
 import org.example.eurder.common.api.FullNameMapper;
+import org.example.eurder.feature.customer.exception.CustomerNotFoundException;
 import org.example.eurder.feature.security.exception.EmailAlreadyUsedException;
 import org.example.eurder.feature.customer.api.CustomerMapper;
 import org.example.eurder.feature.customer.api.dto.CreatedCustomerDto;
@@ -12,6 +13,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -55,5 +58,10 @@ public class CustomerService {
     private void verifyIfEmailHasDuplicate(String email) {
         customerRepository.findByEmail(email)
                 .ifPresent(customer -> { throw new EmailAlreadyUsedException(email); });
+    }
+
+    public Customer getCustomerById(UUID id) {
+        customerRepository.findById(id)
+                .orElseThrow(() -> CustomerNotFoundException.customerIdNotFound(id));
     }
 }

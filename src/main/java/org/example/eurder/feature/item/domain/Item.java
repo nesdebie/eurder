@@ -56,4 +56,9 @@ public class Item {
     public int getAmount() {
         return amount;
     }
+
+    public void reduceAmount(int toSubstract) {
+        if (amount >= toSubstract && toSubstract > 0)
+            this.amount -= toSubstract;
+    }
 }

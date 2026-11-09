@@ -48,6 +48,10 @@ public class Eurder {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
+    public UUID getId() {
+        return id;
+    }
+
     public Customer getCustomer() {
         return customer;
     }

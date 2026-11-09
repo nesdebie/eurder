@@ -3,8 +3,13 @@ package org.example.eurder.feature.security.domain;
 import java.util.Set;
 
 public enum Role {
-    CUSTOMER(Permission.EURDER_ITEMS),
-    ADMIN(Permission.ADD_ITEM, Permission.UPDATE_ITEM);
+    CUSTOMER(
+            Permission.EURDER_ITEMS,
+            Permission.REEURDER_ITEMS,
+            Permission.VIEW_EURDERS_REPORT),
+    ADMIN(
+            Permission.ADD_ITEM,
+            Permission.UPDATE_ITEM);
 
     private final Set<Permission> permissions;
 
