@@ -41,7 +41,7 @@ public class EurderService {
 
 
     public EurderDto createEurder(EurderItemsRequest request, UUID customerId) {
-        List<ItemGroup> itemGroups = request.list().stream()
+        List<ItemGroup> itemGroups = request.items().stream()
                 .map(itemToBuy -> {
                     Item item = itemService.getItemById(itemToBuy.id());
 
