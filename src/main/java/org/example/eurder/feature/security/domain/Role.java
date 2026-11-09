@@ -9,7 +9,9 @@ public enum Role {
             Permission.VIEW_EURDERS_REPORT),
     ADMIN(
             Permission.ADD_ITEM,
-            Permission.UPDATE_ITEM);
+            Permission.UPDATE_ITEM,
+            Permission.VIEW_CUSTOMERS,
+            Permission.VIEW_CUSTOMER);
 
     private final Set<Permission> permissions;
 

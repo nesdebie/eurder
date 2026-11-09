@@ -39,8 +39,8 @@ public class EurderController {
     @ResponseStatus(HttpStatus.CREATED)
     public EurderDto createReeurder(
             @AuthenticationPrincipal AuthenticatedUser user,
-            @PathVariable UUID eurderId) {
-        return eurderService.createReeurder(eurderId, user.id());
+            @PathVariable UUID id) {
+        return eurderService.createReeurder(id, user.id());
     }
 
 
