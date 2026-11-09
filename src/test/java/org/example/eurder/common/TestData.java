@@ -8,10 +8,6 @@ import org.example.eurder.feature.item.domain.Item;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-/**
- * Builders for test data. The H2 database is shared by all tests of a run:
- * every builder makes unique emails and names, so tests never depend on each other.
- */
 public final class TestData {
 
     public static final String PASSWORD = "secret123";

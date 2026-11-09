@@ -20,10 +20,8 @@ class CustomerEndToEndTest extends EndToEndTest {
 
         @Test
         void givenValidCustomer_whenRegisteringWithoutAuthentication_thenReturns201() {
-            // given
             String email = TestData.uniqueEmail();
 
-            // when / then
             anonymous().body(customerJson(email)).post("/customers")
                     .then()
                     .statusCode(HttpStatus.CREATED.value())
@@ -36,10 +34,8 @@ class CustomerEndToEndTest extends EndToEndTest {
 
         @Test
         void givenEmailWithCapitals_whenRegistering_thenEmailIsStoredInLowerCase() {
-            // given
             String email = TestData.uniqueEmail();
 
-            // when / then
             anonymous().body(customerJson(email.toUpperCase())).post("/customers")
                     .then()
                     .statusCode(HttpStatus.CREATED.value())
@@ -48,10 +44,8 @@ class CustomerEndToEndTest extends EndToEndTest {
 
         @Test
         void givenEmailAlreadyInUse_whenRegistering_thenReturns409() {
-            // given
             String email = newCustomer();
 
-            // when / then
             anonymous().body(customerJson(email)).post("/customers")
                     .then()
                     .statusCode(HttpStatus.CONFLICT.value())
@@ -60,10 +54,8 @@ class CustomerEndToEndTest extends EndToEndTest {
 
         @Test
         void givenEmptyCity_whenRegistering_thenReturns400WithFieldError() {
-            // given
             String body = customerJson(TestData.uniqueEmail()).replace("\"city\": \"Brussels\"", "\"city\": \"\"");
 
-            // when / then
             anonymous().body(body).post("/customers")
                     .then()
                     .statusCode(HttpStatus.BAD_REQUEST.value())
@@ -72,7 +64,6 @@ class CustomerEndToEndTest extends EndToEndTest {
 
         @Test
         void givenInvalidEmail_whenRegistering_thenReturns400() {
-            // when / then
             anonymous().body(customerJson("not-an-email")).post("/customers")
                     .then()
                     .statusCode(HttpStatus.BAD_REQUEST.value())
@@ -86,27 +77,22 @@ class CustomerEndToEndTest extends EndToEndTest {
 
         @Test
         void givenRegisteredCustomer_whenLoggingIn_thenCanViewOwnReport() {
-            // given
             String email = newCustomer();
 
-            // when / then
             as(email).get("/orders/report")
                     .then().statusCode(HttpStatus.OK.value());
         }
 
         @Test
         void givenWrongPassword_whenLoggingIn_thenReturns401() {
-            // given
             String email = newCustomer();
 
-            // when / then
             anonymous().auth().preemptive().basic(email, "wrong-password").get("/orders/report")
                     .then().statusCode(HttpStatus.UNAUTHORIZED.value());
         }
 
         @Test
         void givenNoCredentials_whenCallingASecuredEndpoint_thenReturns401() {
-            // when / then
             anonymous().get("/customers")
                     .then().statusCode(HttpStatus.UNAUTHORIZED.value());
         }
@@ -118,10 +104,8 @@ class CustomerEndToEndTest extends EndToEndTest {
 
         @Test
         void givenAdmin_whenListingCustomers_thenNewCustomerIsListed() {
-            // given
             String email = newCustomer();
 
-            // when / then
             as(newAdmin()).get("/customers")
                     .then()
                     .statusCode(HttpStatus.OK.value())
@@ -130,7 +114,6 @@ class CustomerEndToEndTest extends EndToEndTest {
 
         @Test
         void givenCustomer_whenListingCustomers_thenReturns403() {
-            // when / then
             as(newCustomer()).get("/customers")
                     .then().statusCode(HttpStatus.FORBIDDEN.value());
         }
@@ -142,11 +125,9 @@ class CustomerEndToEndTest extends EndToEndTest {
 
         @Test
         void givenAdmin_whenViewingCustomer_thenReturnsTheirDetails() {
-            // given
             String email = newCustomer();
             UUID id = findCustomer(email).getId();
 
-            // when / then
             as(newAdmin()).get("/customers/{id}", id)
                     .then()
                     .statusCode(HttpStatus.OK.value())
@@ -156,24 +137,20 @@ class CustomerEndToEndTest extends EndToEndTest {
 
         @Test
         void givenUnknownId_whenViewingCustomer_thenReturns404() {
-            // when / then
             as(newAdmin()).get("/customers/{id}", UUID.randomUUID())
                     .then().statusCode(HttpStatus.NOT_FOUND.value());
         }
 
         @Test
         void givenMalformedId_whenViewingCustomer_thenReturns400() {
-            // when / then
             as(newAdmin()).get("/customers/not-a-uuid")
                     .then().statusCode(HttpStatus.BAD_REQUEST.value());
         }
 
         @Test
         void givenCustomer_whenViewingAnotherCustomer_thenReturns403() {
-            // given
             UUID id = findCustomer(newCustomer()).getId();
 
-            // when / then
             as(newCustomer()).get("/customers/{id}", id)
                     .then().statusCode(HttpStatus.FORBIDDEN.value());
         }

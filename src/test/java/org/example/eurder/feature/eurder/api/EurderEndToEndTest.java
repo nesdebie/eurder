@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 
-/** The whole customer journey, through HTTP only: no repository is used to prepare the data. */
 class EurderEndToEndTest extends EndToEndTest {
 
     private String addItem(String admin, String price, int amount) {
@@ -25,18 +24,15 @@ class EurderEndToEndTest extends EndToEndTest {
 
     @Test
     void givenItemAddedByAdmin_whenNewCustomerOrdersIt_thenEurderAndReportAreCorrect() {
-        // given
         String fridge = addItem(newAdmin(), "499.99", 5);
         String customer = newCustomer();
 
-        // when
         as(customer).body(orderJson(fridge, 2)).post("/orders")
                 .then()
                 .statusCode(HttpStatus.CREATED.value())
                 .body("items[0].shippingDate", equalTo("2026-11-10"))
                 .body("totalPrice", equalTo(999.98f));
 
-        // then
         as(customer).get("/orders/report")
                 .then()
                 .statusCode(HttpStatus.OK.value())
@@ -47,7 +43,6 @@ class EurderEndToEndTest extends EndToEndTest {
 
     @Test
     void givenOwnEurder_whenReorderingAfterAPriceChange_thenNewPriceIsUsed() {
-        // given
         String admin = newAdmin();
         String itemId = addItem(admin, "10.00", 10);
         String customer = newCustomer();
@@ -57,7 +52,6 @@ class EurderEndToEndTest extends EndToEndTest {
         as(admin).body(itemJson(TestData.uniqueName(), "15.00", 10)).put("/items/{id}/update", itemId)
                 .then().statusCode(HttpStatus.OK.value());
 
-        // when / then
         as(customer).post("/orders/{id}/reorder", eurderId)
                 .then()
                 .statusCode(HttpStatus.CREATED.value())
@@ -73,12 +67,10 @@ class EurderEndToEndTest extends EndToEndTest {
 
     @Test
     void givenMissingAmount_whenOrdering_thenReturns400WithIndexedFieldError() {
-        // given
         String body = """
                 { "items": [ { "id": "%s" } ] }
                 """.formatted(addItem(newAdmin(), "1.00", 1));
 
-        // when / then
         as(newCustomer()).body(body).post("/orders")
                 .then()
                 .statusCode(HttpStatus.BAD_REQUEST.value())

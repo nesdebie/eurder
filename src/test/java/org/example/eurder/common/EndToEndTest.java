@@ -19,10 +19,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
-/**
- * Base class of the end-to-end tests: a real server on a random port, real HTTP calls,
- * real HTTP Basic login. Only the clock is replaced, to control the shipping dates.
- */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Import(EndToEndTest.TestClockConfig.class)
 public abstract class EndToEndTest {
@@ -40,10 +36,13 @@ public abstract class EndToEndTest {
 
     @LocalServerPort
     private int port;
+
     @Autowired
     protected MutableClock clock;
+
     @Autowired
     private CustomerRepository customerRepository;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -60,7 +59,6 @@ public abstract class EndToEndTest {
         return anonymous().auth().preemptive().basic(email, TestData.PASSWORD);
     }
 
-    /** The admin account comes from a PostgreSQL-only migration: on H2, each test creates its own. */
     protected String newAdmin() {
         return customerRepository.save(TestData.admin(passwordEncoder.encode(TestData.PASSWORD))).getEmail();
     }

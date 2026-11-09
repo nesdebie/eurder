@@ -58,17 +58,14 @@ class ItemControllerTest {
 
         @Test
         void givenNewValues_whenUpdating_thenReturns200WithNewValues() throws Exception {
-            // given
             Item item = itemRepository.save(TestData.item("10.00", 5));
             String newName = TestData.uniqueName();
 
-            // when
             ResultActions result = mockMvc.perform(put("/items/{id}/update", item.getId())
                     .with(user(AuthenticatedUser.from(admin)))
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(itemJson(newName, "12.50", 8)));
 
-            // then
             result.andExpect(status().isOk())
                     .andExpect(jsonPath("$.id").value(item.getId().toString()))
                     .andExpect(jsonPath("$.name").value(newName))
@@ -78,61 +75,50 @@ class ItemControllerTest {
 
         @Test
         void givenSameName_whenUpdatingOnlyThePrice_thenReturns200() throws Exception {
-            // given: an admin changes the price but keeps the name of the item
             Item item = itemRepository.save(TestData.item("10.00", 5));
 
-            // when
             ResultActions result = mockMvc.perform(put("/items/{id}/update", item.getId())
                     .with(user(AuthenticatedUser.from(admin)))
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(itemJson(item.getName(), "11.00", 5)));
 
-            // then
             result.andExpect(status().isOk())
                     .andExpect(jsonPath("$.price").value(11.0));
         }
 
         @Test
         void givenNameOfAnotherItem_whenUpdating_thenReturns409() throws Exception {
-            // given
             Item item = itemRepository.save(TestData.item("10.00", 5));
             Item other = itemRepository.save(TestData.item("10.00", 5));
 
-            // when
             ResultActions result = mockMvc.perform(put("/items/{id}/update", item.getId())
                     .with(user(AuthenticatedUser.from(admin)))
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(itemJson(other.getName(), "10.00", 5)));
 
-            // then
             result.andExpect(status().isConflict());
         }
 
         @Test
         void givenUnknownId_whenUpdating_thenReturns404() throws Exception {
-            // when
             ResultActions result = mockMvc.perform(put("/items/{id}/update", UUID.randomUUID())
                     .with(user(AuthenticatedUser.from(admin)))
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(itemJson(TestData.uniqueName(), "10.00", 5)));
 
-            // then
             result.andExpect(status().isNotFound());
         }
 
         @Test
         void givenCustomer_whenUpdating_thenReturns403() throws Exception {
-            // given
             Item item = itemRepository.save(TestData.item("10.00", 5));
             Customer customer = customerRepository.save(TestData.customer("hash"));
 
-            // when
             ResultActions result = mockMvc.perform(put("/items/{id}/update", item.getId())
                     .with(user(AuthenticatedUser.from(customer)))
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(itemJson(TestData.uniqueName(), "10.00", 5)));
 
-            // then
             result.andExpect(status().isForbidden());
         }
     }
@@ -143,18 +129,15 @@ class ItemControllerTest {
 
         @Test
         void givenItemsOfEachLevel_whenFilteringOnStockLow_thenReturnsOnlyItemsBelowFive() throws Exception {
-            // given
             Item low = itemRepository.save(TestData.item("1.00", 2));
             Item medium = itemRepository.save(TestData.item("1.00", 7));
             Item high = itemRepository.save(TestData.item("1.00", 12));
 
-            // when
             String response = mockMvc.perform(get("/items/inventory").param("urgency", "STOCK_LOW")
                             .with(user(AuthenticatedUser.from(admin))))
                     .andExpect(status().isOk())
                     .andReturn().getResponse().getContentAsString();
 
-            // then
             List<String> names = JsonPath.read(response, "$[*].name");
             List<Integer> amounts = JsonPath.read(response, "$[*].amount");
             assertThat(names).contains(low.getName()).doesNotContain(medium.getName(), high.getName());
@@ -163,43 +146,35 @@ class ItemControllerTest {
 
         @Test
         void givenNoFilter_whenViewingInventory_thenItemsAreSortedFromMostToLeastUrgent() throws Exception {
-            // given
             itemRepository.save(TestData.item("1.00", 12));
             itemRepository.save(TestData.item("1.00", 2));
             itemRepository.save(TestData.item("1.00", 7));
 
-            // when
             String response = mockMvc.perform(get("/items/inventory")
                             .with(user(AuthenticatedUser.from(admin))))
                     .andExpect(status().isOk())
                     .andReturn().getResponse().getContentAsString();
 
-            // then
             List<Integer> amounts = JsonPath.read(response, "$[*].amount");
             assertThat(amounts).isSorted();
         }
 
         @Test
         void givenUnknownLevel_whenFiltering_thenReturns400() throws Exception {
-            // when
             ResultActions result = mockMvc.perform(get("/items/inventory").param("urgency", "WRONG")
                     .with(user(AuthenticatedUser.from(admin))));
 
-            // then
             result.andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.detail").value("Invalid value 'WRONG' for parameter 'urgency'"));
         }
 
         @Test
         void givenCustomer_whenViewingInventory_thenReturns403() throws Exception {
-            // given
             Customer customer = customerRepository.save(TestData.customer("hash"));
 
-            // when
             ResultActions result = mockMvc.perform(get("/items/inventory")
                     .with(user(AuthenticatedUser.from(customer))));
 
-            // then
             result.andExpect(status().isForbidden());
         }
     }

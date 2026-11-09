@@ -101,14 +101,11 @@ class EurderControllerTest {
 
         @Test
         void givenItemInStock_whenOrdering_thenShipsNextDayAndReturnsTotal() throws Exception {
-            // given
             Customer customer = saveCustomer();
             Item item = saveItem("19.99", 10);
 
-            // when
             ResultActions result = order(customer, item, 3);
 
-            // then
             result.andExpect(status().isCreated())
                     .andExpect(jsonPath("$.id").isNotEmpty())
                     .andExpect(jsonPath("$.items[0].itemId").value(item.getId().toString()))
@@ -121,54 +118,43 @@ class EurderControllerTest {
 
         @Test
         void givenItemNotEnoughInStock_whenOrdering_thenShipsInSevenDays() throws Exception {
-            // given
             Customer customer = saveCustomer();
             Item item = saveItem("19.99", 2);
 
-            // when
             ResultActions result = order(customer, item, 3);
 
-            // then
             result.andExpect(status().isCreated())
                     .andExpect(jsonPath("$.items[0].shippingDate").value("2026-11-16"));
         }
 
         @Test
         void givenTheClockMovedForward_whenOrdering_thenShippingDateFollowsTheClock() throws Exception {
-            // given
             Customer customer = saveCustomer();
             Item item = saveItem("19.99", 10);
             clock.setTo(NOW.plusDays(30));
 
-            // when
             ResultActions result = order(customer, item, 1);
 
-            // then
             result.andExpect(status().isCreated())
                     .andExpect(jsonPath("$.items[0].shippingDate").value("2026-12-10"));
         }
 
         @Test
         void givenItemInStock_whenOrdering_thenStockIsReduced() throws Exception {
-            // given
             Customer customer = saveCustomer();
             Item item = saveItem("19.99", 10);
 
-            // when
             order(customer, item, 3).andExpect(status().isCreated());
 
-            // then
             assertThat(itemRepository.findById(item.getId()).orElseThrow().getAmount()).isEqualTo(7);
         }
 
         @Test
         void givenTwoItems_whenOrdering_thenTotalIsTheSumOfBothItemGroups() throws Exception {
-            // given
             Customer customer = saveCustomer();
             Item fridge = saveItem("19.99", 10);
             Item lamp = saveItem("0.10", 10);
 
-            // when
             ResultActions result = mockMvc.perform(post("/orders")
                     .with(user(AuthenticatedUser.from(customer)))
                     .contentType(MediaType.APPLICATION_JSON)
@@ -176,7 +162,6 @@ class EurderControllerTest {
                             { "items": [ { "id": "%s", "amount": 3 }, { "id": "%s", "amount": 2 } ] }
                             """.formatted(fridge.getId(), lamp.getId())));
 
-            // then
             result.andExpect(status().isCreated())
                     .andExpect(jsonPath("$.items.length()").value(2))
                     .andExpect(jsonPath("$.totalPrice").value(60.17));
@@ -184,11 +169,9 @@ class EurderControllerTest {
 
         @Test
         void givenUnknownItemAfterAValidOne_whenOrdering_thenReturns404AndStockIsUnchanged() throws Exception {
-            // given
             Customer customer = saveCustomer();
             Item item = saveItem("19.99", 10);
 
-            // when
             ResultActions result = mockMvc.perform(post("/orders")
                     .with(user(AuthenticatedUser.from(customer)))
                     .contentType(MediaType.APPLICATION_JSON)
@@ -203,7 +186,6 @@ class EurderControllerTest {
 
         @Test
         void givenNoItems_whenOrdering_thenReturns400() throws Exception {
-            // when
             ResultActions result = mockMvc.perform(post("/orders")
                     .with(user(AuthenticatedUser.from(saveCustomer())))
                     .contentType(MediaType.APPLICATION_JSON)
@@ -211,20 +193,16 @@ class EurderControllerTest {
                             { "items": [] }
                             """));
 
-            // then
             result.andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.errors.items[0]").value("An eurder must contain at least one item"));
         }
 
         @Test
         void givenAdmin_whenOrdering_thenReturns403() throws Exception {
-            // given
             Customer admin = customerRepository.save(TestData.admin("hash"));
 
-            // when
             ResultActions result = order(admin, saveItem("19.99", 10), 1);
 
-            // then
             result.andExpect(status().isForbidden());
         }
     }
@@ -235,16 +213,13 @@ class EurderControllerTest {
 
         @Test
         void givenTwoEurders_whenViewingReport_thenReturnsBothWithGrandTotal() throws Exception {
-            // given
             Customer customer = saveCustomer();
             orderAndGetId(customer, saveItem("10.00", 10), 2);   // 20.00
             orderAndGetId(customer, saveItem("2.50", 10), 3);    //  7.50
 
-            // when
             ResultActions result = mockMvc.perform(get("/orders/report")
                     .with(user(AuthenticatedUser.from(customer))));
 
-            // then
             result.andExpect(status().isOk())
                     .andExpect(jsonPath("$.eurders.length()").value(2))
                     .andExpect(jsonPath("$.totalPrice").value(27.5));
@@ -252,11 +227,9 @@ class EurderControllerTest {
 
         @Test
         void givenNoEurders_whenViewingReport_thenReturnsEmptyReport() throws Exception {
-            // when
             ResultActions result = mockMvc.perform(get("/orders/report")
                     .with(user(AuthenticatedUser.from(saveCustomer()))));
 
-            // then
             result.andExpect(status().isOk())
                     .andExpect(jsonPath("$.eurders", empty()))
                     .andExpect(jsonPath("$.totalPrice").value(0));
@@ -269,7 +242,6 @@ class EurderControllerTest {
 
         @Test
         void givenOwnEurder_whenReordering_thenReturns201WithCurrentPrice() throws Exception {
-            // given
             Customer customer = saveCustomer();
             Item item = saveItem("10.00", 10);
             String eurderId = orderAndGetId(customer, item, 1);
@@ -277,11 +249,9 @@ class EurderControllerTest {
             changed.update(new Item(changed.getName(), changed.getDescription(), new java.math.BigDecimal("12.00"), 9));
             itemRepository.save(changed);
 
-            // when
             ResultActions result = mockMvc.perform(post("/orders/{id}/reorder", eurderId)
                     .with(user(AuthenticatedUser.from(customer))));
 
-            // then
             result.andExpect(status().isCreated())
                     .andExpect(jsonPath("$.id").value(org.hamcrest.Matchers.not(eurderId)))
                     .andExpect(jsonPath("$.totalPrice").value(12.0));
@@ -289,24 +259,19 @@ class EurderControllerTest {
 
         @Test
         void givenEurderOfAnotherCustomer_whenReordering_thenReturns403() throws Exception {
-            // given
             String eurderId = orderAndGetId(saveCustomer(), saveItem("19.99", 10), 1);
 
-            // when
             ResultActions result = mockMvc.perform(post("/orders/{id}/reorder", eurderId)
                     .with(user(AuthenticatedUser.from(saveCustomer()))));
 
-            // then
             result.andExpect(status().isForbidden());
         }
 
         @Test
         void givenUnknownEurder_whenReordering_thenReturns404() throws Exception {
-            // when
             ResultActions result = mockMvc.perform(post("/orders/{id}/reorder", UUID.randomUUID())
                     .with(user(AuthenticatedUser.from(saveCustomer()))));
 
-            // then
             result.andExpect(status().isNotFound());
         }
     }
@@ -319,7 +284,6 @@ class EurderControllerTest {
 
         @Test
         void givenItemGroupShippingToday_whenViewingShippedToday_thenListsItWithTheCustomerAddress() throws Exception {
-            // given: ordered yesterday with enough stock, so it ships today
             String city = "City-" + UUID.randomUUID();
             Customer customer = saveCustomerLivingIn(city);
             Item item = saveItem("19.99", 10);
@@ -328,13 +292,11 @@ class EurderControllerTest {
             clock.setTo(ORDER_DAY.plusDays(1));
             Customer admin = customerRepository.save(TestData.admin("hash"));
 
-            // when
             String response = mockMvc.perform(get("/orders/shipped-today")
                             .with(user(AuthenticatedUser.from(admin))))
                     .andExpect(status().isOk())
                     .andReturn().getResponse().getContentAsString();
 
-            // then
             String shipment = "$.itemsShippedToday[?(@.addressDto.city == '" + city + "')]";
             List<String> itemNames = JsonPath.read(response, shipment + ".itemgroups[*].itemName");
             List<Integer> amounts = JsonPath.read(response, shipment + ".itemgroups[*].amount");
@@ -344,7 +306,6 @@ class EurderControllerTest {
 
         @Test
         void givenEurderShippingNextWeek_whenViewingShippedToday_thenItIsNotListed() throws Exception {
-            // given: not enough stock, so it ships in 7 days and not today
             String city = "City-" + UUID.randomUUID();
             Customer customer = saveCustomerLivingIn(city);
             clock.setTo(ORDER_DAY);
@@ -352,22 +313,18 @@ class EurderControllerTest {
             clock.setTo(ORDER_DAY.plusDays(1));
             Customer admin = customerRepository.save(TestData.admin("hash"));
 
-            // when
             ResultActions result = mockMvc.perform(get("/orders/shipped-today")
                     .with(user(AuthenticatedUser.from(admin))));
 
-            // then
             result.andExpect(status().isOk())
                     .andExpect(jsonPath("$.itemsShippedToday[?(@.addressDto.city == '" + city + "')]", empty()));
         }
 
         @Test
         void givenCustomer_whenViewingShippedToday_thenReturns403() throws Exception {
-            // when
             ResultActions result = mockMvc.perform(get("/orders/shipped-today")
                     .with(user(AuthenticatedUser.from(saveCustomer()))));
 
-            // then
             result.andExpect(status().isForbidden());
         }
     }

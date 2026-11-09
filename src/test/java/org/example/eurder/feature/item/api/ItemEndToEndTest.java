@@ -25,10 +25,8 @@ class ItemEndToEndTest extends EndToEndTest {
 
         @Test
         void givenAdmin_whenAddingItem_thenReturns201() {
-            // given
             String name = TestData.uniqueName();
 
-            // when / then
             as(newAdmin()).body(itemJson(name, "19.99", 10)).post("/items")
                     .then()
                     .statusCode(HttpStatus.CREATED.value())
@@ -40,13 +38,11 @@ class ItemEndToEndTest extends EndToEndTest {
 
         @Test
         void givenNameAlreadyUsed_whenAddingItem_thenReturns409() {
-            // given
             String admin = newAdmin();
             String name = TestData.uniqueName();
             as(admin).body(itemJson(name, "19.99", 10)).post("/items")
                     .then().statusCode(HttpStatus.CREATED.value());
 
-            // when / then
             as(admin).body(itemJson(name, "5.00", 1)).post("/items")
                     .then()
                     .statusCode(HttpStatus.CONFLICT.value())
@@ -55,7 +51,6 @@ class ItemEndToEndTest extends EndToEndTest {
 
         @Test
         void givenPriceWithThreeDecimals_whenAddingItem_thenReturns400() {
-            // when / then
             as(newAdmin()).body(itemJson(TestData.uniqueName(), "19.999", 10)).post("/items")
                     .then()
                     .statusCode(HttpStatus.BAD_REQUEST.value())
@@ -64,7 +59,6 @@ class ItemEndToEndTest extends EndToEndTest {
 
         @Test
         void givenZeroPrice_whenAddingItem_thenReturns400() {
-            // when / then
             as(newAdmin()).body(itemJson(TestData.uniqueName(), "0", 10)).post("/items")
                     .then()
                     .statusCode(HttpStatus.BAD_REQUEST.value())
@@ -73,12 +67,10 @@ class ItemEndToEndTest extends EndToEndTest {
 
         @Test
         void givenMissingAmount_whenAddingItem_thenReturns400() {
-            // given
             String body = """
                     { "name": "%s", "description": "A description", "price": 1.00 }
                     """.formatted(TestData.uniqueName());
 
-            // when / then
             as(newAdmin()).body(body).post("/items")
                     .then()
                     .statusCode(HttpStatus.BAD_REQUEST.value())
@@ -87,14 +79,12 @@ class ItemEndToEndTest extends EndToEndTest {
 
         @Test
         void givenCustomer_whenAddingItem_thenReturns403() {
-            // when / then
             as(newCustomer()).body(itemJson(TestData.uniqueName(), "19.99", 10)).post("/items")
                     .then().statusCode(HttpStatus.FORBIDDEN.value());
         }
 
         @Test
         void givenNoCredentials_whenAddingItem_thenReturns401() {
-            // when / then
             anonymous().body(itemJson(TestData.uniqueName(), "19.99", 10)).post("/items")
                     .then().statusCode(HttpStatus.UNAUTHORIZED.value());
         }
@@ -106,11 +96,9 @@ class ItemEndToEndTest extends EndToEndTest {
 
         @Test
         void givenItemInStockAndItemOutOfStock_whenListingItems_thenOnlyTheOneInStockIsListed() {
-            // given
             String inStock = itemRepository.save(TestData.item("1.00", 3)).getName();
             String outOfStock = itemRepository.save(TestData.item("1.00", 0)).getName();
 
-            // when / then
             as(newCustomer()).get("/items")
                     .then()
                     .statusCode(HttpStatus.OK.value())

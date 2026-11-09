@@ -31,18 +31,15 @@ class EurderRepositoryTest {
 
     @Test
     void givenSavedEurder_whenReadingItBack_thenItemGroupsAndTotalAreStored() {
-        // given
         Customer customer = customerRepository.save(TestData.customer("hash"));
         Item item = itemRepository.save(TestData.item("19.99", 10));
         Eurder eurder = eurderRepository.save(new Eurder(customer, ORDER_DATE,
                 List.of(ItemGroup.of(item, 3, ORDER_DATE))));
         entityManager.flush();
-        entityManager.clear(); // forces a real read from H2 instead of the cache
+        entityManager.clear();
 
-        // when
         Eurder found = eurderRepository.findById(eurder.getId()).orElseThrow();
 
-        // then
         assertThat(found.getOrderDate()).isEqualTo(ORDER_DATE);
         assertThat(found.getItemGroups()).hasSize(1);
         ItemGroup itemGroup = found.getItemGroups().get(0);
@@ -55,17 +52,14 @@ class EurderRepositoryTest {
 
     @Test
     void givenEurdersOfTwoCustomers_whenFindingByCustomer_thenReturnsOnlyTheirs() {
-        // given
         Customer john = customerRepository.save(TestData.customer("hash"));
         Customer jane = customerRepository.save(TestData.customer("hash"));
         Item item = itemRepository.save(TestData.item("19.99", 10));
         eurderRepository.save(new Eurder(john, ORDER_DATE, List.of(ItemGroup.of(item, 1, ORDER_DATE))));
         eurderRepository.save(new Eurder(jane, ORDER_DATE, List.of(ItemGroup.of(item, 1, ORDER_DATE))));
 
-        // when
         List<Eurder> eurders = eurderRepository.findAllByCustomer(john);
 
-        // then
         assertThat(eurders).hasSize(1);
         assertThat(eurders.get(0).getCustomer().getId()).isEqualTo(john.getId());
     }

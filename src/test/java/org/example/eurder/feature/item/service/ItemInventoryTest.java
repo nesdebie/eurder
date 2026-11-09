@@ -17,10 +17,8 @@ class ItemInventoryTest {
             "1000, STOCK_HIGH"
     })
     void givenAmount_whenGettingUrgency_thenReturnsExpectedLevel(int amount, ItemInventory expected) {
-        // when
         ItemInventory urgency = ItemInventory.of(amount);
 
-        // then
         assertThat(urgency).isEqualTo(expected);
     }
 }

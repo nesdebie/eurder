@@ -20,15 +20,12 @@ class CustomerRepositoryTest {
 
     @Test
     void givenSavedCustomer_whenReadingItBack_thenFullNameAndAddressAreStored() {
-        // given
         Customer customer = customerRepository.save(TestData.customer("hash"));
         entityManager.flush();
         entityManager.clear();
 
-        // when
         Customer found = customerRepository.findByEmail(customer.getEmail()).orElseThrow();
 
-        // then
         assertThat(found.getFullName().firstName()).isEqualTo("John");
         assertThat(found.getAddress()).isEqualTo(TestData.address());
         assertThat(found.getPhoneNumber()).isEqualTo("0470123456");
@@ -36,27 +33,22 @@ class CustomerRepositoryTest {
 
     @Test
     void givenSavedAdmin_whenReadingItBack_thenProfileIsEmpty() {
-        // given
         Customer admin = customerRepository.save(TestData.admin("hash"));
         entityManager.flush();
         entityManager.clear();
 
-        // when
         Customer found = customerRepository.findById(admin.getId()).orElseThrow();
 
-        // then
         assertThat(found.getFullName()).isNull();
         assertThat(found.getAddress()).isNull();
     }
 
     @Test
     void givenEmailAlreadyStored_whenSavingAnotherCustomerWithIt_thenDatabaseRejectsIt() {
-        // given
         Customer first = customerRepository.saveAndFlush(TestData.customer("hash"));
         Customer duplicate = Customer.customer(first.getEmail(), "hash",
                 first.getFullName(), "0470000000", TestData.address());
 
-        // when / then
         assertThatThrownBy(() -> customerRepository.saveAndFlush(duplicate))
                 .isInstanceOf(DataIntegrityViolationException.class);
     }
