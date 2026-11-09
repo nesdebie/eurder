@@ -2,7 +2,6 @@ package org.example.eurder.feature.customer.service;
 
 import org.example.eurder.common.api.AddressMapper;
 import org.example.eurder.common.api.FullNameMapper;
-import org.example.eurder.feature.customer.api.dto.CustomerDetailDto;
 import org.example.eurder.feature.customer.exception.CustomerNotFoundException;
 import org.example.eurder.feature.eurder.service.EurderService;
 import org.example.eurder.feature.security.exception.EmailAlreadyUsedException;
@@ -28,7 +27,6 @@ public class CustomerService {
     private final AddressMapper addressMapper;
     private final FullNameMapper fullNameMapper;
     private final CustomerMapper customerMapper;
-    private final EurderService eurderService;
 
     public CustomerService(CustomerRepository customerRepository, PasswordEncoder passwordEncoder, AddressMapper addressMapper, FullNameMapper fullNameMapper, CustomerMapper customerMapper, EurderService eurderService) {
         this.customerRepository = customerRepository;
@@ -36,7 +34,6 @@ public class CustomerService {
         this.addressMapper = addressMapper;
         this.fullNameMapper = fullNameMapper;
         this.customerMapper = customerMapper;
-        this.eurderService = eurderService;
     }
 
     public CustomerDto createCustomer(CreateCustomerRequest request) {
@@ -63,11 +60,9 @@ public class CustomerService {
         return customerMapper.mapToDto(customerRepository.findAllBy());
     }
 
-    public CustomerDetailDto getCustomerDetails(UUID customerId) {
-        Customer customer = getCustomerById(customerId);
+    public CustomerDto getCustomerDetails(UUID customerId) {
         return customerMapper.mapToDto(
-                customer,
-                eurderService.viewEurdersReport(customerId)
+                getCustomerById(customerId)
         );
     }
 

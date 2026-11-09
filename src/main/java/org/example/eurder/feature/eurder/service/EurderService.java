@@ -1,5 +1,6 @@
 package org.example.eurder.feature.eurder.service;
 
+import jakarta.transaction.Transactional;
 import org.example.eurder.feature.customer.service.CustomerService;
 import org.example.eurder.feature.eurder.api.EurderMapper;
 import org.example.eurder.feature.eurder.api.dto.EurderDto;
@@ -22,6 +23,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+@Transactional
 @Service
 public class EurderService {
     private final EurderRepository eurderRepository;
@@ -45,10 +47,8 @@ public class EurderService {
                 .map(itemToBuy -> {
                     Item item = itemService.getItemById(itemToBuy.id());
 
-                    ItemGroup itemGroup = new ItemGroup(
-                            item.getId(),
-                            item.getName(),
-                            item.getPrice(),
+                    ItemGroup itemGroup = ItemGroup.of(
+                            item,
                             itemToBuy.amount(),
                             LocalDate.now(clock));
                     itemService.reduceStock(item.getId(), itemToBuy.amount());

@@ -2,16 +2,13 @@ package org.example.eurder.feature.customer.api;
 
 import org.example.eurder.common.api.AddressMapper;
 import org.example.eurder.common.api.FullNameMapper;
-import org.example.eurder.feature.customer.api.dto.CustomerDetailDto;
 import org.example.eurder.feature.customer.api.dto.CustomerDto;
 import org.example.eurder.feature.customer.domain.Customer;
 import org.example.eurder.feature.eurder.api.EurderMapper;
 import org.example.eurder.feature.eurder.api.dto.EurdersReportDto;
-import org.example.eurder.feature.eurder.domain.Eurder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.UUID;
 
 @Component
 public class CustomerMapper {
@@ -37,12 +34,5 @@ public class CustomerMapper {
         return customers.stream()
                 .map(this::mapToDto)
                 .toList();
-    }
-
-    public CustomerDetailDto mapToDto(Customer customer, EurdersReportDto eurders) {
-        return new CustomerDetailDto(
-                mapToDto(customer),
-                eurders
-        );
     }
 }

@@ -2,7 +2,6 @@ package org.example.eurder.feature.customer.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
-import org.example.eurder.feature.customer.api.dto.CustomerDetailDto;
 import org.example.eurder.feature.customer.api.dto.CustomerDto;
 import org.example.eurder.feature.customer.api.request.CreateCustomerRequest;
 import org.example.eurder.feature.customer.service.CustomerService;
@@ -42,7 +41,7 @@ public class CustomerController {
     @GetMapping(value = "/{id}")
     @Secured("VIEW_CUSTOMER")
     @ResponseStatus(HttpStatus.OK)
-    public CustomerDetailDto viewCustomer(@PathVariable UUID id) {
+    public CustomerDto viewCustomer(@PathVariable UUID id) {
         return customerService.getCustomerDetails(id);
     }
 }
