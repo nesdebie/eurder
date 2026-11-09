@@ -16,6 +16,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import tools.jackson.core.JacksonException;
 import tools.jackson.databind.exc.MismatchedInputException;
@@ -89,6 +90,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ProblemDetail handleUnexpected(Exception e) {
         log.error("Unexpected error", e);
         return ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, "An unexpected error occurred");
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ProblemDetail handleTypeMismatch(MethodArgumentTypeMismatchException e) {
+        String detail = "Invalid value '" + e.getValue() + "' for parameter '" + e.getName() + "'";
+        log.warn("Bad request: {}", detail);
+        return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, detail);
     }
 
     @Override

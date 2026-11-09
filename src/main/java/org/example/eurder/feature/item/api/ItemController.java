@@ -2,11 +2,15 @@ package org.example.eurder.feature.item.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
+import org.example.eurder.feature.eurder.api.dto.EurdersReportDto;
 import org.example.eurder.feature.item.api.dto.ItemDto;
 import org.example.eurder.feature.item.api.request.AddOrUpdateItemRequest;
+import org.example.eurder.feature.item.service.ItemInventory;
 import org.example.eurder.feature.item.service.ItemService;
+import org.example.eurder.feature.security.authentication.AuthenticatedUser;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -46,5 +50,14 @@ public class ItemController {
     @Operation(summary = "List all items")
     public List<ItemDto> listAllItems() {
         return itemService.getAllItems();
+    }
+
+
+    @GetMapping("/inventory")
+    @Secured("VIEW_INVENTORY")
+    @Operation(summary = "List items by stock resupply urgency, most urgent first")
+    public List<ItemDto> viewItemInventory(
+            @RequestParam(name = "urgency", required = false) ItemInventory urgency) {
+        return itemService.getItemsInventory(urgency);
     }
 }
