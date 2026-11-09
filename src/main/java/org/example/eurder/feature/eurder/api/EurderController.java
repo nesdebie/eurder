@@ -3,6 +3,7 @@ package org.example.eurder.feature.eurder.api;
 import jakarta.validation.Valid;
 import org.example.eurder.feature.eurder.api.dto.EurderDto;
 import org.example.eurder.feature.eurder.api.dto.EurdersReportDto;
+import org.example.eurder.feature.eurder.api.dto.ItemsShippedTodayDto;
 import org.example.eurder.feature.eurder.api.request.EurderItemsRequest;
 import org.example.eurder.feature.eurder.service.EurderService;
 import org.example.eurder.feature.security.authentication.AuthenticatedUser;
@@ -44,11 +45,18 @@ public class EurderController {
     }
 
 
-    @GetMapping()
+    @GetMapping("/report")
     @Secured("VIEW_EURDERS_REPORT")
     @ResponseStatus(HttpStatus.OK)
     public EurdersReportDto viewEurdersReport(
             @AuthenticationPrincipal AuthenticatedUser user) {
         return eurderService.viewEurdersReport(user.id());
+    }
+
+    @GetMapping("/shipped-today")
+    @Secured("VIEW_SHIPPING_TODAY")
+    @ResponseStatus(HttpStatus.OK)
+    public ItemsShippedTodayDto viewItemsShippedToday() {
+        return eurderService.viewItemsShippedToday();
     }
 }

@@ -67,4 +67,10 @@ public class Eurder {
     public List<ItemGroup> getItemGroups() {
         return List.copyOf(itemGroups);
     }
+
+    public List<ItemGroup> getItemGroupsShippingOn(LocalDate date) {
+        return itemGroups.stream()
+                .filter(itemGroup -> itemGroup.shippingDate().equals(date))
+                .toList();
+    }
 }

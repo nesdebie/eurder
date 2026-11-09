@@ -4,6 +4,7 @@ import org.example.eurder.feature.customer.service.CustomerService;
 import org.example.eurder.feature.eurder.api.EurderMapper;
 import org.example.eurder.feature.eurder.api.dto.EurderDto;
 import org.example.eurder.feature.eurder.api.dto.EurdersReportDto;
+import org.example.eurder.feature.eurder.api.dto.ItemsShippedTodayDto;
 import org.example.eurder.feature.eurder.api.request.EurderItemsRequest;
 import org.example.eurder.feature.eurder.domain.Eurder;
 import org.example.eurder.feature.eurder.domain.EurderRepository;
@@ -77,6 +78,13 @@ public class EurderService {
                         customerService
                                 .getCustomerById(customerId)
                 )
+        );
+    }
+
+    public ItemsShippedTodayDto viewItemsShippedToday() {
+        return eurderMapper.mapToItemsShippedTodayDto(
+                eurderRepository.findAll(),
+                LocalDate.now(clock)
         );
     }
 

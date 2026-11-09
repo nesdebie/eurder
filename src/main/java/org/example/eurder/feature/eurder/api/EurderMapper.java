@@ -1,8 +1,9 @@
 package org.example.eurder.feature.eurder.api;
 
-import org.example.eurder.feature.eurder.api.dto.EurderDto;
-import org.example.eurder.feature.eurder.api.dto.EurdersReportDto;
-import org.example.eurder.feature.eurder.api.dto.ItemGroupDto;
+import org.apache.commons.lang3.tuple.Pair;
+import org.example.eurder.common.api.AddressMapper;
+import org.example.eurder.common.domain.Address;
+import org.example.eurder.feature.eurder.api.dto.*;
 import org.example.eurder.feature.eurder.api.request.EurderItemsRequest;
 import org.example.eurder.feature.eurder.api.request.EurderSingleItemRequest;
 import org.example.eurder.feature.eurder.domain.Eurder;
@@ -10,10 +11,21 @@ import org.example.eurder.feature.eurder.domain.ItemGroup;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Component
 public class EurderMapper {
+
+    private final AddressMapper addressMapper;
+
+    public EurderMapper(AddressMapper addressMapper) {
+        this.addressMapper = addressMapper;
+    }
+
     public EurderItemsRequest mapToEurderRequest(Eurder eurder) {
         return new EurderItemsRequest(
                 eurder.getItemGroups().stream()
@@ -61,5 +73,27 @@ public class EurderMapper {
 
     public List<ItemGroupDto> mapToDto(List<ItemGroup> itemGroups) {
         return itemGroups.stream().map(this::mapToDto).toList();
+    }
+
+
+    public ItemsShippedTodayDto mapToItemsShippedTodayDto(List<Eurder> eurders, LocalDate shippingDate) {
+        Map<Address, List<ItemGroup>> itemGroupsByAddress = eurders.stream()
+                .collect(Collectors.groupingBy(
+                        eurder -> eurder.getCustomer().getAddress(),
+                        LinkedHashMap::new,
+                        Collectors.flatMapping(
+                                eurder -> eurder.getItemGroupsShippingOn(shippingDate).stream(),
+                                Collectors.toList())));
+
+        return new ItemsShippedTodayDto(itemGroupsByAddress.entrySet().stream()
+                .map(entry -> mapToDto(entry.getValue(), entry.getKey()))
+                .toList());
+    }
+
+    public ItemGroupShippedTodayDto mapToDto(List<ItemGroup> groups, Address address) {
+        return new ItemGroupShippedTodayDto(
+                addressMapper.mapToDto(address),
+                mapToDto(groups)
+        );
     }
 }
