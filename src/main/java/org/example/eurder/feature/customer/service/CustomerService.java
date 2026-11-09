@@ -3,7 +3,6 @@ package org.example.eurder.feature.customer.service;
 import org.example.eurder.common.api.AddressMapper;
 import org.example.eurder.common.api.FullNameMapper;
 import org.example.eurder.feature.customer.exception.CustomerNotFoundException;
-import org.example.eurder.feature.eurder.service.EurderService;
 import org.example.eurder.feature.security.exception.EmailAlreadyUsedException;
 import org.example.eurder.feature.customer.api.CustomerMapper;
 import org.example.eurder.feature.customer.api.dto.CustomerDto;
@@ -28,7 +27,7 @@ public class CustomerService {
     private final FullNameMapper fullNameMapper;
     private final CustomerMapper customerMapper;
 
-    public CustomerService(CustomerRepository customerRepository, PasswordEncoder passwordEncoder, AddressMapper addressMapper, FullNameMapper fullNameMapper, CustomerMapper customerMapper, EurderService eurderService) {
+    public CustomerService(CustomerRepository customerRepository, PasswordEncoder passwordEncoder, AddressMapper addressMapper, FullNameMapper fullNameMapper, CustomerMapper customerMapper) {
         this.customerRepository = customerRepository;
         this.passwordEncoder = passwordEncoder;
         this.addressMapper = addressMapper;
