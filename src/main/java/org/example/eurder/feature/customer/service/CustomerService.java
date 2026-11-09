@@ -3,6 +3,7 @@ package org.example.eurder.feature.customer.service;
 import org.example.eurder.common.api.AddressMapper;
 import org.example.eurder.common.api.FullNameMapper;
 import org.example.eurder.feature.customer.exception.CustomerNotFoundException;
+import org.example.eurder.feature.security.domain.Role;
 import org.example.eurder.feature.security.exception.EmailAlreadyUsedException;
 import org.example.eurder.feature.customer.api.CustomerMapper;
 import org.example.eurder.feature.customer.api.dto.CustomerDto;
@@ -56,7 +57,11 @@ public class CustomerService {
     }
 
     public List<CustomerDto> getAllCustomers() {
-        return customerMapper.mapToDto(customerRepository.findAllBy());
+        return customerMapper.mapToDto(
+                customerRepository.findAllBy().stream()
+                        .filter(customer -> customer.getRole().equals(Role.CUSTOMER))
+                        .toList()
+        );
     }
 
     public CustomerDto getCustomerDetails(UUID customerId) {

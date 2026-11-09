@@ -47,7 +47,7 @@ public class ItemService {
     }
 
     public ItemDto updateItem(AddOrUpdateItemRequest request, UUID id) {
-        verifyItemNameHasNoDuplicate(request.name());
+        verifyItemNameHasNoDuplicate(request.name(), id);
         Item item = getItemById(id);
 
         item.update(itemMapper.mapToEntity(request));
@@ -84,8 +84,9 @@ public class ItemService {
     }
 
 
-    private void verifyItemNameHasNoDuplicate(String name) {
+    private void verifyItemNameHasNoDuplicate(String name, UUID id) {
         itemRepository.findByName(name)
+                .filter(item -> !item.getId().equals(id))
                 .ifPresent(item -> { throw new ItemConflictException(name); });
     }
 

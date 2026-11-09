@@ -13,9 +13,7 @@ import org.example.eurder.feature.eurder.domain.ItemGroup;
 import org.example.eurder.feature.eurder.exception.EurderForbiddenException;
 import org.example.eurder.feature.eurder.exception.EurderNotFoundException;
 import org.example.eurder.feature.item.domain.Item;
-import org.example.eurder.feature.item.domain.ItemRepository;
 import org.example.eurder.feature.item.service.ItemService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Clock;
@@ -28,7 +26,6 @@ import java.util.UUID;
 public class EurderService {
     private final EurderRepository eurderRepository;
     private final ItemService itemService;
-    private final Clock clock;
     private final EurderMapper eurderMapper;
     private final CustomerService customerService;
 
@@ -36,7 +33,6 @@ public class EurderService {
     public EurderService(EurderRepository eurderRepository, ItemService itemService, Clock clock, EurderMapper eurderMapper, CustomerService customerService) {
         this.eurderRepository = eurderRepository;
         this.itemService = itemService;
-        this.clock = clock;
         this.eurderMapper = eurderMapper;
         this.customerService = customerService;
     }
@@ -81,7 +77,7 @@ public class EurderService {
         );
     }
 
-    public ItemsShippedTodayDto viewItemsShippedToday() {
+    public ItemsShippedTodayDto viewItemsShippedToday(Clock clock) {
         return eurderMapper.mapToItemsShippedTodayDto(
                 eurderRepository.findAll(),
                 LocalDate.now(clock)

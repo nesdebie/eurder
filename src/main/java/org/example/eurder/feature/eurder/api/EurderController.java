@@ -12,6 +12,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Clock;
 import java.util.UUID;
 
 @RestController
@@ -19,11 +20,12 @@ import java.util.UUID;
 public class EurderController {
 
     private final EurderService eurderService;
+    private final Clock clock;
 
-    public EurderController(EurderService eurderService) {
+    public EurderController(EurderService eurderService, Clock clock) {
         this.eurderService = eurderService;
+        this.clock = clock;
     }
-
 
     @PostMapping
     @Secured("EURDER_ITEMS")
@@ -57,6 +59,6 @@ public class EurderController {
     @Secured("VIEW_SHIPPING_TODAY")
     @ResponseStatus(HttpStatus.OK)
     public ItemsShippedTodayDto viewItemsShippedToday() {
-        return eurderService.viewItemsShippedToday();
+        return eurderService.viewItemsShippedToday(clock);
     }
 }
