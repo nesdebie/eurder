@@ -28,15 +28,16 @@ public class EurderService {
     private final ItemService itemService;
     private final EurderMapper eurderMapper;
     private final CustomerService customerService;
+    private final Clock clock;
 
 
-    public EurderService(EurderRepository eurderRepository, ItemService itemService, EurderMapper eurderMapper, CustomerService customerService) {
+    public EurderService(EurderRepository eurderRepository, ItemService itemService, EurderMapper eurderMapper, CustomerService customerService, Clock clock) {
         this.eurderRepository = eurderRepository;
         this.itemService = itemService;
         this.eurderMapper = eurderMapper;
         this.customerService = customerService;
+        this.clock = clock;
     }
-
 
     public EurderDto createEurder(EurderItemsRequest request, UUID customerId) {
         List<ItemGroup> itemGroups = request.items().stream()
@@ -77,11 +78,10 @@ public class EurderService {
         );
     }
 
-    public ItemsShippedTodayDto viewItemsShippedToday(Clock clock) {
+    public ItemsShippedTodayDto viewItemsShippedToday() {
+        LocalDate today = LocalDate.now(clock);
         return eurderMapper.mapToItemsShippedTodayDto(
-                eurderRepository.findAll(),
-                LocalDate.now(clock)
-        );
+                eurderRepository.findAllWithItemGroupsShippingOn(today), today);
     }
 
     public Eurder getEurderById(UUID id) {

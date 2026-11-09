@@ -20,11 +20,9 @@ import java.util.UUID;
 public class EurderController {
 
     private final EurderService eurderService;
-    private final Clock clock;
 
-    public EurderController(EurderService eurderService, Clock clock) {
+    public EurderController(EurderService eurderService) {
         this.eurderService = eurderService;
-        this.clock = clock;
     }
 
     @PostMapping
@@ -59,6 +57,6 @@ public class EurderController {
     @Secured("VIEW_SHIPPING_TODAY")
     @ResponseStatus(HttpStatus.OK)
     public ItemsShippedTodayDto viewItemsShippedToday() {
-        return eurderService.viewItemsShippedToday(clock);
+        return eurderService.viewItemsShippedToday();
     }
 }
