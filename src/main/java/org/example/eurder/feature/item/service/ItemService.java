@@ -86,7 +86,7 @@ public class ItemService {
 
     private void verifyItemNameHasNoDuplicate(String name) {
         itemRepository.findByName(name)
-                .ifPresent(item -> new ItemConflictException(name));
+                .ifPresent(item -> { throw new ItemConflictException(name); });
     }
 
     public Item getItemById(UUID id) {
