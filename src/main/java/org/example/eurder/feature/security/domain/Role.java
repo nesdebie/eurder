@@ -12,7 +12,8 @@ public enum Role {
             Permission.UPDATE_ITEM,
             Permission.VIEW_CUSTOMERS,
             Permission.VIEW_CUSTOMER,
-            Permission.VIEW_INVENTORY);
+            Permission.VIEW_INVENTORY,
+            Permission.VIEW_SHIPPING_TODAY);
 
     private final Set<Permission> permissions;
 
