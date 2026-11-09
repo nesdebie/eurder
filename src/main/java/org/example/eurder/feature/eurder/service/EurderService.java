@@ -30,7 +30,7 @@ public class EurderService {
     private final CustomerService customerService;
 
 
-    public EurderService(EurderRepository eurderRepository, ItemService itemService, Clock clock, EurderMapper eurderMapper, CustomerService customerService) {
+    public EurderService(EurderRepository eurderRepository, ItemService itemService, EurderMapper eurderMapper, CustomerService customerService) {
         this.eurderRepository = eurderRepository;
         this.itemService = itemService;
         this.eurderMapper = eurderMapper;
