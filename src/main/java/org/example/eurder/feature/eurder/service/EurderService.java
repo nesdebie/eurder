@@ -94,6 +94,6 @@ public class EurderService {
     }
 
     private void verifyCustomerIdAreMatching(Eurder eurder, UUID customerId) {
-        if (eurder.getCustomer().getId() != customerId) throw EurderForbiddenException.forbiddenException();
+        if (!eurder.getCustomer().getId().equals(customerId)) throw EurderForbiddenException.forbiddenException();
     }
 }
