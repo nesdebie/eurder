@@ -1,0 +1,1 @@
+ALTER TABLE items DROP CONSTRAINT chk_items_amount_not_negative;

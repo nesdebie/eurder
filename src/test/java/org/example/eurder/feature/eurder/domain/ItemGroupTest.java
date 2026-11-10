@@ -78,4 +78,15 @@ class ItemGroupTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Amount must be greater than 0");
     }
+
+    @DisplayName("Checking shipping date with negative stock")
+    @Test
+    void givenNegativeStock_whenCreatingItemGroup_thenShipsInSevenDays() {
+        Item item = itemWithStock(2);
+        item.reduceAmount(5);
+
+        ItemGroup itemGroup = ItemGroup.of(item, 1, ORDER_DATE);
+
+        assertThat(itemGroup.shippingDate()).isEqualTo(LocalDate.of(2026, 11, 16));
+    }
 }
