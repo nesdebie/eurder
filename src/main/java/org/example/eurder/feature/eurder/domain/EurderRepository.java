@@ -12,11 +12,12 @@ import java.util.UUID;
 @Repository
 public interface EurderRepository extends JpaRepository<Eurder, UUID> {
     @Query("""
-        select distinct e from Eurder e
-        join fetch e.customer
-        join e.itemGroups ig
-        where ig.shippingDate = :date
-        """)
+            select distinct e from Eurder e
+            join fetch e.customer
+            join e.itemGroups ig
+            where ig.shippingDate = :date
+            """)
     List<Eurder> findAllWithItemGroupsShippingOn(LocalDate date);
+
     List<Eurder> findAllByCustomer(Customer customer);
 }

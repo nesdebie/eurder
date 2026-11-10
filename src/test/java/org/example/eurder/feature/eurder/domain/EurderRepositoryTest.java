@@ -5,6 +5,7 @@ import org.example.eurder.feature.customer.domain.Customer;
 import org.example.eurder.feature.customer.domain.CustomerRepository;
 import org.example.eurder.feature.item.domain.Item;
 import org.example.eurder.feature.item.domain.ItemRepository;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
@@ -29,6 +30,7 @@ class EurderRepositoryTest {
     @Autowired
     private TestEntityManager entityManager;
 
+    @DisplayName("Testing stored order data")
     @Test
     void givenSavedEurder_whenReadingItBack_thenItemGroupsAndTotalAreStored() {
         Customer customer = customerRepository.save(TestData.customer("hash"));
@@ -50,6 +52,7 @@ class EurderRepositoryTest {
         assertThat(found.getTotalPrice()).isEqualByComparingTo("59.97");
     }
 
+    @DisplayName("Testing an customer views his/her own orders")
     @Test
     void givenEurdersOfTwoCustomers_whenFindingByCustomer_thenReturnsOnlyTheirs() {
         Customer john = customerRepository.save(TestData.customer("hash"));

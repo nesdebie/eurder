@@ -5,7 +5,6 @@ import org.example.eurder.common.api.FullNameMapper;
 import org.example.eurder.feature.customer.api.dto.CustomerDto;
 import org.example.eurder.feature.customer.domain.Customer;
 import org.example.eurder.feature.eurder.api.EurderMapper;
-import org.example.eurder.feature.eurder.api.dto.EurdersReportDto;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

@@ -2,15 +2,12 @@ package org.example.eurder.feature.item.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
-import org.example.eurder.feature.eurder.api.dto.EurdersReportDto;
 import org.example.eurder.feature.item.api.dto.ItemDto;
 import org.example.eurder.feature.item.api.request.AddOrUpdateItemRequest;
 import org.example.eurder.feature.item.service.ItemInventory;
 import org.example.eurder.feature.item.service.ItemService;
-import org.example.eurder.feature.security.authentication.AuthenticatedUser;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

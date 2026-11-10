@@ -27,7 +27,7 @@ public class SecurityConfig {
                 .exceptionHandling(exceptions -> exceptions.authenticationEntryPoint(authenticationEntryPoint))
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/docs", "/docs/**", "/swagger-ui/**", "/v3/api-docs/**", "/error").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/customers").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/customers").permitAll()
                         .requestMatchers(HttpMethod.GET, "/items").permitAll()
                         .anyRequest().authenticated())
                 .build();

@@ -26,4 +26,5 @@ public record AddOrUpdateItemRequest(
         @Positive(message = "Amount must be more than 0")
         @Schema(description = "Number of items in stock", example = "10")
         Integer amount
-) {}
+) {
+}

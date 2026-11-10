@@ -2,6 +2,7 @@ package org.example.eurder.feature.eurder.domain;
 
 import org.example.eurder.common.TestData;
 import org.example.eurder.feature.customer.domain.Customer;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -21,53 +22,48 @@ class EurderTest {
         return new ItemGroup(UUID.randomUUID(), "Item", new BigDecimal(unitPrice), amount, shippingDate);
     }
 
+    @DisplayName("Checking order's total price")
     @Test
     void givenTwoItemGroups_whenCreatingEurder_thenTotalPriceIsSumOfItemGroupTotals() {
-        // given
         List<ItemGroup> itemGroups = List.of(itemGroup("19.99", 3, TODAY), itemGroup("0.10", 2, TODAY));
 
-        // when
         Eurder eurder = new Eurder(CUSTOMER, TODAY, itemGroups);
 
-        // then
         assertThat(eurder.getTotalPrice()).isEqualByComparingTo("60.17");
     }
 
+    @DisplayName("Testing no-item-group exception")
     @Test
     void givenNoItemGroups_whenCreatingEurder_thenThrows() {
-        // when / then
         assertThatThrownBy(() -> new Eurder(CUSTOMER, TODAY, List.of()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("An eurder must contain at least one item group");
     }
 
+    @DisplayName("Testing null-item-group exception")
     @Test
     void givenNullItemGroups_whenCreatingEurder_thenThrows() {
-        // when / then
         assertThatThrownBy(() -> new Eurder(CUSTOMER, TODAY, null))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
+    @DisplayName("Testing different shipping dates item groups")
     @Test
     void givenItemGroupsWithDifferentShippingDates_whenGettingItemGroupsShippingOnDate_thenReturnsOnlyThoseOfThatDate() {
-        // given
         ItemGroup tomorrow = itemGroup("1.00", 1, TODAY.plusDays(1));
         ItemGroup nextWeek = itemGroup("1.00", 1, TODAY.plusDays(7));
         Eurder eurder = new Eurder(CUSTOMER, TODAY, List.of(tomorrow, nextWeek));
 
-        // when
         List<ItemGroup> shipping = eurder.getItemGroupsShippingOn(TODAY.plusDays(1));
 
-        // then
         assertThat(shipping).containsExactly(tomorrow);
     }
 
+    @DisplayName("Testing Eurder data persistence")
     @Test
     void givenEurder_whenModifyingReturnedItemGroups_thenEurderIsUnchanged() {
-        // given
         Eurder eurder = new Eurder(CUSTOMER, TODAY, List.of(itemGroup("1.00", 1, TODAY)));
 
-        // when / then
         assertThatThrownBy(() -> eurder.getItemGroups().clear())
                 .isInstanceOf(UnsupportedOperationException.class);
         assertThat(eurder.getItemGroups()).hasSize(1);

@@ -1,7 +1,6 @@
 package org.example.eurder.feature.eurder.exception;
 
 import org.example.eurder.common.exception.NotFoundException;
-import org.example.eurder.feature.item.exception.ItemNotFoundException;
 
 import java.util.UUID;
 

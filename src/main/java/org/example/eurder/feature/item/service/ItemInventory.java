@@ -1,9 +1,6 @@
 package org.example.eurder.feature.item.service;
 
-import org.example.eurder.feature.item.exception.ItemBadRequestException;
-
 import java.util.Arrays;
-import java.util.function.IntPredicate;
 
 public enum ItemInventory {
     STOCK_LOW(5),

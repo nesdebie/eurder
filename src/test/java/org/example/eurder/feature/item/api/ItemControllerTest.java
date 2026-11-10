@@ -53,9 +53,10 @@ class ItemControllerTest {
     }
 
     @Nested
-    @DisplayName("Story 4 · Update an item")
+    @DisplayName("Update an item")
     class UpdateItem {
 
+        @DisplayName("Changing every item values")
         @Test
         void givenNewValues_whenUpdating_thenReturns200WithNewValues() throws Exception {
             Item item = itemRepository.save(TestData.item("10.00", 5));
@@ -73,6 +74,7 @@ class ItemControllerTest {
                     .andExpect(jsonPath("$.amount").value(8));
         }
 
+        @DisplayName("Changing one item value")
         @Test
         void givenSameName_whenUpdatingOnlyThePrice_thenReturns200() throws Exception {
             Item item = itemRepository.save(TestData.item("10.00", 5));
@@ -86,6 +88,7 @@ class ItemControllerTest {
                     .andExpect(jsonPath("$.price").value(11.0));
         }
 
+        @DisplayName("Renaming item into an existing one")
         @Test
         void givenNameOfAnotherItem_whenUpdating_thenReturns409() throws Exception {
             Item item = itemRepository.save(TestData.item("10.00", 5));
@@ -99,6 +102,7 @@ class ItemControllerTest {
             result.andExpect(status().isConflict());
         }
 
+        @DisplayName("Using unknown item ID")
         @Test
         void givenUnknownId_whenUpdating_thenReturns404() throws Exception {
             ResultActions result = mockMvc.perform(put("/items/{id}/update", UUID.randomUUID())
@@ -109,6 +113,7 @@ class ItemControllerTest {
             result.andExpect(status().isNotFound());
         }
 
+        @DisplayName("As a customer")
         @Test
         void givenCustomer_whenUpdating_thenReturns403() throws Exception {
             Item item = itemRepository.save(TestData.item("10.00", 5));
@@ -124,9 +129,10 @@ class ItemControllerTest {
     }
 
     @Nested
-    @DisplayName("Story 10 · Item overview")
+    @DisplayName("Item overview")
     class Inventory {
 
+        @DisplayName("STOCK_LOW filter")
         @Test
         void givenItemsOfEachLevel_whenFilteringOnStockLow_thenReturnsOnlyItemsBelowFive() throws Exception {
             Item low = itemRepository.save(TestData.item("1.00", 2));
@@ -144,6 +150,7 @@ class ItemControllerTest {
             assertThat(amounts).allMatch(amount -> amount < 5);
         }
 
+        @DisplayName("No filter")
         @Test
         void givenNoFilter_whenViewingInventory_thenItemsAreSortedFromMostToLeastUrgent() throws Exception {
             itemRepository.save(TestData.item("1.00", 12));
@@ -159,6 +166,7 @@ class ItemControllerTest {
             assertThat(amounts).isSorted();
         }
 
+        @DisplayName("Unknown filter")
         @Test
         void givenUnknownLevel_whenFiltering_thenReturns400() throws Exception {
             ResultActions result = mockMvc.perform(get("/items/inventory").param("urgency", "WRONG")
@@ -168,6 +176,7 @@ class ItemControllerTest {
                     .andExpect(jsonPath("$.detail").value("Invalid value 'WRONG' for parameter 'urgency'"));
         }
 
+        @DisplayName("As a customer")
         @Test
         void givenCustomer_whenViewingInventory_thenReturns403() throws Exception {
             Customer customer = customerRepository.save(TestData.customer("hash"));

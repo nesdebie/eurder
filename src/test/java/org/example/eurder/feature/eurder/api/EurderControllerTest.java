@@ -96,9 +96,11 @@ class EurderControllerTest {
     }
 
     @Nested
-    @DisplayName("Story 3 · Order items")
+    @DisplayName("Order items")
     class CreateEurder {
 
+
+        @DisplayName("Ordering item in stock")
         @Test
         void givenItemInStock_whenOrdering_thenShipsNextDayAndReturnsTotal() throws Exception {
             Customer customer = saveCustomer();
@@ -116,6 +118,7 @@ class EurderControllerTest {
                     .andExpect(jsonPath("$.totalPrice").value(59.97));
         }
 
+        @DisplayName("Ordering item out of stock")
         @Test
         void givenItemNotEnoughInStock_whenOrdering_thenShipsInSevenDays() throws Exception {
             Customer customer = saveCustomer();
@@ -127,6 +130,7 @@ class EurderControllerTest {
                     .andExpect(jsonPath("$.items[0].shippingDate").value("2026-11-16"));
         }
 
+        @DisplayName("Testing shipping date")
         @Test
         void givenTheClockMovedForward_whenOrdering_thenShippingDateFollowsTheClock() throws Exception {
             Customer customer = saveCustomer();
@@ -139,6 +143,8 @@ class EurderControllerTest {
                     .andExpect(jsonPath("$.items[0].shippingDate").value("2026-12-10"));
         }
 
+
+        @DisplayName("Testing stock reduction after order")
         @Test
         void givenItemInStock_whenOrdering_thenStockIsReduced() throws Exception {
             Customer customer = saveCustomer();
@@ -149,6 +155,7 @@ class EurderControllerTest {
             assertThat(itemRepository.findById(item.getId()).orElseThrow().getAmount()).isEqualTo(7);
         }
 
+        @DisplayName("Testing item groups")
         @Test
         void givenTwoItems_whenOrdering_thenTotalIsTheSumOfBothItemGroups() throws Exception {
             Customer customer = saveCustomer();
@@ -167,6 +174,7 @@ class EurderControllerTest {
                     .andExpect(jsonPath("$.totalPrice").value(60.17));
         }
 
+        @DisplayName("Testing ordering unknown item")
         @Test
         void givenUnknownItemAfterAValidOne_whenOrdering_thenReturns404AndStockIsUnchanged() throws Exception {
             Customer customer = saveCustomer();
@@ -179,11 +187,11 @@ class EurderControllerTest {
                             { "items": [ { "id": "%s", "amount": 3 }, { "id": "%s", "amount": 1 } ] }
                             """.formatted(item.getId(), UUID.randomUUID())));
 
-            // then: the transaction is rolled back, the first item keeps its stock
             result.andExpect(status().isNotFound());
             assertThat(itemRepository.findById(item.getId()).orElseThrow().getAmount()).isEqualTo(10);
         }
 
+        @DisplayName("Testing no item ordered")
         @Test
         void givenNoItems_whenOrdering_thenReturns400() throws Exception {
             ResultActions result = mockMvc.perform(post("/orders")
@@ -197,6 +205,7 @@ class EurderControllerTest {
                     .andExpect(jsonPath("$.errors.items[0]").value("An eurder must contain at least one item"));
         }
 
+        @DisplayName("Testing ordering as an admin")
         @Test
         void givenAdmin_whenOrdering_thenReturns403() throws Exception {
             Customer admin = customerRepository.save(TestData.admin("hash"));
@@ -208,9 +217,10 @@ class EurderControllerTest {
     }
 
     @Nested
-    @DisplayName("Story 5 · View report of orders")
+    @DisplayName("View report of orders")
     class Report {
 
+        @DisplayName("Two-orders size")
         @Test
         void givenTwoEurders_whenViewingReport_thenReturnsBothWithGrandTotal() throws Exception {
             Customer customer = saveCustomer();
@@ -225,6 +235,7 @@ class EurderControllerTest {
                     .andExpect(jsonPath("$.totalPrice").value(27.5));
         }
 
+        @DisplayName("Zero-order size")
         @Test
         void givenNoEurders_whenViewingReport_thenReturnsEmptyReport() throws Exception {
             ResultActions result = mockMvc.perform(get("/orders/report")
@@ -237,9 +248,10 @@ class EurderControllerTest {
     }
 
     @Nested
-    @DisplayName("Story 6 · Reorder an existing order")
+    @DisplayName("Reorder an existing order")
     class Reorder {
 
+        @DisplayName("As the matching customer")
         @Test
         void givenOwnEurder_whenReordering_thenReturns201WithCurrentPrice() throws Exception {
             Customer customer = saveCustomer();
@@ -257,6 +269,7 @@ class EurderControllerTest {
                     .andExpect(jsonPath("$.totalPrice").value(12.0));
         }
 
+        @DisplayName("As another customer")
         @Test
         void givenEurderOfAnotherCustomer_whenReordering_thenReturns403() throws Exception {
             String eurderId = orderAndGetId(saveCustomer(), saveItem("19.99", 10), 1);
@@ -267,6 +280,7 @@ class EurderControllerTest {
             result.andExpect(status().isForbidden());
         }
 
+        @DisplayName("As a customer with an unknown order")
         @Test
         void givenUnknownEurder_whenReordering_thenReturns404() throws Exception {
             ResultActions result = mockMvc.perform(post("/orders/{id}/reorder", UUID.randomUUID())
@@ -277,11 +291,12 @@ class EurderControllerTest {
     }
 
     @Nested
-    @DisplayName("Story 9 · Items shipping today")
+    @DisplayName("Items shipped today")
     class ShippedToday {
 
         private static final ZonedDateTime ORDER_DAY = ZonedDateTime.of(2031, 3, 3, 10, 0, 0, 0, BRUSSELS);
 
+        @DisplayName("With only valid item groups in database")
         @Test
         void givenItemGroupShippingToday_whenViewingShippedToday_thenListsItWithTheCustomerAddress() throws Exception {
             String city = "City-" + UUID.randomUUID();
@@ -304,6 +319,7 @@ class EurderControllerTest {
             assertThat(amounts).containsExactly(2);
         }
 
+        @DisplayName("With valid and non valid item groups in database")
         @Test
         void givenEurderShippingNextWeek_whenViewingShippedToday_thenItIsNotListed() throws Exception {
             String city = "City-" + UUID.randomUUID();
@@ -320,6 +336,7 @@ class EurderControllerTest {
                     .andExpect(jsonPath("$.itemsShippedToday[?(@.addressDto.city == '" + city + "')]", empty()));
         }
 
+        @DisplayName("As a customer")
         @Test
         void givenCustomer_whenViewingShippedToday_thenReturns403() throws Exception {
             ResultActions result = mockMvc.perform(get("/orders/shipped-today")

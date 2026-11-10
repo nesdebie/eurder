@@ -12,8 +12,7 @@ public final class TestData {
 
     public static final String PASSWORD = "secret123";
 
-    private TestData() {
-    }
+    private TestData() {}
 
     public static String uniqueEmail() {
         return "user-" + UUID.randomUUID() + "@eurder.com";

@@ -1,5 +1,6 @@
 package org.example.eurder.feature.item.domain;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -13,51 +14,42 @@ class ItemTest {
         return new Item("Fridge", "Cold", new BigDecimal("499.99"), stock);
     }
 
+    @DisplayName("Checking stock if(stock > amount)")
     @Test
     void givenEnoughStock_whenReducingAmount_thenStockDecreases() {
-        // given
         Item item = itemWithStock(10);
 
-        // when
         item.reduceAmount(3);
 
-        // then
         assertThat(item.getAmount()).isEqualTo(7);
     }
 
+    @DisplayName("Checking stock if(stock == amount)")
     @Test
     void givenWholeStock_whenReducingAmount_thenStockIsZero() {
-        // given
         Item item = itemWithStock(3);
 
-        // when
         item.reduceAmount(3);
 
-        // then
         assertThat(item.getAmount()).isZero();
     }
 
+    @DisplayName("Checking stock if(stock < amount)")
     @Test
     void givenNotEnoughStock_whenReducingAmount_thenStockIsUnchanged() {
-        // given
         Item item = itemWithStock(2);
 
-        // when
         item.reduceAmount(3);
 
-        // then: current behaviour, the stock never goes below 0
         assertThat(item.getAmount()).isEqualTo(2);
     }
 
     @Test
     void givenOtherValues_whenUpdating_thenAllFieldsAreReplaced() {
-        // given
         Item item = itemWithStock(10);
 
-        // when
         item.update(new Item("Freezer", "Colder", new BigDecimal("699.00"), 4));
 
-        // then
         assertThat(item.getName()).isEqualTo("Freezer");
         assertThat(item.getDescription()).isEqualTo("Colder");
         assertThat(item.getPrice()).isEqualByComparingTo("699.00");

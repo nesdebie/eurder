@@ -1,6 +1,5 @@
 package org.example.eurder.feature.eurder.api;
 
-import org.apache.commons.lang3.tuple.Pair;
 import org.example.eurder.common.api.AddressMapper;
 import org.example.eurder.common.domain.Address;
 import org.example.eurder.feature.eurder.api.dto.*;

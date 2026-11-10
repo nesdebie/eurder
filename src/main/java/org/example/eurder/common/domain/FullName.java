@@ -6,4 +6,5 @@ import jakarta.persistence.Embeddable;
 public record FullName(
         String firstName,
         String lastName
-) {}
+) {
+}

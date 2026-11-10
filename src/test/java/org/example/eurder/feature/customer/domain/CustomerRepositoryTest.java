@@ -1,6 +1,7 @@
 package org.example.eurder.feature.customer.domain;
 
 import org.example.eurder.common.TestData;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
@@ -18,6 +19,7 @@ class CustomerRepositoryTest {
     @Autowired
     private TestEntityManager entityManager;
 
+    @DisplayName("Testing stored customer data")
     @Test
     void givenSavedCustomer_whenReadingItBack_thenFullNameAndAddressAreStored() {
         Customer customer = customerRepository.save(TestData.customer("hash"));
@@ -31,6 +33,7 @@ class CustomerRepositoryTest {
         assertThat(found.getPhoneNumber()).isEqualTo("0470123456");
     }
 
+    @DisplayName("Testing stored admin data")
     @Test
     void givenSavedAdmin_whenReadingItBack_thenProfileIsEmpty() {
         Customer admin = customerRepository.save(TestData.admin("hash"));
@@ -43,6 +46,7 @@ class CustomerRepositoryTest {
         assertThat(found.getAddress()).isNull();
     }
 
+    @DisplayName("Testing email security (no duplicate)")
     @Test
     void givenEmailAlreadyStored_whenSavingAnotherCustomerWithIt_thenDatabaseRejectsIt() {
         Customer first = customerRepository.saveAndFlush(TestData.customer("hash"));

@@ -12,7 +12,6 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Clock;
 import java.util.UUID;
 
 @RestController
@@ -52,6 +51,7 @@ public class EurderController {
             @AuthenticationPrincipal AuthenticatedUser user) {
         return eurderService.viewEurdersReport(user.id());
     }
+
 
     @GetMapping("/shipped-today")
     @Secured("VIEW_SHIPPING_TODAY")

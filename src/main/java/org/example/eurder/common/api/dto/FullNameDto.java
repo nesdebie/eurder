@@ -14,4 +14,5 @@ public record FullNameDto(
         @Size(max = 255, message = "Last name must be at most 255 characters")
         @Schema(example = "Doe")
         String lastName
-) {}
+) {
+}

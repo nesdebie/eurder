@@ -2,6 +2,7 @@ package org.example.eurder.feature.eurder.api;
 
 import org.example.eurder.common.EndToEndTest;
 import org.example.eurder.common.TestData;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 
@@ -22,6 +23,7 @@ class EurderEndToEndTest extends EndToEndTest {
                 """.formatted(itemId, amount);
     }
 
+    @DisplayName("Adding item as an admin")
     @Test
     void givenItemAddedByAdmin_whenNewCustomerOrdersIt_thenEurderAndReportAreCorrect() {
         String fridge = addItem(newAdmin(), "499.99", 5);
@@ -41,6 +43,7 @@ class EurderEndToEndTest extends EndToEndTest {
                 .body("totalPrice", equalTo(999.98f));
     }
 
+    @DisplayName("Testing reorder after a price change")
     @Test
     void givenOwnEurder_whenReorderingAfterAPriceChange_thenNewPriceIsUsed() {
         String admin = newAdmin();
@@ -58,13 +61,14 @@ class EurderEndToEndTest extends EndToEndTest {
                 .body("totalPrice", equalTo(15.0f));
     }
 
+    @DisplayName("Ordering as an anonymous")
     @Test
     void givenNoCredentials_whenOrdering_thenReturns401() {
-        // when / then
         anonymous().body(orderJson(addItem(newAdmin(), "1.00", 1), 1)).post("/orders")
                 .then().statusCode(HttpStatus.UNAUTHORIZED.value());
     }
 
+    @DisplayName("Ordering with a missing amount")
     @Test
     void givenMissingAmount_whenOrdering_thenReturns400WithIndexedFieldError() {
         String body = """

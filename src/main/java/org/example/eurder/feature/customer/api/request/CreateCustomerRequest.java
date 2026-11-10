@@ -33,4 +33,5 @@ public record CreateCustomerRequest(
         @NotNull(message = "Full name is required")
         @Valid
         AddressDto address
-) {}
+) {
+}

@@ -7,4 +7,5 @@ import java.util.List;
 public record ItemGroupShippedTodayDto(
         AddressDto addressDto,
         List<ItemGroupDto> itemgroups
-) {}
+) {
+}

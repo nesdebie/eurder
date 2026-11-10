@@ -1,5 +1,6 @@
 package org.example.eurder.feature.item.service;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -16,6 +17,8 @@ class ItemInventoryTest {
             "10, STOCK_HIGH",
             "1000, STOCK_HIGH"
     })
+
+    @DisplayName("Checking Item Inventory")
     void givenAmount_whenGettingUrgency_thenReturnsExpectedLevel(int amount, ItemInventory expected) {
         ItemInventory urgency = ItemInventory.of(amount);
 

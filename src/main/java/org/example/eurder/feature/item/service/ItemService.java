@@ -7,7 +7,6 @@ import org.example.eurder.feature.item.domain.Item;
 import org.example.eurder.feature.item.domain.ItemRepository;
 import org.example.eurder.feature.item.exception.ItemConflictException;
 import org.example.eurder.feature.item.exception.ItemNotFoundException;
-import org.example.eurder.feature.item.exception.ItemBadRequestException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
-import java.util.function.Predicate;
 
 @Service
 @Transactional
@@ -87,7 +85,9 @@ public class ItemService {
     private void verifyItemNameHasNoDuplicate(String name, UUID id) {
         itemRepository.findByName(name)
                 .filter(item -> !item.getId().equals(id))
-                .ifPresent(item -> { throw new ItemConflictException(name); });
+                .ifPresent(item -> {
+                    throw new ItemConflictException(name);
+                });
     }
 
     public Item getItemById(UUID id) {

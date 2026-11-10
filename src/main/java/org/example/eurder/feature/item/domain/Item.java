@@ -35,7 +35,8 @@ public class Item {
         this.amount = item.getAmount();
     }
 
-    protected Item() {}
+    protected Item() {
+    }
 
     public UUID getId() {
         return id;

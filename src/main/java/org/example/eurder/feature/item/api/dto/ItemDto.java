@@ -9,4 +9,5 @@ public record ItemDto(
         String description,
         BigDecimal price,
         int amount
-) {}
+) {
+}

@@ -40,7 +40,8 @@ public class Eurder {
         this.totalPrice = calculateTotalPrice();
     }
 
-    protected Eurder() {}
+    protected Eurder() {
+    }
 
     private BigDecimal calculateTotalPrice() {
         return itemGroups.stream()

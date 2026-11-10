@@ -1,6 +1,7 @@
 package org.example.eurder.feature.item.domain;
 
 import org.example.eurder.common.TestData;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
@@ -20,6 +21,7 @@ class ItemRepositoryTest {
     @Autowired
     private TestEntityManager entityManager;
 
+    @DisplayName("Checking item stored data")
     @Test
     void givenSavedItem_whenFindingByName_thenReturnsItWithExactPrice() {
         Item item = itemRepository.save(TestData.item("19.99", 10));
@@ -32,6 +34,7 @@ class ItemRepositoryTest {
         assertThat(found.getAmount()).isEqualTo(10);
     }
 
+    @DisplayName("Testing negative price")
     @Test
     void givenNegativePrice_whenSaving_thenDatabaseRejectsIt() {
         Item item = new Item(TestData.uniqueName(), "A description", new BigDecimal("-1.00"), 1);
@@ -40,6 +43,7 @@ class ItemRepositoryTest {
                 .isInstanceOf(DataIntegrityViolationException.class);
     }
 
+    @DisplayName("Testing add a duplicate name")
     @Test
     void givenNameAlreadyStored_whenSavingAnotherItemWithIt_thenDatabaseRejectsIt() {
         Item first = itemRepository.saveAndFlush(TestData.item("1.00", 1));

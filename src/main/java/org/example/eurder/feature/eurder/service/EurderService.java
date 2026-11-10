@@ -57,7 +57,7 @@ public class EurderService {
                 customerService.getCustomerById(customerId),
                 LocalDate.now(clock),
                 itemGroups
-                );
+        );
 
         eurderRepository.saveAndFlush(eurder);
         return eurderMapper.mapToDto(eurder);

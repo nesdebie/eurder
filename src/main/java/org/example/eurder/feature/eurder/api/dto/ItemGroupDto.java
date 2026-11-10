@@ -11,4 +11,5 @@ public record ItemGroupDto(
         int amount,
         BigDecimal totalPrice,
         LocalDate shippingDate
-) {}
+) {
+}

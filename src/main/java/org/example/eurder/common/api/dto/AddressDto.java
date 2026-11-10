@@ -24,4 +24,5 @@ public record AddressDto(
         @Size(max = 255, message = "City must be at most 255 characters")
         @Schema(example = "Brussels")
         String city
-) {}
+) {
+}

@@ -8,4 +8,5 @@ public record CustomerDto(
         String email,
         String phone,
         AddressDto address
-) {}
+) {
+}
