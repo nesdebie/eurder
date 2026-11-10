@@ -58,8 +58,8 @@ public class Item {
         return amount;
     }
 
-    public void reduceAmount(int toSubstract) {
-        if (amount >= toSubstract && toSubstract > 0)
-            this.amount -= toSubstract;
+    public void reduceAmount(int toSubtract) {
+        if (toSubtract <= 0) throw new IllegalArgumentException("Amount to subtract must be greater than 0");
+        this.amount -= toSubtract;
     }
 }

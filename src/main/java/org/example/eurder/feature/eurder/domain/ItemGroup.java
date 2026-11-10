@@ -19,9 +19,9 @@ public record ItemGroup(
         if (amount <= 0) {
             throw new IllegalArgumentException("Amount must be greater than 0");
         }
-        LocalDate shippingDate = amount <= item.getAmount()
-                ? orderDate.plusDays(1)
-                : orderDate.plusWeeks(1);
+        LocalDate shippingDate = item.getAmount() - amount < 0
+                ? orderDate.plusWeeks(1)
+                : orderDate.plusDays(1);
         return new ItemGroup(item.getId(), item.getName(), item.getPrice(), amount, shippingDate);
     }
 
