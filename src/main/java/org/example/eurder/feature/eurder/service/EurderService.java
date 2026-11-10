@@ -1,6 +1,5 @@
 package org.example.eurder.feature.eurder.service;
 
-import jakarta.transaction.Transactional;
 import org.example.eurder.feature.customer.service.CustomerService;
 import org.example.eurder.feature.eurder.api.EurderMapper;
 import org.example.eurder.feature.eurder.api.dto.EurderDto;
@@ -15,6 +14,7 @@ import org.example.eurder.feature.eurder.exception.EurderNotFoundException;
 import org.example.eurder.feature.item.domain.Item;
 import org.example.eurder.feature.item.service.ItemService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Clock;
 import java.time.LocalDate;
@@ -69,6 +69,7 @@ public class EurderService {
         return createEurder(eurderMapper.mapToEurderRequest(eurder), customerId);
     }
 
+    @Transactional(readOnly = true)
     public EurdersReportDto viewEurdersReport(UUID customerId) {
         return eurderMapper.reportToDto(
                 eurderRepository.findAllByCustomer(
@@ -78,6 +79,7 @@ public class EurderService {
         );
     }
 
+    @Transactional(readOnly = true)
     public ItemsShippedTodayDto viewItemsShippedToday() {
         LocalDate today = LocalDate.now(clock);
         return eurderMapper.mapToItemsShippedTodayDto(

@@ -56,6 +56,7 @@ public class CustomerService {
         }
     }
 
+    @Transactional(readOnly = true)
     public List<CustomerDto> getAllCustomers() {
         return customerMapper.mapToDto(
                 customerRepository.findAllBy().stream()
@@ -64,6 +65,7 @@ public class CustomerService {
         );
     }
 
+    @Transactional(readOnly = true)
     public CustomerDto getCustomerDetails(UUID customerId) {
         return customerMapper.mapToDto(
                 getCustomerById(customerId)

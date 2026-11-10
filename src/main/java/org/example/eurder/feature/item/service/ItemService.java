@@ -73,6 +73,7 @@ public class ItemService {
     }
 
 
+    @Transactional(readOnly = true)
     public List<ItemDto> getAllItems() {
         return itemMapper.mapToDto(
                 itemRepository.findAll().stream()
