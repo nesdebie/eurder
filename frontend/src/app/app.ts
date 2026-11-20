@@ -7,6 +7,4 @@ import {Layout} from './layout/layout';
   styleUrl: './app.css',
   templateUrl: './app.html',
 })
-export class App {
-  protected readonly title = signal('frontend');
-}
+export class App {}
