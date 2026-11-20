@@ -10,7 +10,7 @@ export class ItemService {
   private readonly petsUrl = `${environment.backendUrl}/items`;
 
   getItems(): Observable<Item[]> {
-    return this.http.get<Item[]>(this.petsUrl)
+    return this.http.get<Item[]>(this.itemsUrl)
       .pipe(map(items => items.sort((a, b) => a.name.localeCompare(b.name))));
   }
 }
