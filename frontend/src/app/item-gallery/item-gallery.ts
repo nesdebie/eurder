@@ -1,4 +1,9 @@
 import { Component } from '@angular/core';
+import { rxRessource } from '@angular/core/rxjs-interop';
+import {FormsModule} from '@angular/forms';
+
+import { Item } from '../model/item';
+import { ItemService } from '../service/item-service';
 
 @Component({
   imports: [],
@@ -6,4 +11,21 @@ import { Component } from '@angular/core';
   styleUrl: './item-gallery.css',
   templateUrl: './item-gallery.html',
 })
-export class ItemGallery {}
+export class ItemGallery {
+  private readonly itemService = inject(ItemService);
+  protected searchText = signal<string | undefined>(undefined);
+
+  protected readonly items = rxResource({
+    stream: () => this.itemService.getItems(),
+    defaultValue: [],
+  });
+  protected readonly filteredItems = computed(() => {
+    const toFind = this.searchText()?.trim().toLowerCase();
+    const items = this.items.value();
+
+    if (!toFind)
+      return items;
+
+    return items.filter(item => item.name.toLowerCase().includes(toFind));
+  });
+}
