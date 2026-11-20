@@ -1,12 +1,15 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import {FormsModule} from '@angular/forms';
+import { CurrencyPipe } from '@angular/common';
 
-import { Item } from '../model/item';
 import { ItemService } from '../service/item-service';
 
 @Component({
-  imports: [FormsModule],
+  imports: [
+    FormsModule,
+    CurrencyPipe
+  ],
   selector: 'app-item-gallery',
   styleUrl: './item-gallery.css',
   templateUrl: './item-gallery.html',

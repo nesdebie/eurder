@@ -1,0 +1,84 @@
+/* ---------- Recherche ---------- */
+.tiny-dialog {
+  max-width: 420px;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+/* ---------- Grille d'articles ---------- */
+#gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.25rem;
+}
+
+#gallery > .text-muted {
+  grid-column: 1 / -1;
+}
+
+/* ---------- Carte d'article ---------- */
+.gallery {
+  cursor: pointer;
+  background: var(--surface);
+  border: 2px solid transparent;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+}
+
+.gallery:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+}
+
+.gallery.selected {
+  border-color: var(--blue);
+}
+
+.gallery-item {
+  height: 100%;
+}
+
+.overlay {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  height: 100%;
+  padding: 1.25rem;
+}
+
+.overlay-text {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--blue-dark);
+}
+
+.overlay-price {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.overlay-stock {
+  align-self: flex-start;
+  margin-top: auto;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--green-apple);
+  border-radius: 999px;
+}
+
+.overlay-stock.out-of-stock {
+  color: var(--white-text);
+  background: var(--danger);
+}
+
+.overlay-stock.out-of-stock-soon {
+  color: var(--white-text);
+  background: var(--orange);
+}
+

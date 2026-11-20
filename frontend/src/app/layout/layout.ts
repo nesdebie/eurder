@@ -11,5 +11,6 @@ import {RouterOutlet} from '@angular/router';
   ],
   selector: 'app-layout',
   templateUrl: './layout.html',
+  styleUrl: 'layout.css',
 })
 export class Layout {}

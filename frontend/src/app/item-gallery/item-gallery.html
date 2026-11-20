@@ -1,8 +1,6 @@
 <section class="tiny-dialog">
-  <h3>Find your item</h3>
   <div class="form-group">
-    <label for="name">Name</label>
-    <input id="name" name="name" class="form-control" placeholder="Name" [(ngModel)]="searchText" />
+    <input id="name" name="name" class="form-control" placeholder="Filter by Name" [(ngModel)]="searchText" />
   </div>
 </section>
 
@@ -20,9 +18,11 @@
             <div class="gallery-item fader">
               <div class="overlay">
                 <div class="overlay-text">{{ item.name }}</div>
-                <div class="overlay-price">{{ item.price  + 'EUR' }}</div>
-                @if (item.amount > 0) {
+                <div class="overlay-price">{{ item.price   | currency:'EUR' }}</div>
+                @if (item.amount > 5) {
                   <div class="overlay-stock">{{ item.amount }} in stock</div>
+                } @else if (item.amount <= 5 && item.amount > 0) {
+                    <div class="overlay-stock out-of-stock-soon">Only {{ item.amount }} left!</div>
                 } @else {
                   <div class="overlay-stock out-of-stock">Out of stock</div>
                 }
