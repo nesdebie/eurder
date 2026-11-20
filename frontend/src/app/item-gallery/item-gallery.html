@@ -5,6 +5,7 @@
     <input id="name" name="name" class="form-control" placeholder="Name" [(ngModel)]="searchText" />
   </div>
 </section>
+
 @if (items.isLoading()) {
   <p class="text-muted">Loading items...</p>
 } @else if (items.error()) {
@@ -15,13 +16,21 @@
       <div id="gallery" class="col-md-9">
 
         @for (item of filteredItems(); track item.id) {
-          <div class="gallery" (click)="selectPet(pet)">
-            <div class="gallery-pet fader">
+          <div class="gallery">
+            <div class="gallery-item fader">
               <div class="overlay">
                 <div class="overlay-text">{{ item.name }}</div>
+                <div class="overlay-price">{{ item.price  + 'EUR' }}</div>
+                @if (item.amount > 0) {
+                  <div class="overlay-stock">{{ item.amount }} in stock</div>
+                } @else {
+                  <div class="overlay-stock out-of-stock">Out of stock</div>
+                }
               </div>
             </div>
           </div>
+        } @empty {
+          <p class="text-muted">No item found.</p>
         }
 
       </div>

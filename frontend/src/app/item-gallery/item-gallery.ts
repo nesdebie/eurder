@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
-import { rxRessource } from '@angular/core/rxjs-interop';
+import { Component, computed, inject, signal } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
 import {FormsModule} from '@angular/forms';
 
 import { Item } from '../model/item';
 import { ItemService } from '../service/item-service';
 
 @Component({
-  imports: [],
+  imports: [FormsModule],
   selector: 'app-item-gallery',
   styleUrl: './item-gallery.css',
   templateUrl: './item-gallery.html',
