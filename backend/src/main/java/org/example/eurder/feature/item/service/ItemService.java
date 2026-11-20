@@ -77,7 +77,6 @@ public class ItemService {
     public List<ItemDto> getAllItems() {
         return itemMapper.mapToDto(
                 itemRepository.findAll().stream()
-                        .filter(item -> item.getAmount() > 0)
                         .toList()
         );
     }
