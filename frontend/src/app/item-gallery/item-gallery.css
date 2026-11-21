@@ -67,18 +67,18 @@
   padding: 0.2rem 0.6rem;
   font-size: 0.8rem;
   font-weight: 600;
-  color: var(--text);
-  background: var(--green-apple);
+  color: var(--green);
+  border: var(--green);
   border-radius: 999px;
 }
 
 .overlay-stock.out-of-stock {
-  color: var(--white-text);
-  background: var(--danger);
+  color: var(--danger);
+  border: var(--danger);
 }
 
 .overlay-stock.out-of-stock-soon {
-  color: var(--white-text);
-  background: var(--orange);
+  color: var(--orange);
+  border: var(--orange);
 }
 
