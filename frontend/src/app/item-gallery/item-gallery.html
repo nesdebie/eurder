@@ -19,12 +19,14 @@
               <div class="overlay">
                 <div class="overlay-text">{{ item.name }}</div>
                 <div class="overlay-price">{{ item.price   | currency:'EUR' }}</div>
-                @if (item.amount > 5) {
+                @if (item.amount > 10) {
                   <div class="overlay-stock"> In stock</div>
+                } @else if (item.amount > 10 && item.amount > 5) {
+                  <div class="overlay-stock medium"> {{ item.amount }} left in stock</div>
                 } @else if (item.amount <= 5 && item.amount > 0) {
-                    <div class="overlay-stock out-of-stock-soon">Only {{ item.amount }} left!</div>
+                    <div class="overlay-stock low">Only {{ item.amount }} left!</div>
                 } @else {
-                  <div class="overlay-stock out-of-stock">Out of stock</div>
+                  <div class="overlay-stock low">Out of stock</div>
                 }
               </div>
             </div>

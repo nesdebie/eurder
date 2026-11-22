@@ -72,12 +72,12 @@
   border-radius: 999px;
 }
 
-.overlay-stock.out-of-stock {
+.overlay-stock.low {
   color: var(--danger);
   border: var(--danger);
 }
 
-.overlay-stock.out-of-stock-soon {
+.overlay-stock.medium {
   color: var(--orange);
   border: var(--orange);
 }
