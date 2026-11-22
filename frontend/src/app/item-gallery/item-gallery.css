@@ -2,17 +2,13 @@
 .tiny-dialog {
   max-width: 420px;
   margin-bottom: 2rem;
-  padding: 1.5rem;
-  background: var(--surface);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
 }
 
 /* ---------- Grille d'articles ---------- */
 #gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 1.5rem;
 }
 
 #gallery > .text-muted {
@@ -23,19 +19,21 @@
 .gallery {
   cursor: pointer;
   background: var(--surface);
-  border: 2px solid transparent;
+  border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .gallery:hover {
   transform: translateY(-3px);
+  border-color: var(--primary-border);
   box-shadow: var(--shadow-hover);
 }
 
 .gallery.selected {
-  border-color: var(--blue);
+  border-color: var(--primary);
 }
 
 .gallery-item {
@@ -49,53 +47,56 @@
   align-items: center;
   justify-content: center;
   aspect-ratio: 4 / 3;
-  background: var(--blue-light);
-  border-radius: calc(var(--radius) - 2px) calc(var(--radius) - 2px) 0 0;
-  overflow: hidden;
+  background: linear-gradient(135deg, rgba(110, 157, 136, 0.18), rgba(255, 255, 255, 0.6));
 }
 
 .item-image img {
-  width: 40%;
+  width: 38%;
   height: auto;
-  opacity: 0.6;
+  opacity: 0.7;
 }
+
 .overlay {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-  height: 100%;
-  padding: 1.25rem;
+  gap: 0.3rem;
+  flex: 1;
+  padding: 1.1rem 1.2rem 1.2rem;
 }
 
 .overlay-text {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--blue-dark);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--primary-dark);
 }
 
 .overlay-price {
-  font-size: 1.3rem;
+  font-size: 1.25rem;
   font-weight: 700;
+  color: var(--text);
 }
 
+/* ---------- Badge de stock ---------- */
 .overlay-stock {
   align-self: flex-start;
   margin-top: auto;
-  padding: 0.2rem 0.6rem;
+  padding: 0.15rem 0.7rem;
   font-size: 0.8rem;
   font-weight: 600;
-  color: var(--green);
-  border: var(--green);
+  color: var(--success);
+  background: rgba(62, 122, 90, 0.1);
+  border: 1px solid rgba(62, 122, 90, 0.3);
   border-radius: 999px;
+}
+
+.overlay-stock.medium {
+  color: var(--warning);
+  background: rgba(181, 118, 42, 0.1);
+  border-color: rgba(181, 118, 42, 0.3);
 }
 
 .overlay-stock.low {
   color: var(--danger);
-  border: var(--danger);
+  background: rgba(181, 74, 63, 0.1);
+  border-color: rgba(181, 74, 63, 0.3);
 }
-
-.overlay-stock.medium {
-  color: var(--orange);
-  border: var(--orange);
-}
-

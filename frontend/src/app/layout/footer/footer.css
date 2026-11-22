@@ -1,8 +1,8 @@
 .footer {
-  padding: 1rem;
+  padding: 1.25rem 1rem;
   text-align: center;
-  color: #fff;
-  background: var(--blue);
+  color: var(--text-muted);
+  border-top: 1px solid #cfe0d3;
 }
 
 .footer p {
