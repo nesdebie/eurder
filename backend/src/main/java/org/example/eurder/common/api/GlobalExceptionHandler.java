@@ -9,6 +9,7 @@ import org.springframework.http.*;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authorization.AuthorityAuthorizationDecision;
 import org.springframework.security.authorization.AuthorizationDeniedException;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.validation.FieldError;
@@ -34,15 +35,18 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(AuthenticationException.class)
-    public ResponseEntity<ProblemDetail> handleAuthenticationFailure(AuthenticationException e) {
+    public ResponseEntity<ProblemDetail> handleAuthenticationFailure(AuthenticationException e, HttpServletRequest request) {
         log.warn("Unauthorized: {}", e.getMessage());
-        return unauthorized();
+        return unauthorized(request);
     }
 
-    private static ResponseEntity<ProblemDetail> unauthorized() {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .header(HttpHeaders.WWW_AUTHENTICATE, "Basic realm=\"Eurder\"")
-                .body(ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, "Invalid credentials"));
+    private static ResponseEntity<ProblemDetail> unauthorized(HttpServletRequest request) {
+        ResponseEntity.BodyBuilder response = ResponseEntity.status(HttpStatus.UNAUTHORIZED);
+        // Without this header for AJAX calls, the browser does not open its own login popup
+        if (!"XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
+            response.header(HttpHeaders.WWW_AUTHENTICATE, "Basic realm=\"Eurder\"");
+        }
+        return response.body(ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, "Invalid credentials"));
     }
 
     @ExceptionHandler(NotFoundException.class)

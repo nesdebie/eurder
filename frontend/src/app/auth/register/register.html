@@ -1,0 +1,78 @@
+<section class="auth-card wide">
+  <h2>Create an account</h2>
+
+  <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    <fieldset formGroupName="fullName">
+      <legend>Name</legend>
+      <div class="row">
+        <div class="form-group">
+          <label for="firstName">First name</label>
+          <input id="firstName" class="form-control" formControlName="firstName" autocomplete="given-name" />
+        </div>
+        <div class="form-group">
+          <label for="lastName">Last name</label>
+          <input id="lastName" class="form-control" formControlName="lastName" autocomplete="family-name" />
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Account</legend>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input id="email" type="email" class="form-control" formControlName="email" autocomplete="email" />
+        @if (form.controls.email.touched && form.controls.email.invalid) {
+          <small class="field-error">Please enter a valid email.</small>
+        }
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input id="password" type="password" class="form-control" formControlName="password" autocomplete="new-password" />
+        @if (form.controls.password.touched && form.controls.password.invalid) {
+          <small class="field-error">8 to 72 characters.</small>
+        }
+      </div>
+      <div class="form-group">
+        <label for="phoneNumber">Phone</label>
+        <input id="phoneNumber" type="tel" class="form-control" formControlName="phoneNumber" autocomplete="tel" />
+      </div>
+    </fieldset>
+
+    <fieldset formGroupName="address">
+      <legend>Address</legend>
+      <div class="row">
+        <div class="form-group grow">
+          <label for="streetName">Street</label>
+          <input id="streetName" class="form-control" formControlName="streetName" autocomplete="address-line1" />
+        </div>
+        <div class="form-group small">
+          <label for="streetNumber">Number</label>
+          <input id="streetNumber" class="form-control" formControlName="streetNumber" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group small">
+          <label for="postalCode">Postal code</label>
+          <input id="postalCode" class="form-control" formControlName="postalCode" autocomplete="postal-code" />
+        </div>
+        <div class="form-group grow">
+          <label for="city">City</label>
+          <input id="city" class="form-control" formControlName="city" autocomplete="address-level2" />
+        </div>
+      </div>
+    </fieldset>
+
+    @if (form.touched && form.invalid) {
+      <p class="field-error">Please fill in all the fields.</p>
+    }
+    @for (message of errors(); track message) {
+      <p class="alert alert-danger">{{ message }}</p>
+    }
+
+    <button type="submit" class="btn-primary" [disabled]="loading()">
+      {{ loading() ? 'Creating account…' : 'Create account' }}
+    </button>
+  </form>
+
+  <p class="switch">Already have an account? <a routerLink="/login">Sign in</a></p>
+</section>
