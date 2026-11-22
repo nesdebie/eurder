@@ -1,9 +1,9 @@
 /* ---------- Thème Örder ---------- */
 :root {
-  --blue: #0066b8;          /* couleur du logo */
+  --blue: #0066b8;
   --blue-dark: #004f8f;
   --blue-light: #e8f1fa;
-  --yellow: #ffc81e;        /* accent (icône eurder.svg) */
+  --yellow: #ffc81e;
   --text: #1f2933;
   --white-text: #ffffff;
   --text-muted: #6b7785;
