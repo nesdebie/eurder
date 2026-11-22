@@ -39,9 +39,26 @@
 }
 
 .gallery-item {
+  display: flex;
+  flex-direction: column;
   height: 100%;
 }
 
+.item-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 4 / 3;
+  background: var(--blue-light);
+  border-radius: calc(var(--radius) - 2px) calc(var(--radius) - 2px) 0 0;
+  overflow: hidden;
+}
+
+.item-image img {
+  width: 40%;
+  height: auto;
+  opacity: 0.6;
+}
 .overlay {
   display: flex;
   flex-direction: column;
