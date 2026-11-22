@@ -70,3 +70,82 @@
 @media (max-width: 480px) {
   .user { display: none; }
 }
+
+/* ---------- Bouton "Order" (panier) ---------- */
+.order-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 40px;
+  padding: 0 1rem;
+  font: inherit;
+  font-weight: 600;
+  color: var(--primary-dark);
+  background: var(--primary-light);
+  border: 1px solid var(--primary-border);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.order-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.order-button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.order-button img {
+  width: 20px;
+  height: 20px;
+}
+
+.cart-count {
+  min-width: 1.4rem;
+  height: 1.4rem;
+  padding: 0 0.35rem;
+  font-size: 0.75rem;
+  line-height: 1.4rem;
+  text-align: center;
+  color: #fff;
+  background: var(--primary);
+  border-radius: 999px;
+}
+
+/* ---------- Message après la commande ---------- */
+.order-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.7rem 1.5rem;
+  font-size: 0.95rem;
+}
+
+.order-banner.success {
+  color: var(--success);
+  background: rgba(62, 122, 90, 0.12);
+  border-bottom: 1px solid rgba(62, 122, 90, 0.3);
+}
+
+.order-banner.error {
+  color: var(--danger);
+  background: var(--danger-light);
+  border-bottom: 1px solid #ecc9c3;
+}
+
+.order-banner .close {
+  font-size: 1.3rem;
+  line-height: 1;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .order-button span:not(.cart-count) { display: none; }
+}

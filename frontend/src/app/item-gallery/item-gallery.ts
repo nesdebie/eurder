@@ -2,13 +2,17 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import {FormsModule} from '@angular/forms';
 import { CurrencyPipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 import { ItemService } from '../service/item-service';
+import { StockBadge } from '../stock-badge/stock-badge';
 
 @Component({
   imports: [
     FormsModule,
-    CurrencyPipe
+    CurrencyPipe,
+    RouterLink,
+    StockBadge
   ],
   selector: 'app-item-gallery',
   styleUrl: './item-gallery.css',

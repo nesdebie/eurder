@@ -1,0 +1,109 @@
+<a routerLink="/" class="back-link">← Back to the gallery</a>
+
+@if (item.isLoading()) {
+  <p class="text-muted">Loading item...</p>
+} @else if (item.error()) {
+  <p class="alert alert-danger">Oops, could not load the item. Is the backend running?</p>
+} @else if (item.value(); as item) {
+  <article class="detail fader">
+    <div class="detail-image">
+      <img src="/images/image-placeholder.svg" alt="" />
+    </div>
+
+    <div class="detail-info">
+      @if (editing()) {
+        <form class="edit-form" [formGroup]="editForm" (ngSubmit)="save(item)" novalidate>
+          <h1>Edit item</h1>
+
+          <div class="form-group">
+            <label for="edit-name">Name</label>
+            <input id="edit-name" class="form-control" formControlName="name" />
+            @if (editForm.controls.name.touched && editForm.controls.name.invalid) {
+              <small class="field-error">Required, at most 50 characters.</small>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="edit-description">Description</label>
+            <textarea id="edit-description" class="form-control" rows="4" formControlName="description"></textarea>
+            @if (editForm.controls.description.touched && editForm.controls.description.invalid) {
+              <small class="field-error">Required, at most 255 characters.</small>
+            }
+          </div>
+
+          <div class="edit-row">
+            <div class="form-group">
+              <label for="edit-price">Price (€)</label>
+              <input id="edit-price" type="number" min="0.01" step="0.01" class="form-control" formControlName="price" />
+              @if (editForm.controls.price.touched && editForm.controls.price.invalid) {
+                <small class="field-error">Must be greater than 0.</small>
+              }
+            </div>
+            <div class="form-group">
+              <label for="edit-amount">Stock</label>
+              <input id="edit-amount" type="number" min="1" step="1" class="form-control" formControlName="amount" />
+              @if (editForm.controls.amount.touched && editForm.controls.amount.invalid) {
+                <small class="field-error">Whole number, at least 1.</small>
+              }
+            </div>
+          </div>
+
+          @for (message of editErrors(); track message) {
+            <p class="alert alert-danger">{{ message }}</p>
+          }
+
+          <div class="edit-actions">
+            <button type="button" class="btn-secondary" (click)="cancelEditing()">Cancel</button>
+            <button type="submit" class="btn-primary" [disabled]="saving()">
+              {{ saving() ? 'Saving…' : 'Save' }}
+            </button>
+          </div>
+        </form>
+      } @else {
+        <div class="title-row">
+          <h1>{{ item.name }}</h1>
+          @if (auth.hasPermission('UPDATE_ITEM')) {
+            <button type="button" class="icon-button" (click)="startEditing(item)"
+                    title="Edit this item" aria-label="Edit this item">
+              <img src="/images/edit.svg" alt="" />
+            </button>
+          }
+        </div>
+
+        <p class="detail-price">{{ item.price | currency:'EUR' }}</p>
+        <app-stock-badge [amount]="item.amount" />
+
+        <h2>Description</h2>
+        <p class="detail-description">{{ item.description || 'No description.' }}</p>
+
+        <dl class="detail-facts">
+          <dt>Units available</dt>
+          <dd>{{ item.amount > 0 ? item.amount : 0 }}</dd>
+          <dt>Reference</dt>
+          <dd class="reference">{{ item.id }}</dd>
+        </dl>
+
+        @if (auth.hasPermission('EURDER_ITEMS')) {
+          <form class="add-to-cart" [formGroup]="cartForm" (ngSubmit)="addToCart(item)" novalidate>
+            <label for="quantity">Quantity</label>
+            <input id="quantity" type="number" min="1" step="1" class="form-control quantity" formControlName="amount" />
+            <button type="submit" class="icon-button primary" title="Add to cart" aria-label="Add to cart">
+              <img src="/images/add-to-cart.svg" alt="" />
+            </button>
+          </form>
+          @if (cartForm.controls.amount.touched && cartForm.controls.amount.invalid) {
+            <small class="field-error">Enter a whole number of at least 1.</small>
+          } @else if (addedMessage()) {
+            <p class="added">{{ addedMessage() }}</p>
+          }
+        } @else if (!auth.isLoggedIn()) {
+          <p class="sign-in-hint">
+            <a routerLink="/login" [queryParams]="{ returnUrl: '/items/' + item.id }">Sign in</a> to order this item.
+          </p>
+        }
+      }
+    </div>
+  </article>
+} @else {
+  <p class="alert alert-danger">This item does not exist (anymore).</p>
+}

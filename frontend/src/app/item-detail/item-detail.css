@@ -1,0 +1,240 @@
+.back-link {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.detail {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 2.5rem;
+  padding: clamp(1.2rem, 2vw, 2rem);
+  background: rgba(255, 255, 255, 0.42);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  box-shadow: var(--shadow);
+}
+
+.detail-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  background: linear-gradient(135deg, rgba(110, 157, 136, 0.18), rgba(255, 255, 255, 0.6));
+  border-radius: var(--radius);
+}
+
+.detail-image img {
+  width: 35%;
+  opacity: 0.7;
+}
+
+.detail-info h1 {
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+}
+
+.detail-info h2 {
+  margin-top: 2rem;
+  font-size: 1.1rem;
+}
+
+.detail-price {
+  margin: 0 0 0.8rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.detail-description {
+  margin: 0;
+  color: var(--text-muted);
+  white-space: pre-line;
+}
+
+.detail-facts {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.4rem 1.5rem;
+  margin: 2rem 0 0;
+  padding: 1rem 1.2rem;
+  background: rgba(248, 250, 247, 0.7);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+}
+
+.detail-facts dt {
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.detail-facts dd {
+  margin: 0;
+}
+
+.reference {
+  font-family: monospace;
+  font-size: 0.8rem;
+  word-break: break-all;
+}
+
+@media (max-width: 760px) {
+  .detail {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .detail-image {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+.title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.52);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.icon-button:hover {
+  transform: translateY(-1px);
+  border-color: var(--primary-border);
+}
+
+.icon-button img {
+  width: 22px;
+  height: 22px;
+}
+
+.icon-button.primary {
+  background: var(--primary-light);
+  border-color: var(--primary-border);
+}
+
+/* ---------- Ajout au panier ---------- */
+.add-to-cart {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-top: 2rem;
+}
+
+.add-to-cart label {
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.quantity {
+  width: 6rem;
+  text-align: center;
+}
+
+.added {
+  margin: 0.6rem 0 0;
+  color: var(--success);
+  font-weight: 600;
+}
+
+.sign-in-hint {
+  margin: 2rem 0 0;
+  color: var(--text-muted);
+}
+
+.sign-in-hint a {
+  font-weight: 600;
+}
+
+.field-error {
+  display: block;
+  margin-top: 0.4rem;
+  color: var(--danger);
+  font-size: 0.85rem;
+}
+
+/* ---------- Formulaire d'édition (admin) ---------- */
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.edit-form h1 {
+  font-size: 1.6rem;
+}
+
+.edit-form textarea.form-control {
+  border-radius: var(--radius-small);
+  resize: vertical;
+}
+
+.edit-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.edit-row > .form-group {
+  flex: 1;
+}
+
+.edit-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.8rem;
+}
+
+.btn-primary,
+.btn-secondary {
+  height: 44px;
+  padding: 0 1.4rem;
+  font: inherit;
+  font-weight: 700;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-primary {
+  color: #fff;
+  background: var(--primary);
+  border: none;
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  background: var(--primary-dark);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.btn-secondary {
+  color: var(--primary-dark);
+  background: rgba(255, 255, 255, 0.52);
+  border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+  border-color: var(--primary-border);
+}
+
+@media (max-width: 480px) {
+  .edit-row {
+    flex-direction: column;
+  }
+}

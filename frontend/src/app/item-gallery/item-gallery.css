@@ -1,10 +1,8 @@
-/* ---------- Recherche ---------- */
 .tiny-dialog {
   max-width: 420px;
   margin-bottom: 2rem;
 }
 
-/* ---------- Grille d'articles ---------- */
 #gallery {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
@@ -15,8 +13,10 @@
   grid-column: 1 / -1;
 }
 
-/* ---------- Carte d'article ---------- */
 .gallery {
+  display: block;
+  color: inherit;
+  text-decoration: none;
   cursor: pointer;
   background: var(--surface);
   border: 1px solid var(--border);
@@ -76,27 +76,7 @@
   color: var(--text);
 }
 
-/* ---------- Badge de stock ---------- */
-.overlay-stock {
+app-stock-badge {
   align-self: flex-start;
   margin-top: auto;
-  padding: 0.15rem 0.7rem;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--success);
-  background: rgba(62, 122, 90, 0.1);
-  border: 1px solid rgba(62, 122, 90, 0.3);
-  border-radius: 999px;
-}
-
-.overlay-stock.medium {
-  color: var(--warning);
-  background: rgba(181, 118, 42, 0.1);
-  border-color: rgba(181, 118, 42, 0.3);
-}
-
-.overlay-stock.low {
-  color: var(--danger);
-  background: rgba(181, 74, 63, 0.1);
-  border-color: rgba(181, 74, 63, 0.3);
 }

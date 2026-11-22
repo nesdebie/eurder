@@ -14,7 +14,7 @@
       <div id="gallery" class="col-md-9">
 
         @for (item of filteredItems(); track item.id) {
-          <div class="gallery">
+          <a class="gallery" [routerLink]="['/items', item.id]">
             <div class="gallery-item fader">
               <div class="item-image">
                 <img src="/images/image-placeholder.svg" alt="" />
@@ -22,18 +22,10 @@
               <div class="overlay">
                 <div class="overlay-text">{{ item.name }}</div>
                 <div class="overlay-price">{{ item.price   | currency:'EUR' }}</div>
-                @if (item.amount >= 10) {
-                  <div class="overlay-stock"> In stock</div>
-                } @else if (item.amount < 10 && item.amount >= 5) {
-                  <div class="overlay-stock medium"> {{ item.amount }} left in stock</div>
-                } @else if (item.amount < 5 && item.amount > 0) {
-                    <div class="overlay-stock low">Only {{ item.amount }} left!</div>
-                } @else {
-                  <div class="overlay-stock low">Out of stock</div>
-                }
+                <app-stock-badge [amount]="item.amount" />
               </div>
             </div>
-          </div>
+          </a>
         } @empty {
           <p class="text-muted">No item found.</p>
         }

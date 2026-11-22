@@ -3,6 +3,17 @@
 
   <nav class="nav">
     @if (auth.currentUser(); as user) {
+      @if (auth.hasPermission('EURDER_ITEMS')) {
+        <button type="button" class="order-button" (click)="placeOrder()"
+                [disabled]="cart.count() === 0 || ordering()"
+                [title]="cart.count() === 0 ? 'Your cart is empty' : 'Place the order'">
+          <img src="/images/shopping-cart.svg" alt="" />
+          <span>{{ ordering() ? 'Ordering…' : 'Order' }}</span>
+          @if (cart.count() > 0) {
+            <span class="cart-count" aria-label="items in cart">{{ cart.count() }}</span>
+          }
+        </button>
+      }
       <span class="user">{{ user.email }}</span>
       <button type="button" class="link-button" (click)="logout()">Sign out</button>
     } @else {
@@ -11,3 +22,17 @@
     }
   </nav>
 </header>
+
+@if (placedOrder(); as order) {
+  <div class="order-banner success" role="status">
+    <span>
+      Order placed: {{ order.items.length }} item(s) for <strong>{{ order.totalPrice | currency:'EUR' }}</strong>.
+    </span>
+    <button type="button" class="close" (click)="dismiss()" aria-label="Close">×</button>
+  </div>
+} @else if (orderError()) {
+  <div class="order-banner error" role="alert">
+    <span>Could not place the order: {{ orderError() }}</span>
+    <button type="button" class="close" (click)="dismiss()" aria-label="Close">×</button>
+  </div>
+}
