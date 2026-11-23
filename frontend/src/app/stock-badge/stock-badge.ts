@@ -20,6 +20,7 @@ export class StockBadge {
     if (amount >= 10) return 'In stock';
     if (amount >= 5) return `${amount} left in stock`;
     if (amount > 0) return `Only ${amount} left!`;
+    if (amount === 0) return 'Out of stock'
     return `Add ${-amount} units to balance stock`;
   });
 }

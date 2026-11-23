@@ -12,6 +12,9 @@
           }
         </a>
       }
+      @if (auth.hasPermission('VIEW_CUSTOMERS')) {
+        <a routerLink="/customers" routerLinkActive="active" class="order-button">Customers</a>
+      }
       <span class="user">{{ user.email }}</span>
       @if (auth.hasPermission('MANAGE_PROFILE')) {
         <a routerLink="/edit-profile" routerLinkActive="active" class="icon-button profile-button"

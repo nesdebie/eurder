@@ -1,5 +1,6 @@
-// Response of GET/PUT /customers/me (= CustomerDto on the backend)
+// Response of GET /customers, GET/PUT /customers/me (= CustomerDto on the backend)
 export interface Customer {
+  id: string;
   fullName: { firstName: string; lastName: string };
   email: string;
   phone: string;

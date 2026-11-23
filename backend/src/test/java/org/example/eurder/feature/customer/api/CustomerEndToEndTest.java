@@ -121,7 +121,7 @@ class CustomerEndToEndTest extends EndToEndTest {
                     .body("email", hasItem(email));
         }
 
-        @DisplayName("Ad an admin: Each customer comes with its id")
+        @DisplayName("As an admin: Each customer comes with its id")
         @Test
         void givenAdmin_whenListingCustomers_thenEachCustomerHasItsId() {
             String email = newCustomer();
