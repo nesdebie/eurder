@@ -7,7 +7,7 @@ public class ItemBadRequestException extends BadRequestException {
         super(message);
     }
 
-    public static ItemBadRequestException outOfStockException(String filter) {
-        throw new ItemNotFoundException("Item %s is out of stock.".formatted(filter));
+    public static ItemBadRequestException outOfStockException(String itemName) throws ItemBadRequestException {
+        throw new ItemBadRequestException("Item '%s' is out of stock.".formatted(itemName));
     }
 }

@@ -101,7 +101,7 @@ class ItemEndToEndTest extends EndToEndTest {
     @DisplayName("List items")
     class ListItems {
 
-        @DisplayName("Not excluding out of stock")
+        @DisplayName("Excluding out of stock")
         @Test
         void givenItemInStockAndItemOutOfStock_whenListingItems_thenOnlyInStockIsListed() {
             String inStock = itemRepository.save(TestData.item("1.00", 3)).getName();
