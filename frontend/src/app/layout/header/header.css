@@ -45,7 +45,6 @@
   color: var(--primary-dark);
 }
 
-/* Bouton "Register" en forme de pilule, comme les .social-link */
 .nav a.nav-cta {
   display: inline-flex;
   align-items: center;
@@ -72,7 +71,6 @@
   .user { display: none; }
 }
 
-/* ---------- Bouton "Order" (panier) ---------- */
 .nav a.order-button {
   position: relative;
   display: inline-flex;
@@ -94,7 +92,6 @@
   transform: translateY(-1px);
 }
 
-/* On the cart page itself */
 .nav a.order-button.active {
   background: rgba(255, 255, 255, 0.52);
 }
@@ -120,7 +117,6 @@
   .order-button span:not(.cart-count) { display: none; }
 }
 
-/* ---------- Bouton "Edit my profile" (edit.svg) ---------- */
 .nav a.profile-button {
   width: 38px;
   height: 38px;
@@ -138,9 +134,13 @@
   border-color: var(--primary-border);
 }
 
-/* Petits écrans : on resserre la barre pour que tout tienne sur une ligne */
 @media (max-width: 480px) {
   .header { padding: 0.75rem 1rem; }
   .nav { gap: 0.6rem; }
   .logo { height: 32px; }
+
+  .header { flex-wrap: wrap; row-gap: 0.6rem; }
+  .nav { width: 100%; flex-wrap: wrap; justify-content: flex-end; }
 }
+
+.nav > * { flex-shrink: 0; }

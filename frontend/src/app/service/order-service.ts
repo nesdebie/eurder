@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, inject, Service, signal } from '@angular/core';
 import { Observable, tap } from 'rxjs';
-import { Order, OrderLine } from '../model/order';
+import { Order, OrderLine, OrdersReport } from '../model/order';
 
 const CART_KEY = 'eurder-cart';
 
@@ -28,6 +28,10 @@ export class OrderService {
     return this.http.post<Order>('/api/orders', { items: this.lines() }).pipe(
       tap(() => this.clear()),
     );
+  }
+
+  getOrdersHistory(): Observable<OrdersReport> {
+    return this.http.get<OrdersReport>('/api/orders/report');
   }
 
   clear(): void {

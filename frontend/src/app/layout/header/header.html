@@ -12,6 +12,9 @@
           }
         </a>
       }
+      @if (auth.hasPermission('VIEW_EURDERS_REPORT')) {
+        <a routerLink="/orders-history" routerLinkActive="active" class="order-button">Orders History</a>
+      }
       @if (auth.hasPermission('VIEW_CUSTOMERS')) {
         <a routerLink="/customers" routerLinkActive="active" class="order-button">Customers</a>
       }

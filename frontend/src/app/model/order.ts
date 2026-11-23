@@ -19,3 +19,8 @@ export interface Order {
     shippingDate: string;
   }[];
 }
+
+export interface OrdersReport {
+  eurders: Order[];
+  totalPrice: number;
+}
