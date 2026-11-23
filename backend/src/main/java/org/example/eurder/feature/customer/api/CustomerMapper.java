@@ -22,6 +22,7 @@ public class CustomerMapper {
 
     public CustomerDto mapToDto(Customer customer) {
         return new CustomerDto(
+                customer.getId(),
                 fullNameMapper.mapToDto(customer.getFullName()),
                 customer.getEmail(),
                 customer.getPhoneNumber(),

@@ -121,6 +121,18 @@ class CustomerEndToEndTest extends EndToEndTest {
                     .body("email", hasItem(email));
         }
 
+        @DisplayName("Ad an admin: Each customer comes with its id")
+        @Test
+        void givenAdmin_whenListingCustomers_thenEachCustomerHasItsId() {
+            String email = newCustomer();
+            String id = findCustomer(email).getId().toString();
+
+            as(newAdmin()).get("/customers")
+                    .then()
+                    .statusCode(HttpStatus.OK.value())
+                    .body("find { it.email == '%s' }.id".formatted(email), equalTo(id));
+        }
+
         @DisplayName("As a customer")
         @Test
         void givenCustomer_whenListingCustomers_thenReturns403() {
