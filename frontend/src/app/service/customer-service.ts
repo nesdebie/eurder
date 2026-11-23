@@ -9,7 +9,6 @@ export class CustomerService {
   private readonly customersUrl = '/api/customers';
   private readonly meUrl = `${this.customersUrl}/me`;
 
-  // Admin only (VIEW_CUSTOMERS): every customer, sorted by last name then first name
   getAllCustomers(): Observable<Customer[]> {
     return this.http.get<Customer[]>(this.customersUrl).pipe(
       map(customers => customers.sort((a, b) =>
@@ -18,7 +17,10 @@ export class CustomerService {
     );
   }
 
-  // The signed-in customer's own profile ("/me": never someone else's)
+  getCustomer(id: string): Observable<Customer> {
+    return this.http.get<Customer>(`${this.customersUrl}/${id}`);
+  }
+
   getMyProfile(): Observable<Customer> {
     return this.http.get<Customer>(this.meUrl);
   }

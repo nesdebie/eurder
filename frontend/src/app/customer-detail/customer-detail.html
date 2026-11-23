@@ -1,0 +1,56 @@
+<a routerLink="/customers" class="back-link">← Back to the customers</a>
+
+@if (customer.isLoading()) {
+  <p class="text-muted">Loading customer...</p>
+} @else if (customer.error()) {
+  @if (notFound()) {
+    <p class="alert alert-danger">This customer does not exist.</p>
+  } @else {
+    <p class="alert alert-danger">Oops, could not load the customer. Is the backend running?</p>
+  }
+} @else if (customer.value(); as customer) {
+  <article class="customer-card fader">
+    <header class="customer-header">
+      <h1>{{ customer.fullName.firstName }} {{ customer.fullName.lastName }}</h1>
+      <span class="reference" title="Customer id">{{ customer.id }}</span>
+    </header>
+
+    <div class="sections">
+      <section class="info-card">
+        <h2>Identity</h2>
+        <dl>
+          <dt>First name</dt>
+          <dd>{{ customer.fullName.firstName }}</dd>
+          <dt>Last name</dt>
+          <dd>{{ customer.fullName.lastName }}</dd>
+          <dt>Id</dt>
+          <dd class="reference">{{ customer.id }}</dd>
+        </dl>
+      </section>
+
+      <section class="info-card">
+        <h2>Contact</h2>
+        <dl>
+          <dt>Email</dt>
+          <dd><a [href]="'mailto:' + customer.email">{{ customer.email }}</a></dd>
+          <dt>Phone</dt>
+          <dd><a [href]="'tel:' + customer.phone">{{ customer.phone }}</a></dd>
+        </dl>
+      </section>
+
+      <section class="info-card">
+        <h2>Address</h2>
+        <dl>
+          <dt>Street</dt>
+          <dd>{{ customer.address.streetName }}</dd>
+          <dt>Number</dt>
+          <dd>{{ customer.address.streetNumber }}</dd>
+          <dt>Postal code</dt>
+          <dd>{{ customer.address.postalCode }}</dd>
+          <dt>City</dt>
+          <dd>{{ customer.address.city }}</dd>
+        </dl>
+      </section>
+    </div>
+  </article>
+}

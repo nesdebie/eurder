@@ -14,13 +14,13 @@
 } @else {
   <div id="gallery">
     @for (customer of filteredCustomers(); track customer.id) {
-      <article class="gallery fader">
+      <a class="gallery fader" [routerLink]="['/customers', customer.id]">
         <div class="overlay">
           <span class="reference" title="Customer id">{{ customer.id }}</span>
           <h2 class="overlay-text">{{ customer.fullName.firstName }} {{ customer.fullName.lastName }}</h2>
-          <a class="email" [href]="'mailto:' + customer.email">{{ customer.email }}</a>
+          <span class="email">{{ customer.email }}</span>
         </div>
-      </article>
+      </a>
     } @empty {
       <p class="text-muted">No customer found.</p>
     }

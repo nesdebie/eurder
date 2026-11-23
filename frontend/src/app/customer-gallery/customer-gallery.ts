@@ -1,11 +1,12 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
 
 import { CustomerService } from '../service/customer-service';
 
 @Component({
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink],
   selector: 'app-customer-gallery',
   styleUrl: './customer-gallery.css',
   templateUrl: './customer-gallery.html',

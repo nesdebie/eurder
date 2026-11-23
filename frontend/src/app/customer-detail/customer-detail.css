@@ -1,0 +1,71 @@
+.back-link {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.customer-card {
+  padding: clamp(1.2rem, 2vw, 2rem);
+  background: rgba(255, 255, 255, 0.42);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  box-shadow: var(--shadow);
+}
+
+.customer-header {
+  margin-bottom: 1.5rem;
+}
+
+.customer-header h1 {
+  margin-bottom: 0.3rem;
+  font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+}
+
+.reference {
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  word-break: break-all;
+}
+
+/* ---------- Trois blocs : identité, contact, adresse ---------- */
+.sections {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.2rem;
+}
+
+.info-card {
+  padding: 1.1rem 1.2rem;
+  background: rgba(248, 250, 247, 0.7);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  min-width: 0;
+}
+
+.info-card h2 {
+  font-size: 1.1rem;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.45rem 1.2rem;
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+dt {
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+dd {
+  margin: 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+dd a {
+  font-weight: 600;
+}
