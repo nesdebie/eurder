@@ -5,7 +5,7 @@ import { AbstractControl, NonNullableFormBuilder, ReactiveFormsModule, Validatio
 import { RouterLink } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
 
-import { AuthService } from '../auth/auth-service';
+import { AuthService } from '../service/auth-service';
 import { OrderService } from '../service/order-service';
 import { messagesFrom } from '../common/http-errors';
 import { Item } from '../model/item';

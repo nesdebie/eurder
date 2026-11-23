@@ -7,13 +7,18 @@
         <a routerLink="/order" routerLinkActive="active" class="order-button"
            [title]="order.count() === 0 ? 'Your cart is empty' : 'See your cart'">
           <img src="/images/shopping-cart.svg" alt="" />
-          <span>Cart</span>
           @if (order.count() > 0) {
             <span class="cart-count" aria-label="items in cart">{{ order.count() }}</span>
           }
         </a>
       }
       <span class="user">{{ user.email }}</span>
+      @if (auth.hasPermission('MANAGE_PROFILE')) {
+        <a routerLink="/edit-profile" routerLinkActive="active" class="icon-button profile-button"
+           title="Edit my profile" aria-label="Edit my profile">
+          <img src="/images/edit.svg" alt="" />
+        </a>
+      }
       <button type="button" class="link-button" (click)="logout()">Sign out</button>
     } @else {
       <a routerLink="/login">Sign in</a>

@@ -3,7 +3,7 @@ import { Component, inject, signal } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
-import { AuthService } from '../auth-service';
+import { AuthService } from '../../service/auth-service';
 
 @Component({
   imports: [ReactiveFormsModule, RouterLink],

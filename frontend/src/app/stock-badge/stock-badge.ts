@@ -19,7 +19,6 @@ export class StockBadge {
     const amount = this.amount();
     if (amount >= 10) return 'In stock';
     if (amount >= 5) return `${amount} left in stock`;
-    if (amount > 0) return `Only ${amount} left!`;
-    return 'Out of stock';
+    return `Only ${amount} left!`;
   });
 }

@@ -4,7 +4,7 @@ import {FormsModule} from '@angular/forms';
 import { CurrencyPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
-import { AuthService } from '../auth/auth-service';
+import { AuthService } from '../service/auth-service';
 import { ItemService } from '../service/item-service';
 import { StockBadge } from '../stock-badge/stock-badge';
 

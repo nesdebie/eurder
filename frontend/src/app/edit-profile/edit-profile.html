@@ -1,0 +1,79 @@
+<a routerLink="/" class="back-link">← Back to the gallery</a>
+
+<section class="auth-card wide fader">
+  <h2>My profile</h2>
+
+  @if (loading()) {
+    <p class="text-muted">Loading your profile...</p>
+  } @else {
+    <form [formGroup]="form" (ngSubmit)="save()" novalidate>
+      <fieldset formGroupName="fullName">
+        <legend>Name</legend>
+        <div class="row">
+          <div class="form-group">
+            <label for="firstName">First name</label>
+            <input id="firstName" class="form-control" formControlName="firstName" autocomplete="given-name" />
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last name</label>
+            <input id="lastName" class="form-control" formControlName="lastName" autocomplete="family-name" />
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Account</legend>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input id="email" type="email" class="form-control" formControlName="email" autocomplete="email" />
+          <small class="hint">You sign in with this email: changing it changes your login.</small>
+          @if (form.controls.email.touched && form.controls.email.invalid) {
+            <small class="field-error">Please enter a valid email.</small>
+          }
+        </div>
+        <div class="form-group">
+          <label for="phoneNumber">Phone</label>
+          <input id="phoneNumber" type="tel" class="form-control" formControlName="phoneNumber" autocomplete="tel" />
+        </div>
+      </fieldset>
+
+      <fieldset formGroupName="address">
+        <legend>Address</legend>
+        <div class="row">
+          <div class="form-group grow">
+            <label for="streetName">Street</label>
+            <input id="streetName" class="form-control" formControlName="streetName" autocomplete="address-line1" />
+          </div>
+          <div class="form-group small">
+            <label for="streetNumber">Number</label>
+            <input id="streetNumber" class="form-control" formControlName="streetNumber" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group small">
+            <label for="postalCode">Postal code</label>
+            <input id="postalCode" class="form-control" formControlName="postalCode" autocomplete="postal-code" />
+          </div>
+          <div class="form-group grow">
+            <label for="city">City</label>
+            <input id="city" class="form-control" formControlName="city" autocomplete="address-level2" />
+          </div>
+        </div>
+      </fieldset>
+
+      @if (form.touched && form.invalid) {
+        <p class="field-error">Please fill in all the fields.</p>
+      }
+      @for (message of errors(); track message) {
+        <p class="alert alert-danger">{{ message }}</p>
+      }
+      @if (saved()) {
+        <p class="saved">Your profile has been saved.</p>
+      }
+
+      <button type="submit" class="btn-primary" [disabled]="saving()">
+        {{ saving() ? 'Saving…' : 'Save' }}
+      </button>
+    </form>
+  }
+</section>

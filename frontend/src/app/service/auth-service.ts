@@ -3,7 +3,7 @@ import { computed, inject, Service, signal } from '@angular/core';
 import { catchError, Observable, of, tap } from 'rxjs';
 import { CurrentUser } from '../model/current-user';
 import { RegisterRequest } from '../model/register-request';
-import { clearAuthToken, getAuthToken, setAuthToken } from './auth-token';
+import { clearAuthToken, getAuthToken, setAuthToken } from '../auth/auth-token';
 
 @Service()
 export class AuthService {
@@ -54,6 +54,20 @@ export class AuthService {
     );
   }
 
+  // The email is the Basic login: after the customer changed it, the next requests must
+  // use the new email (same password), otherwise the backend answers 401.
+  changeEmail(newEmail: string): void {
+    const token = getAuthToken();
+    const user = this.currentUser();
+    if (!token || !user) {
+      return;
+    }
+    const credentials = fromBase64(token);
+    const password = credentials.slice(credentials.indexOf(':') + 1);
+    setAuthToken(toBase64(`${newEmail}:${password}`));
+    this.currentUser.set({ ...user, email: newEmail });
+  }
+
   register(request: RegisterRequest): Observable<unknown> {
     return this.http.post('/api/customers', request);
   }
@@ -72,4 +86,8 @@ export class AuthService {
 
 function toBase64(value: string): string {
   return btoa(String.fromCharCode(...new TextEncoder().encode(value)));
+}
+
+function fromBase64(value: string): string {
+  return new TextDecoder().decode(Uint8Array.from(atob(value), char => char.charCodeAt(0)));
 }
