@@ -101,7 +101,7 @@
   height: 20px;
 }
 
-.cart-count {
+.item-count {
   min-width: 1.4rem;
   height: 1.4rem;
   padding: 0 0.35rem;
@@ -114,7 +114,7 @@
 }
 
 @media (max-width: 600px) {
-  .order-button span:not(.cart-count) { display: none; }
+  .order-button span:not(.item-count) { display: none; }
 }
 
 .nav a.profile-button {

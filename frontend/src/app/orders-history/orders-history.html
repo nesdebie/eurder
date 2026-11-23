@@ -36,7 +36,7 @@
             <tbody>
               @for (line of order.items; track line.itemId) {
                 <tr>
-                  <td data-label="Item"><a [routerLink]="['/items', line.itemId]">{{ line.itemName }}</a></td>
+                  <td data-label="Item">{{ line.itemName }}</td>
                   <td data-label="Quantity" class="number">{{ line.amount }}</td>
                   <td data-label="Unit price" class="number">{{ line.unitPrice | currency:'EUR' }}</td>
                   <td data-label="Price" class="number">{{ line.totalPrice | currency:'EUR' }}</td>

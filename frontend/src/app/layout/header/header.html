@@ -14,7 +14,7 @@
            [title]="order.count() === 0 ? 'Your cart is empty' : 'See your cart'">
           <img src="/images/shopping-cart.svg" alt="" />
           @if (order.count() > 0) {
-            <span class="cart-count" aria-label="items in cart">{{ order.count() }}</span>
+            <span class="item-count" aria-label="items in cart">{{ order.count() }}</span>
           }
         </a>
       }
