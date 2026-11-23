@@ -3,6 +3,12 @@
 
   <nav class="nav">
     @if (auth.currentUser(); as user) {
+      @if (auth.hasPermission('VIEW_EURDERS_REPORT')) {
+        <a routerLink="/orders-history" routerLinkActive="active" class="order-button">Orders History</a>
+      }
+      @if (auth.hasPermission('VIEW_CUSTOMERS')) {
+        <a routerLink="/customers" routerLinkActive="active" class="order-button">Customers</a>
+      }
       @if (auth.hasPermission('EURDER_ITEMS')) {
         <a routerLink="/order" routerLinkActive="active" class="order-button"
            [title]="order.count() === 0 ? 'Your cart is empty' : 'See your cart'">
@@ -11,12 +17,6 @@
             <span class="cart-count" aria-label="items in cart">{{ order.count() }}</span>
           }
         </a>
-      }
-      @if (auth.hasPermission('VIEW_EURDERS_REPORT')) {
-        <a routerLink="/orders-history" routerLinkActive="active" class="order-button">Orders History</a>
-      }
-      @if (auth.hasPermission('VIEW_CUSTOMERS')) {
-        <a routerLink="/customers" routerLinkActive="active" class="order-button">Customers</a>
       }
       <span class="user">{{ user.email }}</span>
       @if (auth.hasPermission('MANAGE_PROFILE')) {
