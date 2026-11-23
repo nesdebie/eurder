@@ -64,7 +64,7 @@
           <h1>{{ item.name }}</h1>
           @if (auth.hasPermission('UPDATE_ITEM')) {
             <button type="button" class="icon-button" (click)="startEditing(item)"
-                    title="Edit this item" aria-label="Edit this item">
+                    title="Edit" aria-label="Edit">
               <img src="/images/edit.svg" alt="" />
             </button>
           }
