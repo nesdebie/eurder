@@ -11,8 +11,8 @@ export const routes: Routes = [
   { path: '', component: ItemGallery, title: 'Örder' },
   { path: 'items/new', component: ItemCreate, title: 'New item - Örder', canActivate: [permissionGuard('ADD_ITEM')] },
   { path: 'items/:id', component: ItemDetail, title: 'Item - Örder' },
+  { path: 'order', component: CreateOrder, title: 'Cart - Örder', canActivate: [permissionGuard('EURDER_ITEMS')] },
   { path: 'login', component: Login, title: 'Sign in - Örder' },
   { path: 'register', component: Register, title: 'Create an account - Örder' },
   { path: '**', redirectTo: '' },
-  { path: 'order', component: CreateOrder, title: 'Cart - Örder', canActivate: [permissionGuard('EURDER_ITEMS')] },
 ];
