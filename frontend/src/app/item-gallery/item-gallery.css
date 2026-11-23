@@ -1,6 +1,27 @@
-.tiny-dialog {
-  max-width: 420px;
+.gallery-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
   margin-bottom: 2rem;
+}
+
+.tiny-dialog {
+  flex: 1;
+  max-width: 420px;
+}
+
+.tiny-dialog .form-group {
+  margin: 0;
+}
+
+.add-item {
+  width: 52px;
+  height: 52px;
+}
+
+.add-item img {
+  width: 26px;
+  height: 26px;
 }
 
 #gallery {
@@ -47,7 +68,7 @@
   align-items: center;
   justify-content: center;
   aspect-ratio: 4 / 3;
-  background: linear-gradient(135deg, rgba(110, 157, 136, 0.18), rgba(255, 255, 255, 0.6));
+  background: var(--primary-light);
 }
 
 .item-image img {

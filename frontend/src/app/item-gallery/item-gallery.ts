@@ -4,6 +4,7 @@ import {FormsModule} from '@angular/forms';
 import { CurrencyPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
+import { AuthService } from '../auth/auth-service';
 import { ItemService } from '../service/item-service';
 import { StockBadge } from '../stock-badge/stock-badge';
 
@@ -20,6 +21,7 @@ import { StockBadge } from '../stock-badge/stock-badge';
 })
 export class ItemGallery {
   private readonly itemService = inject(ItemService);
+  protected readonly auth = inject(AuthService);
   protected searchText = signal<string | undefined>(undefined);
 
   protected readonly items = rxResource({

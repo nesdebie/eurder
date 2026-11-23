@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, inject, Service, signal } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { catchError, Observable, of, tap } from 'rxjs';
 import { CurrentUser } from '../model/current-user';
 import { RegisterRequest } from '../model/register-request';
 import { clearAuthToken, getAuthToken, setAuthToken } from './auth-token';
@@ -20,6 +20,24 @@ export class AuthService {
         error: () => this.logout(),
       });
     }
+  }
+
+  ensureUser(): Observable<CurrentUser | null> {
+    const user = this.currentUser();
+    if (user) {
+      return of(user);
+    }
+    const token = getAuthToken();
+    if (!token) {
+      return of(null);
+    }
+    return this.fetchMe(token).pipe(
+      tap(user => this.currentUser.set(user)),
+      catchError(() => {
+        this.logout();
+        return of(null);
+      }),
+    );
   }
 
   hasPermission(permission: string): boolean {

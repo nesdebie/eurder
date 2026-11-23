@@ -8,7 +8,7 @@
   --text-muted: #536a62;
   --border: #d5e2d8;
 
-  --background: linear-gradient(180deg, #eef3ef 0%, #e3ece4 100%);
+  --background: #eef3ef;
   --surface: rgba(255, 255, 255, 0.55);
   --surface-strong: rgba(248, 250, 247, 0.85);
 
@@ -111,7 +111,7 @@ h1, h2, h3 {
   color: inherit;
   background: var(--surface-strong);
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: 10px;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -119,4 +119,73 @@ h1, h2, h3 {
   outline: none;
   border-color: var(--primary-border);
   box-shadow: 0 0 0 3px rgba(78, 122, 102, 0.18);
+}
+
+/* ---------- Boutons partagés (détail, création…) ---------- */
+.btn-primary,
+.btn-secondary {
+  height: 44px;
+  padding: 0 1.4rem;
+  font: inherit;
+  font-weight: 700;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-primary {
+  color: #fff;
+  background: var(--primary);
+  border: none;
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  background: var(--primary-dark);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.btn-secondary {
+  color: var(--primary-dark);
+  background: rgba(255, 255, 255, 0.52);
+  border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+  border-color: var(--primary-border);
+}
+
+/* ---------- Boutons icône (edit.svg, add-to-cart.svg, add-item.svg) ---------- */
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.52);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.icon-button:hover {
+  transform: translateY(-1px);
+  border-color: var(--primary-border);
+}
+
+.icon-button img {
+  width: 22px;
+  height: 22px;
+}
+
+.icon-button.primary {
+  background: var(--primary-light);
+  border-color: var(--primary-border);
 }

@@ -20,7 +20,7 @@
   align-items: center;
   justify-content: center;
   aspect-ratio: 1;
-  background: linear-gradient(135deg, rgba(110, 157, 136, 0.18), rgba(255, 255, 255, 0.6));
+  background: var(--primary-light);
   border-radius: var(--radius);
 }
 
@@ -95,37 +95,6 @@
   gap: 1rem;
 }
 
-.icon-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 46px;
-  height: 46px;
-  padding: 0;
-  background: rgba(255, 255, 255, 0.52);
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  cursor: pointer;
-  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
-}
-
-.icon-button:hover {
-  transform: translateY(-1px);
-  border-color: var(--primary-border);
-}
-
-.icon-button img {
-  width: 22px;
-  height: 22px;
-}
-
-.icon-button.primary {
-  background: var(--primary-light);
-  border-color: var(--primary-border);
-}
-
-/* ---------- Ajout au panier ---------- */
 .add-to-cart {
   display: flex;
   align-items: center;
@@ -165,7 +134,6 @@
   font-size: 0.85rem;
 }
 
-/* ---------- Formulaire d'édition (admin) ---------- */
 .edit-form {
   display: flex;
   flex-direction: column;
@@ -194,43 +162,6 @@
   display: flex;
   justify-content: flex-end;
   gap: 0.8rem;
-}
-
-.btn-primary,
-.btn-secondary {
-  height: 44px;
-  padding: 0 1.4rem;
-  font: inherit;
-  font-weight: 700;
-  border-radius: 999px;
-  cursor: pointer;
-  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
-}
-
-.btn-primary {
-  color: #fff;
-  background: var(--primary);
-  border: none;
-}
-
-.btn-primary:hover:not(:disabled) {
-  transform: translateY(-1px);
-  background: var(--primary-dark);
-}
-
-.btn-primary:disabled {
-  opacity: 0.6;
-  cursor: default;
-}
-
-.btn-secondary {
-  color: var(--primary-dark);
-  background: rgba(255, 255, 255, 0.52);
-  border: 1px solid var(--border);
-}
-
-.btn-secondary:hover {
-  border-color: var(--primary-border);
 }
 
 @media (max-width: 480px) {

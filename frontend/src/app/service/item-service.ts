@@ -19,6 +19,9 @@ export class ItemService {
     return this.getItems().pipe(map(items => items.find(item => item.id === id)));
   }
 
+  createItem(request: ItemRequest): Observable<Item> {
+    return this.http.post<Item>(this.itemsUrl, request);
+  }
 
   updateItem(id: string, request: ItemRequest): Observable<Item> {
     return this.http.put<Item>(`${this.itemsUrl}/${id}/update`, request);

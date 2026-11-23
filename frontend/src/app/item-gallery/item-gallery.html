@@ -1,8 +1,16 @@
-<section class="tiny-dialog">
-  <div class="form-group">
-    <input id="name" name="name" class="form-control" placeholder="Filter by Name" [(ngModel)]="searchText" />
-  </div>
-</section>
+<div class="gallery-toolbar">
+  <section class="tiny-dialog">
+    <div class="form-group">
+      <input id="name" name="name" class="form-control" placeholder="Filter by Name" [(ngModel)]="searchText" />
+    </div>
+  </section>
+
+  @if (auth.hasPermission('ADD_ITEM')) {
+    <a routerLink="/items/new" class="icon-button primary add-item" title="Add an item" aria-label="Add an item">
+      <img src="/images/add-item.svg" alt="" />
+    </a>
+  }
+</div>
 
 @if (items.isLoading()) {
   <p class="text-muted">Loading items...</p>
