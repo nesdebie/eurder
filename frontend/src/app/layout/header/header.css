@@ -72,7 +72,7 @@
 }
 
 /* ---------- Bouton "Order" (panier) ---------- */
-.order-button {
+.nav a.order-button {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -89,13 +89,13 @@
   transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
-.order-button:hover:not(:disabled) {
+.nav a.order-button:hover {
   transform: translateY(-1px);
 }
 
-.order-button:disabled {
-  opacity: 0.5;
-  cursor: default;
+/* On the cart page itself */
+.nav a.order-button.active {
+  background: rgba(255, 255, 255, 0.52);
 }
 
 .order-button img {
@@ -113,37 +113,6 @@
   color: #fff;
   background: var(--primary);
   border-radius: 999px;
-}
-
-/* ---------- Message après la commande ---------- */
-.order-banner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0.7rem 1.5rem;
-  font-size: 0.95rem;
-}
-
-.order-banner.success {
-  color: var(--success);
-  background: rgba(62, 122, 90, 0.12);
-  border-bottom: 1px solid rgba(62, 122, 90, 0.3);
-}
-
-.order-banner.error {
-  color: var(--danger);
-  background: var(--danger-light);
-  border-bottom: 1px solid #ecc9c3;
-}
-
-.order-banner .close {
-  font-size: 1.3rem;
-  line-height: 1;
-  color: inherit;
-  background: none;
-  border: none;
-  cursor: pointer;
 }
 
 @media (max-width: 600px) {

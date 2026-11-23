@@ -1,0 +1,90 @@
+<a routerLink="/" class="back-link">← Back to the gallery</a>
+
+<section class="order-card fader">
+  @if (placedOrder(); as order) {
+    <h1>Thank you for your order!</h1>
+    <p class="text-muted">Order reference: <span class="reference inline">{{ order.id }}</span></p>
+
+    <table class="order-table">
+      <thead>
+      <tr>
+        <th>Item</th>
+        <th class="number">Quantity</th>
+        <th class="number">Price</th>
+        <th>Shipping date</th>
+      </tr>
+      </thead>
+      <tbody>
+        @for (line of order.items; track line.itemId) {
+          <tr>
+            <td>{{ line.itemName }}</td>
+            <td class="number">{{ line.amount }}</td>
+            <td class="number">{{ line.totalPrice | currency:'EUR' }}</td>
+            <td>{{ line.shippingDate | date:'d MMM y' }}</td>
+          </tr>
+        }
+      </tbody>
+      <tfoot>
+      <tr>
+        <td colspan="2">Total</td>
+        <td class="number">{{ order.totalPrice | currency:'EUR' }}</td>
+        <td></td>
+      </tr>
+      </tfoot>
+    </table>
+
+    <a routerLink="/" class="btn-secondary continue">Continue shopping</a>
+  } @else {
+    <!-- ---------- The order ---------- -->
+    <h1>Your order</h1>
+
+    @if (rows().length === 0) {
+      <p class="text-muted">Your order is empty. <a routerLink="/">Browse the items</a></p>
+    } @else {
+      <table class="order-table">
+        <thead>
+        <tr>
+          <th>Item</th>
+          <th class="number">Quantity</th>
+          <th><span class="visually-hidden">Remove</span></th>
+        </tr>
+        </thead>
+        <tbody>
+          @for (row of rows(); track row.id) {
+            <tr>
+              <td>
+                <a [routerLink]="['/items', row.id]">{{ row.name }}</a>
+                <span class="reference">{{ row.id }}</span>
+              </td>
+              <td class="number">{{ row.amount }}</td>
+              <td class="actions">
+                <button type="button" class="icon-button small" (click)="remove(row.id)"
+                        [title]="'Remove ' + row.name" [attr.aria-label]="'Remove ' + row.name">
+                  <img src="/images/cross.svg" alt="" />
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+        <tfoot>
+        <tr>
+          <td>Total</td>
+          <td class="number">{{ order.count() }}</td>
+          <td></td>
+        </tr>
+        </tfoot>
+      </table>
+
+      @for (message of errors(); track message) {
+        <p class="alert alert-danger">{{ message }}</p>
+      }
+
+      <div class="order-actions">
+        <button type="button" class="icon-button primary order" (click)="placeOrder()" [disabled]="ordering()">
+          <img src="/images/delivery-van.svg" alt="" />
+          <span>{{ ordering() ? 'Ordering…' : 'Place order' }}</span>
+        </button>
+      </div>
+    }
+  }
+</section>

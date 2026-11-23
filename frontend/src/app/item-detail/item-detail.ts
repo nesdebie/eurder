@@ -6,7 +6,7 @@ import { RouterLink } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
 
 import { AuthService } from '../auth/auth-service';
-import { CartService } from '../service/cart-service';
+import { OrderService } from '../service/order-service';
 import { messagesFrom } from '../common/http-errors';
 import { Item } from '../model/item';
 import { ItemService } from '../service/item-service';
@@ -20,7 +20,7 @@ import { StockBadge } from '../stock-badge/stock-badge';
 })
 export class ItemDetail {
   private readonly itemService = inject(ItemService);
-  private readonly cart = inject(CartService);
+  private readonly cart = inject(OrderService);
   private readonly fb = inject(NonNullableFormBuilder);
   protected readonly auth = inject(AuthService);
 

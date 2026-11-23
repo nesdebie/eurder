@@ -16,7 +16,6 @@ export class ItemCreate {
   private readonly itemService = inject(ItemService);
   private readonly router = inject(Router);
 
-  // Same rules as AddOrUpdateItemRequest on the backend
   protected readonly form = inject(NonNullableFormBuilder).group({
     name: ['', [Validators.required, Validators.maxLength(50)]],
     description: ['', [Validators.required, Validators.maxLength(255)]],
@@ -36,7 +35,6 @@ export class ItemCreate {
 
     const { name, description, price, amount } = this.form.getRawValue();
     this.itemService.createItem({ name, description, price: price!, amount }).subscribe({
-      // Created: open the page of the new item
       next: item => this.router.navigate(['/items', item.id]),
       error: (e: HttpErrorResponse) => {
         this.saving.set(false);
@@ -46,7 +44,6 @@ export class ItemCreate {
   }
 }
 
-// Refuses 1.5, accepts 1, 2, 3...
 function integer(control: AbstractControl): ValidationErrors | null {
   return Number.isInteger(Number(control.value)) ? null : { integer: true };
 }

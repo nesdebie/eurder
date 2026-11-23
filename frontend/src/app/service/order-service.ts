@@ -6,7 +6,7 @@ import { Order, OrderLine } from '../model/order';
 const CART_KEY = 'eurder-cart';
 
 @Service()
-export class CartService {
+export class OrderService {
   private readonly http = inject(HttpClient);
 
   readonly lines = signal<OrderLine[]>(readCart());
@@ -18,6 +18,10 @@ export class CartService {
     this.save(existing
       ? lines.map(line => line === existing ? { ...line, amount: line.amount + amount } : line)
       : [...lines, { id, amount }]);
+  }
+
+  remove(id: string): void {
+    this.save(this.lines().filter(line => line.id !== id));
   }
 
   placeOrder(): Observable<Order> {
