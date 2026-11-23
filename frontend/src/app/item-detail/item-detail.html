@@ -91,7 +91,7 @@
           <form class="add-to-cart" [formGroup]="cartForm" (ngSubmit)="addToCart(item)" novalidate>
             <label for="quantity">Quantity</label>
             <input id="quantity" type="number" min="1" step="1" class="form-control quantity" formControlName="amount" />
-            <button type="submit" class="icon-button primary" title="Add to cart" aria-label="Add to cart">
+            <button type="submit" class="icon-button" title="Add to cart" aria-label="Add to cart">
               <img src="/images/add-to-cart.svg" alt="" />
             </button>
           </form>

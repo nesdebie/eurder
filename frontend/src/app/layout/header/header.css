@@ -53,7 +53,7 @@
   color: var(--primary-dark);
   background: rgba(255, 255, 255, 0.52);
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: var(--radius-button);
   transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
@@ -83,7 +83,7 @@
   color: var(--primary-dark);
   background: var(--primary-light);
   border: 1px solid var(--primary-border);
-  border-radius: 999px;
+  border-radius: var(--radius-button);
   cursor: pointer;
   transition: transform 0.2s ease, opacity 0.2s ease;
 }

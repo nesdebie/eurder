@@ -58,7 +58,7 @@ legend {
   color: #fff;
   background: var(--primary);
   border: none;
-  border-radius: 999px;
+  border-radius: var(--radius-button);
   cursor: pointer;
   transition: transform 0.2s ease, background 0.2s ease;
 }

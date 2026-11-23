@@ -19,6 +19,7 @@
 
   --radius: 20px;
   --radius-small: 12px;
+  --radius-button: 10px;   /* every button: square with slightly rounded corners */
   --shadow: 0 18px 35px rgba(68, 90, 80, 0.08);
   --shadow-hover: 0 22px 40px rgba(68, 90, 80, 0.16);
 }
@@ -128,7 +129,7 @@ h1, h2, h3 {
   padding: 0 1.4rem;
   font: inherit;
   font-weight: 700;
-  border-radius: 10px;
+  border-radius: var(--radius-button);
   cursor: pointer;
   transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
 }
@@ -159,7 +160,6 @@ h1, h2, h3 {
   border-color: var(--primary-border);
 }
 
-/* ---------- Boutons icône (edit.svg, add-to-cart.svg, add-item.svg) ---------- */
 .icon-button {
   display: inline-flex;
   align-items: center;
@@ -170,7 +170,7 @@ h1, h2, h3 {
   padding: 0;
   background: rgba(255, 255, 255, 0.52);
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: var(--radius-button);
   cursor: pointer;
   transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }

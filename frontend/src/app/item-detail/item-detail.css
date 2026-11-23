@@ -97,6 +97,7 @@
 
 .add-to-cart {
   display: flex;
+  background: transparent;
   align-items: center;
   gap: 0.8rem;
   margin-top: 2rem;
