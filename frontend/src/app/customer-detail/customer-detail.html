@@ -15,42 +15,26 @@
       <span class="reference" title="Customer id">{{ customer.id }}</span>
     </header>
 
-    <div class="sections">
-      <section class="info-card">
-        <h2>Identity</h2>
-        <dl>
-          <dt>First name</dt>
-          <dd>{{ customer.fullName.firstName }}</dd>
-          <dt>Last name</dt>
-          <dd>{{ customer.fullName.lastName }}</dd>
-          <dt>Id</dt>
-          <dd class="reference">{{ customer.id }}</dd>
-        </dl>
-      </section>
-
-      <section class="info-card">
-        <h2>Contact</h2>
-        <dl>
-          <dt>Email</dt>
-          <dd><a [href]="'mailto:' + customer.email">{{ customer.email }}</a></dd>
-          <dt>Phone</dt>
-          <dd><a [href]="'tel:' + customer.phone">{{ customer.phone }}</a></dd>
-        </dl>
-      </section>
-
-      <section class="info-card">
-        <h2>Address</h2>
-        <dl>
-          <dt>Street</dt>
-          <dd>{{ customer.address.streetName }}</dd>
-          <dt>Number</dt>
-          <dd>{{ customer.address.streetNumber }}</dd>
-          <dt>Postal code</dt>
-          <dd>{{ customer.address.postalCode }}</dd>
-          <dt>City</dt>
-          <dd>{{ customer.address.city }}</dd>
-        </dl>
-      </section>
-    </div>
+    <dl class="fields">
+      <div class="field">
+        <dt>Full name</dt>
+        <dd> {{ customer.fullName.firstName }} {{ customer.fullName.lastName.toUpperCase() }}  </dd>
+      </div>
+      <div class="field">
+        <dt>Phone</dt>
+        <dd><a [href]="'tel:' + customer.phone">{{ customer.phone }}</a></dd>
+      </div>
+      <div class="field">
+        <dt>Email</dt>
+        <dd><a [href]="'mailto:' + customer.email">{{ customer.email }}</a></dd>
+      </div>
+      <div class="field">
+        <dt>Address</dt>
+        <dd>
+          {{ customer.address.streetName }} {{ customer.address.streetNumber }},
+          {{ customer.address.postalCode }} {{ customer.address.city }}
+        </dd>
+      </div>
+    </dl>
   </article>
 }

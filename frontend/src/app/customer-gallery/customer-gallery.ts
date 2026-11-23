@@ -27,7 +27,7 @@ export class CustomerGallery {
     if (!toFind)
       return customers;
 
-    return customers.filter(customer => customer.email.toLowerCase().includes(toFind));
+    return customers.filter(customer => customer.fullName.lastName.toLowerCase().includes(toFind));
   });
 
   protected initials(firstName: string, lastName: string): string {
