@@ -6,6 +6,7 @@ import org.example.eurder.feature.eurder.api.dto.EurdersReportDto;
 import org.example.eurder.feature.eurder.api.dto.ItemsShippedTodayDto;
 import org.example.eurder.feature.eurder.api.request.EurderItemsRequest;
 import org.example.eurder.feature.eurder.service.EurderService;
+import org.example.eurder.feature.item.exception.ItemBadRequestException;
 import org.example.eurder.feature.security.authentication.AuthenticatedUser;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
@@ -29,7 +30,7 @@ public class EurderController {
     @ResponseStatus(HttpStatus.CREATED)
     public EurderDto createEurder(
             @AuthenticationPrincipal AuthenticatedUser user,
-            @Valid @RequestBody EurderItemsRequest request) {
+            @Valid @RequestBody EurderItemsRequest request) throws ItemBadRequestException {
         return eurderService.createEurder(request, user.id());
     }
 
@@ -39,7 +40,7 @@ public class EurderController {
     @ResponseStatus(HttpStatus.CREATED)
     public EurderDto createReeurder(
             @AuthenticationPrincipal AuthenticatedUser user,
-            @PathVariable UUID id) {
+            @PathVariable UUID id) throws ItemBadRequestException {
         return eurderService.createReeurder(id, user.id());
     }
 

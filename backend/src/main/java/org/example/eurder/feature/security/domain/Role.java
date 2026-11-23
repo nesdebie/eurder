@@ -6,7 +6,8 @@ public enum Role {
     CUSTOMER(
             Permission.EURDER_ITEMS,
             Permission.REEURDER_ITEMS,
-            Permission.VIEW_EURDERS_REPORT),
+            Permission.VIEW_EURDERS_REPORT,
+            Permission.MANAGE_PROFILE),
     ADMIN(
             Permission.ADD_ITEM,
             Permission.UPDATE_ITEM,

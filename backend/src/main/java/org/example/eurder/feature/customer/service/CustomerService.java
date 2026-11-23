@@ -5,6 +5,7 @@ import org.example.eurder.common.api.FullNameMapper;
 import org.example.eurder.feature.customer.api.CustomerMapper;
 import org.example.eurder.feature.customer.api.dto.CustomerDto;
 import org.example.eurder.feature.customer.api.request.CreateCustomerRequest;
+import org.example.eurder.feature.customer.api.request.UpdateCustomerRequest;
 import org.example.eurder.feature.customer.domain.Customer;
 import org.example.eurder.feature.customer.domain.CustomerRepository;
 import org.example.eurder.feature.customer.exception.CustomerNotFoundException;
@@ -56,6 +57,30 @@ public class CustomerService {
         }
     }
 
+
+    public CustomerDto updateCustomer(UUID customerId, UpdateCustomerRequest request) {
+        String normalizedEmail = Customer.normalizeEmail(request.email());
+        Customer customer = getCustomerById(customerId);
+
+        customerRepository.findByEmail(normalizedEmail)
+                .filter(other -> !other.getId().equals(customerId))
+                .ifPresent(other -> {
+                    throw new EmailAlreadyUsedException(normalizedEmail);
+                });
+
+        customer.updateProfile(
+                normalizedEmail,
+                fullNameMapper.mapToEmbeddable(request.fullName()),
+                request.phoneNumber(),
+                addressMapper.mapToEmbeddable(request.address())
+        );
+
+        try {
+            return customerMapper.mapToDto(customerRepository.saveAndFlush(customer));
+        } catch (DataIntegrityViolationException e) {
+            throw new EmailAlreadyUsedException(normalizedEmail);
+        }
+    }
     @Transactional(readOnly = true)
     public List<CustomerDto> getAllCustomers() {
         return customerMapper.mapToDto(

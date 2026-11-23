@@ -9,5 +9,6 @@ public enum Permission {
     VIEW_CUSTOMERS,
     VIEW_CUSTOMER,
     VIEW_SHIPPING_TODAY,
-    VIEW_INVENTORY
+    VIEW_INVENTORY,
+    MANAGE_PROFILE
 }

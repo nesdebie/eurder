@@ -103,7 +103,7 @@ class ItemEndToEndTest extends EndToEndTest {
 
         @DisplayName("Not excluding out of stock")
         @Test
-        void givenItemInStockAndItemOutOfStock_whenListingItems_thenAllTheStockIsListed() {
+        void givenItemInStockAndItemOutOfStock_whenListingItems_thenOnlyInStockIsListed() {
             String inStock = itemRepository.save(TestData.item("1.00", 3)).getName();
             String outOfStock = itemRepository.save(TestData.item("1.00", 0)).getName();
 
@@ -111,7 +111,7 @@ class ItemEndToEndTest extends EndToEndTest {
                     .then()
                     .statusCode(HttpStatus.OK.value())
                     .body("name", hasItem(inStock))
-                    .body("name", hasItem(outOfStock));
+                    .body("name", not(hasItem(outOfStock)));
         }
     }
 }

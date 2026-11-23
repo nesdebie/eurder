@@ -54,6 +54,13 @@ public class Customer {
         return new Customer(email, passwordHash, Role.ADMIN, null, null, null);
     }
 
+    public void updateProfile(String email, FullName fullName, String phoneNumber, Address address) {
+        this.email = normalizeEmail(Objects.requireNonNull(email, "Email is required"));
+        this.fullName = Objects.requireNonNull(fullName, "Full name is required");
+        this.phoneNumber = Objects.requireNonNull(phoneNumber, "Phone number is required");
+        this.address = Objects.requireNonNull(address, "Address is required");
+    }
+
     public UUID getId() {
         return id;
     }

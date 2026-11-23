@@ -1,10 +1,12 @@
 package org.example.eurder.feature.item.service;
 
+import org.apache.coyote.BadRequestException;
 import org.example.eurder.feature.item.api.ItemMapper;
 import org.example.eurder.feature.item.api.dto.ItemDto;
 import org.example.eurder.feature.item.api.request.AddOrUpdateItemRequest;
 import org.example.eurder.feature.item.domain.Item;
 import org.example.eurder.feature.item.domain.ItemRepository;
+import org.example.eurder.feature.item.exception.ItemBadRequestException;
 import org.example.eurder.feature.item.exception.ItemConflictException;
 import org.example.eurder.feature.item.exception.ItemNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -66,8 +68,10 @@ public class ItemService {
                 .toList();
     }
 
-    public void reduceStock(UUID id, int amount) {
+    public void reduceStock(UUID id, int amount) throws ItemBadRequestException {
         Item item = getItemById(id);
+        if (item.getAmount() < 1)
+            throw ItemBadRequestException.outOfStockException(item.getName());
         item.reduceAmount(amount);
         itemRepository.saveAndFlush(item);
     }
@@ -77,6 +81,7 @@ public class ItemService {
     public List<ItemDto> getAllItems() {
         return itemMapper.mapToDto(
                 itemRepository.findAll().stream()
+                        .filter(item -> item.getAmount() > 0)
                         .toList()
         );
     }

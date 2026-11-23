@@ -28,7 +28,7 @@ export class CreateOrder {
     const names = new Map(this.items.value().map(item => [item.id, item.name]));
     return this.order.lines().map(line => ({
       ...line,
-      name: names.get(line.id) ?? (this.items.isLoading() ? 'Loading…' : 'Unknown item'),
+      name: names.get(line.id) ?? (this.items.isLoading() ? 'Loading…' : 'No longer available'),
     }));
   });
 

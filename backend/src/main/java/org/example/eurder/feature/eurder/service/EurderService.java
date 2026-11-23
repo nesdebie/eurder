@@ -12,6 +12,7 @@ import org.example.eurder.feature.eurder.domain.ItemGroup;
 import org.example.eurder.feature.eurder.exception.EurderForbiddenException;
 import org.example.eurder.feature.eurder.exception.EurderNotFoundException;
 import org.example.eurder.feature.item.domain.Item;
+import org.example.eurder.feature.item.exception.ItemBadRequestException;
 import org.example.eurder.feature.item.service.ItemService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,7 +40,7 @@ public class EurderService {
         this.clock = clock;
     }
 
-    public EurderDto createEurder(EurderItemsRequest request, UUID customerId) {
+    public EurderDto createEurder(EurderItemsRequest request, UUID customerId) throws ItemBadRequestException {
         List<ItemGroup> itemGroups = request.items().stream()
                 .map(itemToBuy -> {
                     Item item = itemService.getItemById(itemToBuy.id());
@@ -48,7 +49,11 @@ public class EurderService {
                             item,
                             itemToBuy.amount(),
                             LocalDate.now(clock));
-                    itemService.reduceStock(item.getId(), itemToBuy.amount());
+                    try {
+                        itemService.reduceStock(item.getId(), itemToBuy.amount());
+                    } catch (ItemBadRequestException e) {
+                        throw new RuntimeException(e);
+                    }
                     return itemGroup;
                 })
                 .toList();
@@ -63,7 +68,7 @@ public class EurderService {
         return eurderMapper.mapToDto(eurder);
     }
 
-    public EurderDto createReeurder(UUID eurderId, UUID customerId) {
+    public EurderDto createReeurder(UUID eurderId, UUID customerId) throws ItemBadRequestException {
         Eurder eurder = getEurderById(eurderId);
         verifyCustomerIdAreMatching(eurder, customerId);
         return createEurder(eurderMapper.mapToEurderRequest(eurder), customerId);

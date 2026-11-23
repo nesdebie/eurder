@@ -5,6 +5,15 @@
     </div>
   </section>
 
+  @if (canViewInventory()) {
+    <select id="stock-filter" class="form-control stock-filter" aria-label="Filter by stock level"
+            [ngModel]="stockFilter()" (ngModelChange)="stockFilter.set($event)">
+      @for (filter of stockFilters; track filter.value) {
+        <option [value]="filter.value">{{ filter.label }}</option>
+      }
+    </select>
+  }
+
   @if (auth.hasPermission('ADD_ITEM')) {
     <a routerLink="/items/new" class="icon-button primary add-item" title="Add an item" aria-label="Add an item">
       <img src="/images/add-item.svg" alt="" />

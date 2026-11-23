@@ -4,6 +4,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { AbstractControl, NonNullableFormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
+import { switchMap } from 'rxjs';
 
 import { AuthService } from '../service/auth-service';
 import { OrderService } from '../service/order-service';
@@ -27,8 +28,11 @@ export class ItemDetail {
   readonly id = input.required<string>();
 
   protected readonly item = rxResource({
-    params: () => this.id(),
-    stream: ({ params: id }) => this.itemService.getItem(id),
+    // Admins also see items with no stock left (they are only in the inventory)
+    params: () => ({ id: this.id(), user: this.auth.currentUser() }),
+    stream: ({ params }) => this.auth.ensureUser().pipe(
+      switchMap(user => this.itemService.getItem(params.id, user?.permissions.includes('VIEW_INVENTORY') ?? false)),
+    ),
   });
 
   protected readonly cartForm = this.fb.group({

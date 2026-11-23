@@ -5,3 +5,5 @@ export interface Item {
   price: number
   amount: number
 }
+
+export type StockLevel = 'STOCK_LOW' | 'STOCK_MEDIUM' | 'STOCK_HIGH';

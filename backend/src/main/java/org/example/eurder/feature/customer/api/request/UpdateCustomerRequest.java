@@ -9,7 +9,6 @@ import jakarta.validation.constraints.Size;
 import org.example.eurder.common.api.dto.AddressDto;
 import org.example.eurder.common.api.dto.FullNameDto;
 
-// Same fields and rules as CreateCustomerRequest, without the password
 public record UpdateCustomerRequest(
         @NotNull(message = "Full name is required")
         @Valid
