@@ -110,6 +110,10 @@ h1 {
     border: none;
   }
 
+  .order-table td:nth-child(5) {
+    padding-left: 0;   /* the desktop column offset must not shift the mobile list */
+  }
+
   .order-table td::before {
     content: attr(data-label);
     font-weight: 600;

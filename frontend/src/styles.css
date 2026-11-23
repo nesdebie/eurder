@@ -1,3 +1,12 @@
+/* ---------- Police du header et du footer : Orbitron (SIL Open Font License) ---------- */
+@font-face {
+  font-family: 'Orbitron';
+  src: url('/fonts/Orbitron-SemiBold.ttf') format('truetype');
+  font-weight: 100 900;   /* only the SemiBold file: used for every weight, no fake bold */
+  font-style: normal;
+  font-display: swap;     /* shows Arial while the font loads, never invisible text */
+}
+
 :root {
   --primary: #4e7a66;
   --primary-dark: #2f4d43;
