@@ -1,0 +1,4 @@
+org.springframework.boot.EnvironmentPostProcessor=\
+  org.example.eurder.common.startup.RequiredConfigurationEnvironmentPostProcessor
+org.springframework.boot.diagnostics.FailureAnalyzer=\
+  org.example.eurder.common.startup.MissingConfigurationFailureAnalyzer

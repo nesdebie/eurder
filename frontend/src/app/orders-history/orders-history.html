@@ -1,0 +1,52 @@
+<a routerLink="/" class="back-link">← Back to the gallery</a>
+
+<section class="history-card fader">
+  <h1>Orders History</h1>
+
+  @if (report.isLoading()) {
+    <p class="text-muted">Loading your orders...</p>
+  } @else if (report.error()) {
+    <p class="alert alert-danger">Oops, could not load your orders. Is the backend running?</p>
+  } @else if (report.value(); as report) {
+    @if (report.eurders.length === 0) {
+      <p class="text-muted">You haven't placed any order yet. <a routerLink="/">Browse the items</a></p>
+    } @else {
+      <p class="summary">
+        {{ report.eurders.length }} order(s) — total spent
+        <strong>{{ report.totalPrice | currency:'EUR' }}</strong>
+      </p>
+
+      @for (order of report.eurders; track order.id) {
+        <article class="order">
+          <header class="order-header">
+            <span class="reference" title="Order reference">{{ order.id }}</span>
+            <strong class="order-total">{{ order.totalPrice | currency:'EUR' }}</strong>
+          </header>
+
+          <table class="order-table">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th class="number">Quantity</th>
+                <th class="number">Unit price</th>
+                <th class="number">Price</th>
+                <th>Shipping date</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (line of order.items; track line.itemId) {
+                <tr>
+                  <td data-label="Item">{{ line.itemName }}</td>
+                  <td data-label="Quantity" class="number">{{ line.amount }}</td>
+                  <td data-label="Unit price" class="number">{{ line.unitPrice | currency:'EUR' }}</td>
+                  <td data-label="Price" class="number">{{ line.totalPrice | currency:'EUR' }}</td>
+                  <td data-label="Shipping date">{{ line.shippingDate | date:'d MMM y' }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </article>
+      }
+    }
+  }
+</section>

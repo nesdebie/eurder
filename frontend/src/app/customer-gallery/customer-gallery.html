@@ -1,0 +1,28 @@
+<div class="gallery-toolbar">
+  <section class="tiny-dialog">
+    <div class="form-group">
+      <input id="lastName" name="lastName" type="search" class="form-control" placeholder="Filter by Last name"
+             aria-label="Filter by last name" [(ngModel)]="searchText" />
+    </div>
+  </section>
+</div>
+
+@if (customers.isLoading()) {
+  <p class="text-muted">Loading customers...</p>
+} @else if (customers.error()) {
+  <p class="alert alert-danger">Oops, could not load the customers. Is the backend running?</p>
+} @else {
+  <div id="gallery">
+    @for (customer of filteredCustomers(); track customer.id) {
+      <a class="gallery fader" [routerLink]="['/customers', customer.id]">
+        <div class="overlay">
+          <span class="reference" title="Customer id">{{ customer.id }}</span>
+          <h2 class="overlay-text">{{ customer.fullName.firstName }} {{ customer.fullName.lastName }}</h2>
+          <span class="email">{{ customer.email }}</span>
+        </div>
+      </a>
+    } @empty {
+      <p class="text-muted">No customer found.</p>
+    }
+  </div>
+}

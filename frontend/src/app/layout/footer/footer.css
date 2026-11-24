@@ -1,0 +1,12 @@
+.footer {
+  font-family: 'Orbitron', Arial, Helvetica, sans-serif;
+  padding: 1.25rem 1rem;
+  text-align: center;
+  color: var(--text-muted);
+  border-top: 1px solid #cfe0d3;
+}
+
+.footer p {
+  margin: 0;
+  font-size: 0.9rem;
+}

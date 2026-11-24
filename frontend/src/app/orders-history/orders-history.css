@@ -1,0 +1,126 @@
+.back-link {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.history-card {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: clamp(1.2rem, 3vw, 2.2rem);
+  background: rgba(255, 255, 255, 0.42);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow);
+}
+
+h1 {
+  font-size: 1.8rem;
+}
+
+.summary {
+  margin: 0 0 1.5rem;
+  color: var(--text-muted);
+}
+
+.summary strong {
+  color: var(--text);
+}
+
+.order {
+  margin-bottom: 1.2rem;
+  padding: 1rem 1.2rem;
+  background: rgba(248, 250, 247, 0.7);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.order-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.reference {
+  font-family: monospace;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  word-break: break-all;
+}
+
+.order-total {
+  font-size: 1.15rem;
+  white-space: nowrap;
+}
+
+.order-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.order-table th:nth-child(1) { width: 34%; }
+.order-table th:nth-child(2) { width: 12%; }
+.order-table th:nth-child(3) { width: 16%; }
+.order-table th:nth-child(4) { width: 16%; }
+.order-table th:nth-child(5) { width: 22%; padding-left: 1.2rem; }
+.order-table td:nth-child(5) { padding-left: 1.2rem; }
+
+.order-table th,
+.order-table td {
+  padding: 0.55rem 0.5rem;
+  text-align: left;
+  border-top: 1px solid var(--border);
+}
+
+.order-table th {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  border-top: none;
+}
+
+.order-table td a {
+  font-weight: 600;
+}
+
+.order-table .number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 600px) {
+  .order-table thead {
+    display: none;
+  }
+
+  .order-table tr {
+    display: block;
+    padding: 0.5rem 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .order-table td {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.2rem 0;
+    border: none;
+  }
+
+  .order-table td:nth-child(5) {
+    padding-left: 0;   /* the desktop column offset must not shift the mobile list */
+  }
+
+  .order-table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+
+  .order-table .number {
+    text-align: right;
+  }
+}

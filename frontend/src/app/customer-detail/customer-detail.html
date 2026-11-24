@@ -1,0 +1,40 @@
+<a routerLink="/customers" class="back-link">← Back to the customers</a>
+
+@if (customer.isLoading()) {
+  <p class="text-muted">Loading customer...</p>
+} @else if (customer.error()) {
+  @if (notFound()) {
+    <p class="alert alert-danger">This customer does not exist.</p>
+  } @else {
+    <p class="alert alert-danger">Oops, could not load the customer. Is the backend running?</p>
+  }
+} @else if (customer.value(); as customer) {
+  <article class="customer-card fader">
+    <header class="customer-header">
+      <h1>{{ customer.fullName.firstName }} {{ customer.fullName.lastName }}</h1>
+      <span class="reference" title="Customer id">{{ customer.id }}</span>
+    </header>
+
+    <dl class="fields">
+      <div class="field">
+        <dt>Full name</dt>
+        <dd> {{ customer.fullName.firstName }} {{ customer.fullName.lastName.toUpperCase() }}  </dd>
+      </div>
+      <div class="field">
+        <dt>Phone</dt>
+        <dd> {{ customer.phone }} </dd>
+      </div>
+      <div class="field">
+        <dt>Email</dt>
+        <dd> {{ customer.email }} </dd>
+      </div>
+      <div class="field">
+        <dt>Address</dt>
+        <dd>
+          {{ customer.address.streetName }} {{ customer.address.streetNumber }},
+          {{ customer.address.postalCode }} {{ customer.address.city }}
+        </dd>
+      </div>
+    </dl>
+  </article>
+}
