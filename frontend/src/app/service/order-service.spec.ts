@@ -3,19 +3,18 @@ import { HttpTestingController } from '@angular/common/http/testing';
 import { provideTestDefaults } from '../../testing/test-providers';
 import { OrderService } from './order-service';
 
-// Example 2 — a service: its logic (the cart) and the HTTP request it sends
 describe('OrderService (cart)', () => {
   let service: OrderService;
   let http: HttpTestingController;
 
   beforeEach(() => {
-    localStorage.clear();   // every test starts with an empty cart
+    localStorage.clear();
     TestBed.configureTestingModule({ providers: [provideTestDefaults()] });
     service = TestBed.inject(OrderService);
     http = TestBed.inject(HttpTestingController);
   });
 
-  afterEach(() => http.verify());   // fails if a test left an unexpected request
+  afterEach(() => http.verify());
 
   it('adds up the amounts when the same item is added twice', () => {
     service.add('keyboard', 2);

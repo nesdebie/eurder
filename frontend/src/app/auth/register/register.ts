@@ -16,7 +16,6 @@ export class Register {
   private readonly router = inject(Router);
   private readonly fb = inject(NonNullableFormBuilder);
 
-  // Same structure and rules as CreateCustomerRequest on the backend
   protected readonly form = this.fb.group({
     fullName: this.fb.group({
       firstName: ['', Validators.required],
@@ -45,7 +44,6 @@ export class Register {
 
     const request = this.form.getRawValue();
     this.auth.register(request).pipe(
-      // Registration succeeded: sign in straight away with the same credentials
       switchMap(() => this.auth.login(request.email, request.password)),
     ).subscribe({
       next: () => this.router.navigateByUrl('/'),
@@ -57,7 +55,6 @@ export class Register {
   }
 }
 
-// 400: { errors: { "email": ["Email must be valid"], ... } } — 409: { detail: "..." }
 function messagesFrom(e: HttpErrorResponse): string[] {
   if (e.status === 400 && e.error?.errors) {
     return Object.values(e.error.errors as Record<string, string[]>).flat();

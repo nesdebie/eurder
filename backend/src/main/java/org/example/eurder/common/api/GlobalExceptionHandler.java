@@ -42,7 +42,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     private static ResponseEntity<ProblemDetail> unauthorized(HttpServletRequest request) {
         ResponseEntity.BodyBuilder response = ResponseEntity.status(HttpStatus.UNAUTHORIZED);
-        // Without this header for AJAX calls, the browser does not open its own login popup
         if (!"XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
             response.header(HttpHeaders.WWW_AUTHENTICATE, "Basic realm=\"Eurder\"");
         }

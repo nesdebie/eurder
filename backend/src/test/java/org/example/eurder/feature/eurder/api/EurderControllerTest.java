@@ -224,8 +224,8 @@ class EurderControllerTest {
         @Test
         void givenTwoEurders_whenViewingReport_thenReturnsBothWithGrandTotal() throws Exception {
             Customer customer = saveCustomer();
-            orderAndGetId(customer, saveItem("10.00", 10), 2);   // 20.00
-            orderAndGetId(customer, saveItem("2.50", 10), 3);    //  7.50
+            orderAndGetId(customer, saveItem("10.00", 10), 2);
+            orderAndGetId(customer, saveItem("2.50", 10), 3);
 
             ResultActions result = mockMvc.perform(get("/orders/report")
                     .with(user(AuthenticatedUser.from(customer))));

@@ -1,4 +1,3 @@
-// Response of GET /customers, GET/PUT /customers/me (= CustomerDto on the backend)
 export interface Customer {
   id: string;
   fullName: { firstName: string; lastName: string };
@@ -7,7 +6,6 @@ export interface Customer {
   address: { streetName: string; streetNumber: string; postalCode: string; city: string };
 }
 
-// Body of PUT /customers/me (= UpdateCustomerRequest): everything except id and password
 export interface UpdateCustomerRequest {
   fullName: { firstName: string; lastName: string };
   email: string;

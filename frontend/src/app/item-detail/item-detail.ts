@@ -86,7 +86,7 @@ export class ItemDetail {
 
     this.itemService.updateItem(item.id, this.editForm.getRawValue()).subscribe({
       next: updated => {
-        this.item.set(updated);   // shows the new values without reloading
+        this.item.set(updated);
         this.saving.set(false);
         this.editing.set(false);
       },
@@ -98,7 +98,6 @@ export class ItemDetail {
   }
 }
 
-// Refuses 1.5, accepts 1, 2, 3...
 function integer(control: AbstractControl): ValidationErrors | null {
   return Number.isInteger(Number(control.value)) ? null : { integer: true };
 }

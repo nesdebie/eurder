@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { StockBadge } from './stock-badge';
 
-// Example 1 — a simple component: give it an input, check what it displays
 describe('StockBadge', () => {
   let fixture: ComponentFixture<StockBadge>;
 
@@ -9,7 +8,6 @@ describe('StockBadge', () => {
     fixture = TestBed.createComponent(StockBadge);
   });
 
-  // Sets the "amount" input, renders, and returns the badge element
   async function render(amount: number): Promise<HTMLElement> {
     fixture.componentRef.setInput('amount', amount);
     await fixture.whenStable();

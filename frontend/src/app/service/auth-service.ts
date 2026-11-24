@@ -54,8 +54,6 @@ export class AuthService {
     );
   }
 
-  // The email is the Basic login: after the customer changed it, the next requests must
-  // use the new email (same password), otherwise the backend answers 401.
   changeEmail(newEmail: string): void {
     const token = getAuthToken();
     const user = this.currentUser();

@@ -19,7 +19,6 @@ export class EditProfile {
   private readonly auth = inject(AuthService);
   private readonly fb = inject(NonNullableFormBuilder);
 
-  // Same structure and rules as UpdateCustomerRequest on the backend
   protected readonly form = this.fb.group({
     fullName: this.fb.group({
       firstName: ['', [Validators.required, Validators.maxLength(255)]],
@@ -41,7 +40,6 @@ export class EditProfile {
   protected readonly errors = signal<string[]>([]);
 
   constructor() {
-    // Prefills the form with GET /customers/me
     this.customerService.getMyProfile().subscribe({
       next: customer => {
         this.fill(customer);
@@ -65,7 +63,6 @@ export class EditProfile {
 
     this.customerService.updateMyProfile(this.form.getRawValue()).subscribe({
       next: customer => {
-        // The email is the login: keep the stored credentials in line with it
         this.auth.changeEmail(customer.email);
         this.fill(customer);
         this.saving.set(false);
