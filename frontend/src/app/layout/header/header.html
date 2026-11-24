@@ -4,10 +4,16 @@
   <nav class="nav">
     @if (auth.currentUser(); as user) {
       @if (auth.hasPermission('VIEW_EURDERS_REPORT')) {
-        <a routerLink="/orders-history" routerLinkActive="active" class="order-button">Orders History</a>
+        <a routerLink="/orders-history" routerLinkActive="active" class="icon-button profile-button"
+           title="Show history" aria-label="Show history">
+          <img src="/images/history.svg" alt="" />
+        </a>
       }
       @if (auth.hasPermission('VIEW_CUSTOMERS')) {
-        <a routerLink="/customers" routerLinkActive="active" class="order-button">Customers</a>
+        <a routerLink="/customers" routerLinkActive="active" class="icon-button profile-button"
+           title="Show customers" aria-label="Show customers">
+          <img src="/images/users.svg" alt="" />
+        </a>
       }
       @if (auth.hasPermission('EURDER_ITEMS')) {
         <a routerLink="/order" routerLinkActive="active" class="order-button"
