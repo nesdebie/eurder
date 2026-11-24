@@ -73,19 +73,12 @@
             </button>
           }
         </div>
-
+        <p class="detail-description">{{ item.id }}</p>
         <p class="detail-price">{{ item.price | currency:'EUR' }}</p>
         <app-stock-badge [amount]="item.amount" />
 
         <h2>Description</h2>
         <p class="detail-description">{{ item.description || 'No description.' }}</p>
-
-        <dl class="detail-facts">
-          <dt>Units available</dt>
-          <dd>{{ item.amount > 0 ? item.amount : 0 }}</dd>
-          <dt>Reference</dt>
-          <dd class="reference">{{ item.id }}</dd>
-        </dl>
 
         @if (auth.hasPermission('EURDER_ITEMS')) {
           <form class="add-to-cart" [formGroup]="cartForm" (ngSubmit)="addToCart(item)" novalidate>
@@ -97,8 +90,8 @@
           </form>
           @if (cartForm.controls.amount.touched && cartForm.controls.amount.invalid) {
             <small class="field-error">Enter a whole number of at least 1.</small>
-          } @else if (addedMessage()) {
-            <p class="added">{{ addedMessage() }}</p>
+          } @else if (addedToCartMessage()) {
+            <p class="added">{{ addedToCartMessage() }}</p>
           }
         } @else if (!auth.isLoggedIn()) {
           <p class="sign-in-hint">

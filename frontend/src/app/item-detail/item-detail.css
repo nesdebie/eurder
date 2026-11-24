@@ -50,27 +50,6 @@
   white-space: pre-line;
 }
 
-.detail-facts {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 0.4rem 1.5rem;
-  margin: 2rem 0 0;
-  padding: 1rem 1.2rem;
-  background: rgba(248, 250, 247, 0.7);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  font-size: 0.9rem;
-}
-
-.detail-facts dt {
-  font-weight: 600;
-  color: var(--text-muted);
-}
-
-.detail-facts dd {
-  margin: 0;
-}
-
 .reference {
   font-family: monospace;
   font-size: 0.8rem;

@@ -131,7 +131,6 @@ h1, h2, h3 {
   box-shadow: 0 0 0 3px rgba(78, 122, 102, 0.18);
 }
 
-/* ---------- Boutons partagés (détail, création…) ---------- */
 .btn-primary,
 .btn-secondary {
   height: 44px;
@@ -177,16 +176,16 @@ h1, h2, h3 {
   width: 46px;
   height: 46px;
   padding: 0;
-  background: rgba(255, 255, 255, 0.52);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-button);
+  /*background: rgba(255, 255, 255, 0.52);*/
+  /*border: 1px solid var(--border);*/
+  /*border-radius: var(--radius-button);*/
   cursor: pointer;
   transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }
 
 .icon-button:hover {
   transform: translateY(-1px);
-  border-color: var(--primary-border);
+  /*border-color: var(--primary-border);*/
 }
 
 .icon-button img {
@@ -195,8 +194,8 @@ h1, h2, h3 {
 }
 
 .icon-button.primary {
-  background: var(--primary-light);
-  border-color: var(--primary-border);
+  /*background: var(--primary-light);*/
+  /*border-color: var(--primary-border);*/
 }
 
 .label-row {

@@ -28,7 +28,6 @@ export class ItemDetail {
   readonly id = input.required<string>();
 
   protected readonly item = rxResource({
-    // Admins also see items with no stock left (they are only in the inventory)
     params: () => ({ id: this.id(), user: this.auth.currentUser() }),
     stream: ({ params }) => this.auth.ensureUser().pipe(
       switchMap(user => this.itemService.getItem(params.id, user?.permissions.includes('VIEW_INVENTORY') ?? false)),
@@ -38,7 +37,7 @@ export class ItemDetail {
   protected readonly cartForm = this.fb.group({
     amount: [1, [Validators.required, Validators.min(1), integer]],
   });
-  protected readonly addedMessage = signal<string | null>(null);
+  protected readonly addedToCartMessage = signal<string | null>(null);
 
   protected addToCart(item: Item): void {
     if (this.cartForm.invalid) {
@@ -47,7 +46,7 @@ export class ItemDetail {
     }
     const { amount } = this.cartForm.getRawValue();
     this.cart.add(item.id, amount);
-    this.addedMessage.set(`${amount} × ${item.name} added to your cart.`);
+    this.addedToCartMessage.set(`${amount} × ${item.name} added to your cart.`);
     this.cartForm.reset({ amount: 1 });
   }
 

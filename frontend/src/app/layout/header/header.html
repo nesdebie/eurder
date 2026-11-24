@@ -18,13 +18,14 @@
           }
         </a>
       }
-      <span class="user">{{ user.email }}</span>
       @if (auth.hasPermission('MANAGE_PROFILE')) {
         <a routerLink="/edit-profile" routerLinkActive="active" class="icon-button profile-button"
            title="Edit my profile" aria-label="Edit my profile">
           <img src="/images/edit.svg" alt="" />
         </a>
       }
+      <span class="user">{{ user.email }}</span>
+
       <button type="button" class="link-button" (click)="logout()">Sign out</button>
     } @else {
       <a routerLink="/login">Sign in</a>
