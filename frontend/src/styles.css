@@ -26,9 +26,10 @@
   --danger: #b54a3f;
   --danger-light: #f8e6e3;
 
-  --radius: 20px;
-  --radius-small: 12px;
-  --radius-button: 10px;   /* every button: square with slightly rounded corners */
+  --radius: 10px;
+  --radius-small: 6px;
+  --radius-button: 6px;
+  --radius-card: 14px;
   --shadow: 0 18px 35px rgba(68, 90, 80, 0.08);
   --shadow-hover: 0 22px 40px rgba(68, 90, 80, 0.16);
 }
@@ -121,7 +122,7 @@ h1, h2, h3 {
   color: inherit;
   background: var(--surface-strong);
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: var(--radius-small);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -176,9 +177,8 @@ h1, h2, h3 {
   width: 46px;
   height: 46px;
   padding: 0;
-  /*background: rgba(255, 255, 255, 0.52);*/
-  /*border: 1px solid var(--border);*/
-  /*border-radius: var(--radius-button);*/
+  background: none;
+  border: none;
   cursor: pointer;
   transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }
@@ -191,11 +191,6 @@ h1, h2, h3 {
 .icon-button img {
   width: 22px;
   height: 22px;
-}
-
-.icon-button.primary {
-  /*background: var(--primary-light);*/
-  /*border-color: var(--primary-border);*/
 }
 
 .label-row {

@@ -4,7 +4,7 @@
   padding: clamp(1.4rem, 3vw, 2.2rem);
   background: rgba(255, 255, 255, 0.42);
   border: 1px solid var(--border);
-  border-radius: 28px;
+  border-radius: var(--radius-card);
   box-shadow: var(--shadow);
 }
 
